@@ -83,7 +83,7 @@ class Customer extends DataObject
 		global $gDatabase;
 		
 		if($this->isNew)
-		{ // insert
+		{ // insert (Why are these values different to the SQL Query?!)
 			$statement = $gDatabase->prepare("INSERT INTO customer VALUES (null, :firstname, :surname, :address, :email, :language");
 			$statement->bindParam(":adults", $this->firstname );
 			$statement->bindParam(":children",$this->surname );
@@ -124,5 +124,16 @@ class Customer extends DataObject
 		$statement->execute();
 		$this->id=0;
 		$this->isNew=true;
+	}
+	
+	public static function getIdList()
+	{
+		global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT id FROM customer;");
+		$statement->execute();
+
+		$result = $statement->fetchAll(PDO::FETCH_COLUMN,0);
+
+		return $result;
 	}
 }
