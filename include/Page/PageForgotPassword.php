@@ -6,6 +6,15 @@ class PageForgotPassword extends PageBase
 {
 	protected function runPage()
 	{
+		$this->mBasePage="forgottenpassword.tpl";
+			
+		if(Session::isCustomerLoggedIn() ){
+		// why do you want another account?
+		// redirect to main page
+		$this->mHeaders[] = "HTTP/1.1 303 See Other";
+		$this->mHeaders[] = "Location: " . $cWebPath . "/index.php";
+		}
+		
 			if(WebRequest::wasPosted())
 			{
 				try{
@@ -13,7 +22,7 @@ class PageForgotPassword extends PageBase
 			
 				// validation
 
-				if($suEmail ==""){throw new CreateCustomerException("Email not specified");}
+				if($suEmail==""){throw new CreateCustomerException("Email not specified");}
 			
 				$customer->sendForgetPasswordMail();
 				}
@@ -24,9 +33,9 @@ class PageForgotPassword extends PageBase
 					$this->error($ex->getMessage());
 				}
 			}
-
-			else	
-			{
+			
+			else
+			{	
 				$this->mBasePage="forgottenpassword.tpl";
 			}
 		
