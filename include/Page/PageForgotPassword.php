@@ -6,6 +6,30 @@ class PageForgotPassword extends PageBase
 {
 	protected function runPage()
 	{
+			if(WebRequest::wasPosted())
+			{
+				try{
+				$suEmail=WebRequest::post("suEmail");
+			
+				// validation
+
+				if($suEmail ==""){throw new CreateCustomerException("Email not specified");}
+			
+				$customer->sendForgetPasswordMail();
+				}
+				
+				catch (CreateCustomerException $ex)
+				{
+					$this->mBasePage="forgottenpassword.tpl";
+					$this->error($ex->getMessage());
+				}
+			}
+
+			else	
+			{
+				$this->mBasePage="forgottenpassword.tpl";
+			}
+		
 		
 	}
 }
