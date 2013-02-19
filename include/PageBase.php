@@ -24,6 +24,7 @@ abstract class PageBase
 			"Class name" => array(
 				"title" => "Message name to display",
 				"link" => "Link to show",
+				"items" => array(...)
 				),
 			*/
 		"PageMain" => array(

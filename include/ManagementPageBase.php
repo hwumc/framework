@@ -23,24 +23,6 @@ abstract class ManagementPageBase extends PageBase
 			"title" => "mpage-home",
 			"link" => "/",
 			),
-		"MPageHotel" => array(
-			"title" => "mpage-hotel",
-			"link" => "/Hotel",
-			"items" => array(
-				"MPageCustomers" => array(
-					"title" => "mpage-customers",
-					"link" => "/Customers",
-					),
-				"MPageBookings" => array(
-					"title" => "mpage-booking",
-					"link" => "/Bookings",
-					),
-				"MPageRooms" => array(
-					"title" => "mpage-rooms",
-					"link" => "/Rooms",
-					),
-				),
-			),
 		"MPageSystem" => array(
 			"title" => "mpage-system",
 			"link" => "/System",
@@ -52,10 +34,6 @@ abstract class ManagementPageBase extends PageBase
 				"MPageSystemUsers" => array(
 					"title" => "mpage-systemusers",
 					"link" => "/SystemUsers",
-					),
-				"MPageAccess" => array(
-					"title" => "mpage-access",
-					"link" => "/Access",
 					),
 				"MPageLanguages" => array(
 					"title" => "mpage-languages",
