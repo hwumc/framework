@@ -93,14 +93,6 @@ abstract class PageBase
 	 */
 	protected function addSystemCssJs()
 	{
-		global $cWebPath;
-				
-		$this->mStyles[] = $cWebPath . '/style/mainstyle.css';
-		$this->mStyles[] = $cWebPath . '/style/svwp_style.css';
-		
-		$this->mScripts[] = $cWebPath . '/scripts/jquery.slideViewerPro.1.5.js';
-		$this->mScripts[] = $cWebPath . '/scripts/jquery.timers-1.2.js';
-		$this->mScripts[] = $cWebPath . '/scripts/imageslider.js';
 	}
 	
 	protected function handleAccessDeniedException($ex)

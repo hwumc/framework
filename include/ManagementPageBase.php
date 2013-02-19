@@ -65,8 +65,6 @@ abstract class ManagementPageBase extends PageBase
 	
 	protected function addSystemCssJs()
 	{
-		global $cWebPath;
-		$this->mStyles[] = $cWebPath . "/style/management.css";
 	}
 	
 	protected function setupPage()
