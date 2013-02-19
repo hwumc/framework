@@ -71,6 +71,12 @@ HTML;
 			require_once($cIncludePath . "/Page/" . $class_name . ".php");
 			return;
 		}
+		
+		if(file_exists($cIncludePath . "/DataObjects/" . $class_name . ".php"))
+		{
+			require_once($cIncludePath . "/DataObjects/" . $class_name . ".php");
+			return;
+		}
 
 		if(file_exists($cIncludePath . "/ManagementPage/" . $class_name . ".php"))
 		{
