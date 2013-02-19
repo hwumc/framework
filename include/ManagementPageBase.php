@@ -91,11 +91,11 @@ abstract class ManagementPageBase extends PageBase
 			{
 				$gLogger->log("uid is $uid");
 
-				$user = InternalUser::getById($uid);
+				$user = User::getById($uid);
 
 				$gLogger->log("name is" . $user->getUsername());
 
-				$this->mMainMenu["MPageLogout"]["data"] = " (". $user->getUsername().")";
+				$this->mMainMenu["MPageLogout"]["data"] = " (". $user->getFullName().")";
 			}
 		}
 
@@ -201,27 +201,21 @@ abstract class ManagementPageBase extends PageBase
 		global $gLogger;
 		$gLogger->log("Entering checkPageAccessLevel");
 			
-		$userAccessLevel = InternalUser::getById(Session::getLoggedInUser())->getAccessLevel();
-		
-		$gLogger->log("checkPageAccessLevel: user access is $userAccessLevel, page action name is $actionName");
-
+		$userAccessLevel = User::getById(Session::getLoggedInUser())->isAllowed($actionName);
 		
 		if($actionName == "public")
 		{
-			$pageAccessLevel = 0;
+			return true;
 		}
 		else
 		{
-			$actionObject = StaffAccess::getByAction($actionName);
-			$pageAccessLevel = $actionObject->getLevel();
-			$gLogger->log("checkPageAccessLevel: page access is " . $pageAccessLevel);
-
+			if($userAccessLevel) 
+			{
+				return true;
+			}
 		}
 				
-		if($userAccessLevel < $pageAccessLevel)
-		{
-			throw new AccessDeniedException();
-		}
+		throw new AccessDeniedException();
 	}
 
 	public function handleAccessDeniedException($ex)

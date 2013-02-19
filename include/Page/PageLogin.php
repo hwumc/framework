@@ -21,7 +21,7 @@ class PageLogin extends PageBase
 				return;
 			}
 
-			$cust = InternalUser::getByName($username);
+			$cust = User::getByName($username);
 			if($cust == null)
 			{
 				// customer doesn't exist. offer to signup or retry?
@@ -29,12 +29,12 @@ class PageLogin extends PageBase
 				return;
 			}
 
-			/*if(! $cust->isMailConfirmed())
+			if(! $cust->isMailConfirmed())
 			{
 				// customer hasn't confirmed their email
 				$this->redirect("noconfirm");
 				return;
-			}*/
+			}
 			
 			if(! $cust->authenticate($password) )
 			{
@@ -100,9 +100,9 @@ class PageLogin extends PageBase
 		
 		if(Session::isLoggedIn())
 		{
-			$customer = InternalUser::getById(Session::getLoggedInUser());
+			$customer = User::getById(Session::getLoggedInUser());
 			$smarty->assign("loginoverride", "userpanel");
-			$smarty->assign("userRealName", $customer->getUsername());
+			$smarty->assign("userRealName", $customer->getFullName());
 		}
 	}
 }

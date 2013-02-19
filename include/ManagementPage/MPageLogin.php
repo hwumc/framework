@@ -48,7 +48,7 @@ class MPageLogin extends ManagementPageBase
 		$username = WebRequest::post("lgUsername");
 		$password = WebRequest::post("lgPassword");
 
-		$userAccount = InternalUser::getByName($username);
+		$userAccount = User::getByName($username);
 		if($userAccount)
 		{
 			if($userAccount->authenticate($password))

@@ -9,21 +9,6 @@ class Session
 		session_start();
 	}
 	
-	public static function setLoggedInCustomer($id)
-	{
-		throw new DeprecatedException();
-	}
-	
-	public static function getLoggedInCustomer()
-	{
-		throw new DeprecatedException();
-	}
-	
-	public static function isCustomerLoggedIn()
-	{
-		throw new DeprecatedException();
-	}
-	
 	public static function setLoggedInUser($id)
 	{
 		$_SESSION['uid'] = $id;
