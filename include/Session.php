@@ -11,24 +11,17 @@ class Session
 	
 	public static function setLoggedInCustomer($id)
 	{
-		$_SESSION['cid'] = $id;
+		throw new DeprecatedException();
 	}
 	
 	public static function getLoggedInCustomer()
 	{
-		if(isset($_SESSION['cid']))
-		{
-			return $_SESSION['cid'];
-		}
-		else
-		{
-			return false;
-		}
+		throw new DeprecatedException();
 	}
 	
 	public static function isCustomerLoggedIn()
 	{
-		return isset($_SESSION['cid']);
+		throw new DeprecatedException();
 	}
 	
 	public static function setLoggedInUser($id)

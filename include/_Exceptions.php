@@ -23,3 +23,5 @@ class InvalidChecksumException extends Exception{}
 class AccessDeniedException extends Exception{}
 
 class YouShouldntBeDoingThatException extends Exception{}
+
+class DeprecatedException extends Exception{}
