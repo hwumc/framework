@@ -1,4 +1,4 @@
-<div class="pager">
+<div class="pagination">
 	<ul>
 		<li><a href="?showall=true">*</a></li>
 		<li><a href="?showall=unset">&empty;</a></li>

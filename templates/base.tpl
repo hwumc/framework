@@ -51,7 +51,7 @@
             </p>
 		{else}
 					<p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a> | Go to Members Area
+              Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
 	{/if}
           </div><!--/.nav-collapse -->
