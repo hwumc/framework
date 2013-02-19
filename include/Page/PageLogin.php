@@ -8,7 +8,7 @@ class PageLogin extends PageBase
 	{
 		if(WebRequest::wasPosted()) // sanity check
 		{
-			if(! ($email = WebRequest::postString("lgEmail")))
+			if(! ($username = WebRequest::postString("lgEmail")))
 			{
 				// no email address specified
 				$this->redirect("noemail");
@@ -21,7 +21,7 @@ class PageLogin extends PageBase
 				return;
 			}
 
-			$cust = Customer::getByEmail($email);
+			$cust = InternalUser::getByName($username);
 			if($cust == null)
 			{
 				// customer doesn't exist. offer to signup or retry?
@@ -29,12 +29,12 @@ class PageLogin extends PageBase
 				return;
 			}
 
-			if(! $cust->isMailConfirmed())
+			/*if(! $cust->isMailConfirmed())
 			{
 				// customer hasn't confirmed their email
 				$this->redirect("noconfirm");
 				return;
-			}
+			}*/
 			
 			if(! $cust->authenticate($password) )
 			{
@@ -46,7 +46,7 @@ class PageLogin extends PageBase
 			// seems to be ok.
 
 			// set up the session
-			Session::setLoggedInCustomer($cust->getId());
+			Session::setLoggedInUser($cust->getId());
 			
 			// redirect back to the main page.
 			$this->redirect();
@@ -98,11 +98,11 @@ class PageLogin extends PageBase
 
 		$smarty->assign("loginoverride", "");
 		
-		if(Session::isCustomerLoggedIn())
+		if(Session::isUserLoggedIn())
 		{
-			$customer = Customer::getById(Session::getLoggedInCustomer());
+			$customer = InternalUser::getById(Session::getLoggedInUser());
 			$smarty->assign("loginoverride", "userpanel");
-			$smarty->assign("userRealName", $customer->getFirstname() . " " . $customer->getSurname());
+			$smarty->assign("userRealName", $customer->getUsername());
 		}
 	}
 }
