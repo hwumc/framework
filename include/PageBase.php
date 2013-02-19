@@ -30,10 +30,6 @@ abstract class PageBase
 			"title" => "page-home",
 			"link" => "/",
 			),
-		"PageBook" => array(
-			"title" => "page-book",
-			"link" => "/Book",
-			),
 		);
 		
 	// array of HTTP headers to add to the request.
