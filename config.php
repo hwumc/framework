@@ -14,7 +14,7 @@ $pparts = pathinfo($_SERVER["SCRIPT_NAME"]);
 $cWebPath = $pparts["dirname"] == "/" ? "" : $pparts["dirname"];
 
 // database details
-$cDatabaseConnectionString = 'mysql:host=dbmaster.helpmebot.org.uk;dbname=dvs_hotel';
+$cDatabaseConnectionString = 'mysql:host=dbmaster.srv.stwalkerster.net;dbname=hwumc_new_devel';
 $cDatabaseModule = "pdo_mysql";
 $cMyDotCnfFile = ".my.cnf";
 
@@ -32,7 +32,6 @@ $cGlobalStyles = array(
 $cAvailableLanguages = array(
 	'zxx' => "(Language Tag Codes)",
 	'en-GB' => "English (British)",
-	'fi' => "Suomi",
 	);
 	
 // list of required php extensions.
@@ -63,4 +62,4 @@ if(file_exists("config.local.php"))
 }
 
 // Load the main hotel file
-require_once($cIncludePath . "/Hotel.php");
+require_once($cIncludePath . "/WebStart.php");

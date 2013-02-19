@@ -2,7 +2,7 @@
 // check for invalid entry point
 if(!defined("HMS")) die("Invalid entry point");
 
-class Hotel
+class WebStart
 {
 	private $managementMode = false;
 
@@ -21,29 +21,26 @@ class Hotel
 	public static function exceptionHandler($exception)
 	{
 		$errorDocument = <<<HTML
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>The Blackfish Hotel</title>
-		<style type="text/css">
-			img{margin:2px 3px;}
-			#content{display:block;float:left;margin-left:15px;}
-			#error{display:block;clear:both;font-size:x-small;}
-			p{margin:0px;padding:0px;}
-		</style>
-	</head>
-	<body>
-		<img src="$2$" class="style1" height="65" style="float: left" width="234" />
-		<div id="content">
-			<h1>Oops! Something went wrong!</h1>
-			<p>We'll work on fixing this for you, so why not come back later?</p>
-		</div>
-		<div id="error">
-			<h3>The technical info:</h3>
-			<pre>$1$</pre>
-		</div>
-	</body>
-</html>
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Oops! Something went wrong!</title>
+<style>
+* { margin: 0; padding: 0; }
+body { background: #fff; margin: 7% auto 0; padding: 2em 1em 1em; font: 14px/21px sans-serif; color: #333; max-width: 560px; }
+img { float: left; margin: 0 2em 2em 0; }
+a img { border: 0; }
+h1 { margin-top: 1em; font-size: 1.2em; }
+p { margin: 0.7em 0 1em 0; }
+a { color: #0645AD; text-decoration: none; }
+a:hover { text-decoration: underline; }
+em { font-style: normal; color: #777; }
+p.sub { margin: 0.7em 0 1em 0; font-style: normal; color: #777;
+pre {color: #777;}
+</style>
+</head><body><h1>Oops! Something went wrong!</h1>
+<p>We'll work on fixing this for you, so why not come back later?</p>
+<p><em>If our trained monkeys ask, tell them this:</em><pre>$1$</pre></p>
+</body></html>
 HTML;
 		$message = "Unhandled " . $exception;
 		
@@ -51,9 +48,7 @@ HTML;
 		
 		global $cWebPath;
 		
-		print str_replace('$1$', $message, 
-			str_replace('$2$', $cWebPath . '/images/bflogo.png' , $errorDocument)
-			);
+		print str_replace('$1$', $message, $errorDocument);
 		die;
 	}
 	
@@ -99,7 +94,7 @@ HTML;
 		global $gDatabase, $cDatabaseConnectionString, $cMyDotCnfFile, 
 			$cDatabaseModule, $cIncludePath, $cLoggerName, $gLogger;
 
-		set_exception_handler(array("Hotel","exceptionHandler"));
+		set_exception_handler(array("WebStart","exceptionHandler"));
 	
 		// check all the required PHP extensions are enabled on this SAPI
 		$this->checkPhpExtensions();
@@ -115,7 +110,7 @@ HTML;
 		// (Depends on some smarty stuff)
 		require_once($cIncludePath . "/_Exceptions.php");
 		
-		spl_autoload_register("Hotel::autoLoader");
+		spl_autoload_register("WebStart::autoLoader");
 
 		Session::start();
 
