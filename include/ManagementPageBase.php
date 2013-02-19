@@ -31,10 +31,6 @@ abstract class ManagementPageBase extends PageBase
 					"title" => "mpage-phpinfo",
 					"link" => "/PhpInfo",
 					),
-				"MPageSystemUsers" => array(
-					"title" => "mpage-systemusers",
-					"link" => "/SystemUsers",
-					),
 				"MPageLanguages" => array(
 					"title" => "mpage-languages",
 					"link" => "/Languages",
