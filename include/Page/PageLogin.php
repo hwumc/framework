@@ -98,7 +98,7 @@ class PageLogin extends PageBase
 
 		$smarty->assign("loginoverride", "");
 		
-		if(Session::isUserLoggedIn())
+		if(Session::isLoggedIn())
 		{
 			$customer = InternalUser::getById(Session::getLoggedInUser());
 			$smarty->assign("loginoverride", "userpanel");
