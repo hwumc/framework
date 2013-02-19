@@ -24,11 +24,11 @@ $cLoggerName="FakeLogger";
 // Global scripts are included first, then local scripts second
 $cGlobalScripts = array(
 	'http://code.jquery.com/jquery.js', 
-	$cWebPath . 'scripts/bootstrap.js',
+	$cWebPath . '/scripts/bootstrap.js',
 	);
 
 $cGlobalStyles = array(
-	$cWebPath . 'style/bootstrap.css',
+	$cWebPath . '/style/bootstrap.css',
 	);
 	
 $cAvailableLanguages = array(

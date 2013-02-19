@@ -58,19 +58,39 @@
         </div>
       </div>
     </div>
-	
-		{block name="nav"}{include file="nav.tpl"}{/block}
-		<div id="contentwrapper">
-			{block name="subnav"}{* For the management system, default empty *}{/block}
-			<div id="content">
+	    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          	<div id="well sidebar-nav">
+		<ul class="nav nav-list">
+			{foreach from="$mainmenu" item="menuitem" }
+				<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data}{/if}</a>
+				{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
+					<ul>
+						{foreach from="$submenu" item="subitem" }
+							<li><a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>{message name={$subitem.title}}{if isset($subitem.data)}{$subitem.data}{/if}</a></li>
+						{/foreach}
+					</ul>
+				{/if}
+				</li>
+			{/foreach}
+		</ul>
+	</div>
+        </div><!--/span-->
+        <div class="span9">
+          
 				{if $showError == "yes"}{include file="errorbar.tpl"}{/if}
 				{block name="body"}{$content|default:"<p>Nothing to see here!</p>"}{/block}
-			</div>
-		</div>
-		{block name="footer"}{include file="footer.tpl"}{/block}
-	
-	
-	
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>{message name="footer-copyright"}</p>
+      </footer>
+
+    </div><!--/.fluid-container-->	
 	
 </body>
 </html>
