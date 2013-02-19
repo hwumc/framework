@@ -26,7 +26,7 @@ class WebStart
 <title>Oops! Something went wrong!</title>
 <style>
 * { margin: 0; padding: 0; }
-body { background: #fff; margin: 7% auto 0; padding: 2em 1em 1em; font: 14px/21px sans-serif; color: #333; max-width: 560px; }
+body { background: #fff; margin: 7% 0 0 7%; padding: 1em 1em 1em; font: 14px/21px sans-serif; color: #333; max-width: 560px; }
 img { float: left; margin: 0 2em 2em 0; }
 a img { border: 0; }
 h1 { margin-top: 1em; font-size: 1.2em; }
@@ -35,7 +35,7 @@ a { color: #0645AD; text-decoration: none; }
 a:hover { text-decoration: underline; }
 em { font-style: normal; color: #777; }
 p.sub { margin: 0.7em 0 1em 0; font-style: normal; color: #777;
-pre {color: #777;}
+pre {color: #777; font-size: xx-small;}
 </style>
 </head><body><h1>Oops! Something went wrong!</h1>
 <p>We'll work on fixing this for you, so why not come back later?</p>
@@ -43,6 +43,13 @@ pre {color: #777;}
 </body></html>
 HTML;
 		$message = "Unhandled " . $exception;
+		
+		// strip out database passwords from the error message
+		global $cMyDotCnfFile;
+		$mycnf = parse_ini_file($cMyDotCnfFile);
+		
+		$message = str_replace($mycnf['user'], "webserver", $message);
+		$message = str_replace($mycnf['password'], "sekrit", $message);
 		
 		ob_end_clean();
 		
