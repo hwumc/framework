@@ -64,13 +64,14 @@
           	<div id="well sidebar-nav">
 		<ul class="nav nav-list">
 			{foreach from="$mainmenu" item="menuitem" }
-				<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data}{/if}</a>
+				
 				{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
-					<ul>
+				<li class="nav-header">{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data}{/if}</li>
 						{foreach from="$submenu" item="subitem" }
 							<li><a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>{message name={$subitem.title}}{if isset($subitem.data)}{$subitem.data}{/if}</a></li>
 						{/foreach}
-					</ul>
+				{else}
+				<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data}{/if}</a>
 				{/if}
 				</li>
 			{/foreach}
