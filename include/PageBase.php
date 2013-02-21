@@ -127,11 +127,6 @@ abstract class PageBase
 	{
 	}
 	
-	protected function handleAccessDeniedException($ex)
-	{
-		throw $ex; // urm, this shouldn't really happen
-	}
-	
 	public function execute()
 	{
 		Hooks::run("PreSetupPage");
