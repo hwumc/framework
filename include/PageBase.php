@@ -191,7 +191,7 @@ abstract class PageBase
 
 	public static function create()
 	{
-				// use "Main" as the default
+		// use "Main" as the default
 		$page = "Main";
 
 		// check the requested page title for safety and sanity
@@ -209,10 +209,10 @@ abstract class PageBase
 		
 		// okay, the page title should be reasonably safe now, let's try and make the page
 		
-		$pagename = "MPage" . $page;
+		$pagename = "Page" . $page;
 		
 		global $cIncludePath, $gLogger;
-		$filepath = $cIncludePath . "/ManagementPage/" . $pagename . ".php";
+		$filepath = $cIncludePath . "/Page/" . $pagename . ".php";
 		
 		if(file_exists($filepath))
 		{
@@ -220,8 +220,8 @@ abstract class PageBase
 		}
 		else
 		{	// oops, couldn't find the requested page, let's fail gracefully.
-			$pagename = "MPage404";
-			$filepath = $cIncludePath . "/ManagementPage/" . $pagename . ".php";
+			$pagename = "Page404";
+			$filepath = $cIncludePath . "/Page/" . $pagename . ".php";
 			require_once($filepath);
 		}	
 
@@ -229,20 +229,20 @@ abstract class PageBase
 		{
 			$pageobject = new $pagename;
 			
-			if(get_parent_class($pageobject) == "ManagementPageBase")
+			if(get_parent_class($pageobject) == "PageBase")
 			{
 				Hooks::run("CreatePage", array($pageobject));
-				$gLogger->log("MPage object created.");
+				$gLogger->log("Page object created.");
 			
 				if(! $pageobject->isProtected())
 				{
-					$gLogger->log("MPage object not protected.");
+					$gLogger->log("Page object not protected.");
 				
 					return $pageobject;
 				}
 				else
 				{
-					$gLogger->log("MPage object IS protected.");
+					$gLogger->log("Page object IS protected.");
 				
 					if(Session::isLoggedIn())
 					{	
@@ -251,7 +251,7 @@ abstract class PageBase
 						Hooks::register("PreRunPage", 
 							function($parameters)
 							{
-								ManagementPageBase::checkAccess($parameters[1]->getAccessName());
+								PageBase::checkAccess($parameters[1]->getAccessName());
 								return $parameters[0];
 							});
 					
@@ -263,8 +263,8 @@ abstract class PageBase
 					{ // not logged in
 						$gLogger->log("Session NOT logged in");
 
-						require_once($cIncludePath . "/ManagementPage/MPageLogin.php");
-						return new MPageLogin();
+						require_once($cIncludePath . "/Page/PageLogin.php");
+						return new PageLogin();
 					}
 				}
 			}
