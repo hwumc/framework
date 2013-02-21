@@ -4,6 +4,11 @@ if(!defined("HMS")) die("Invalid entry point");
 
 abstract class PageBase
 {
+	// is this page a protected by login page?
+	// defaults to true, so we protect everything and have to explicitly 
+	// unprotect if desired.
+	protected $mIsProtectedPage = true;
+
 	// array of extra (per-page) javascript files to add
 	protected $mScripts = array();
 
@@ -15,9 +20,16 @@ abstract class PageBase
 	// message containing the title of the page
 	protected $mPageTitle = "html-title";
 
+	// access right name to access this page
+	protected $mAccessName = "public";
+	
 	// base template to use
 	protected $mBasePage = "base.tpl";
 
+	// subnav
+	protected $mSubMenu = array();
+
+	
 	// main menu
 	protected $mMainMenu = array(
 		/* Format:
@@ -57,6 +69,24 @@ abstract class PageBase
 	
 	protected function finalSetup()
 	{
+		global $gLogger;
+		$gLogger->log("MPage final setup");
+		if(Session::getLoggedInUser())
+		{
+			$gLogger->log("uid is set");
+			$uid = Session::getLoggedInUser();
+			if($uid!=0)
+			{
+				$gLogger->log("uid is $uid");
+
+				$user = User::getById($uid);
+
+				$gLogger->log("name is" . $user->getUsername());
+
+				$this->mMainMenu["MPageLogout"]["data"] = " (". $user->getFullName().")";
+			}
+		}
+	
 		global $cGlobalScripts;
 		$scripts = array_merge($cGlobalScripts, $this->mScripts);
 		$this->mSmarty->assign("scripts",$scripts);
@@ -83,6 +113,8 @@ abstract class PageBase
 
 		// the current page path
 		$this->mSmarty->assign("currentPagePath", WebRequest::pathInfo());
+		
+		$this->mSmarty->assign("subnavigation", $this->mSubMenu);
 	}
 
 	/**
@@ -164,7 +196,7 @@ abstract class PageBase
 
 	public static function create()
 	{
-		// use "Main" as the default
+				// use "Main" as the default
 		$page = "Main";
 
 		// check the requested page title for safety and sanity
@@ -175,17 +207,17 @@ abstract class PageBase
 			count($pathinfo) >= 1 &&
 			$pathinfo[0] != "" &&  // not empty
 			(!ereg("[^a-zA-Z0-9]", $pathinfo[0])) // contains only alphanumeric chars
-		)
-		{
+			)
+		{  //if
 			$page = $pathinfo[0];
-		}
+		} // fi
 		
 		// okay, the page title should be reasonably safe now, let's try and make the page
 		
-		$pagename = "Page" . $page;
+		$pagename = "MPage" . $page;
 		
-		global $cIncludePath;
-		$filepath = $cIncludePath . "/Page/" . $pagename . ".php";
+		global $cIncludePath, $gLogger;
+		$filepath = $cIncludePath . "/ManagementPage/" . $pagename . ".php";
 		
 		if(file_exists($filepath))
 		{
@@ -193,8 +225,8 @@ abstract class PageBase
 		}
 		else
 		{	// oops, couldn't find the requested page, let's fail gracefully.
-			$pagename = "Page404";
-			$filepath = $cIncludePath . "/Page/" . $pagename . ".php";
+			$pagename = "MPage404";
+			$filepath = $cIncludePath . "/ManagementPage/" . $pagename . ".php";
 			require_once($filepath);
 		}	
 
@@ -202,11 +234,44 @@ abstract class PageBase
 		{
 			$pageobject = new $pagename;
 			
-			if(get_parent_class($pageobject) == "PageBase")
+			if(get_parent_class($pageobject) == "ManagementPageBase")
 			{
 				Hooks::run("CreatePage", array($pageobject));
+				$gLogger->log("MPage object created.");
+			
+				if(! $pageobject->isProtected())
+				{
+					$gLogger->log("MPage object not protected.");
 				
-				return $pageobject;
+					return $pageobject;
+				}
+				else
+				{
+					$gLogger->log("MPage object IS protected.");
+				
+					if(Session::isLoggedIn())
+					{	
+						$gLogger->log("Session is logged in");
+
+						Hooks::register("PreRunPage", 
+							function($parameters)
+							{
+								ManagementPageBase::checkAccess($parameters[1]->getAccessName());
+								return $parameters[0];
+							});
+					
+						$pageobject = Hooks::run("AuthorisedCreatePage", array($pageobject));
+					
+						return $pageobject;
+					}
+					else
+					{ // not logged in
+						$gLogger->log("Session NOT logged in");
+
+						require_once($cIncludePath . "/ManagementPage/MPageLogin.php");
+						return new MPageLogin();
+					}
+				}
 			}
 			else
 			{
@@ -214,7 +279,7 @@ abstract class PageBase
 				throw new Exception();
 			}
 		}
-		else
+		else 
 		{
 			// file exists, but the class "within" doesn't, this is a problem as stuff isn't where it should be.
 			throw new Exception();
@@ -226,4 +291,42 @@ abstract class PageBase
 		$this->mSmarty->assign("showError", "yes");
 		$this->mSmarty->assign("errortext", $messageTag);
 	}
+
+	public function isProtected()
+	{
+		return $this->mIsProtectedPage;
+	}
+	
+	public function getAccessName()
+	{
+		return $this->mAccessName;
+	}	
+
+	public static function checkAccess($actionName)
+	{
+		global $gLogger;
+		$gLogger->log("Entering checkPageAccessLevel");
+			
+		$userAccessLevel = User::getById(Session::getLoggedInUser())->isAllowed($actionName);
+		
+		if($actionName == "public")
+		{
+			return true;
+		}
+		else
+		{
+			if($userAccessLevel) 
+			{
+				return true;
+			}
+		}
+				
+		throw new AccessDeniedException();
+	}
+
+	public function handleAccessDeniedException($ex)
+	{
+		$this->mHeaders = "HTTP/1.1 403 Forbidden";
+		$this->mBasePage = "mgmt/accessdenied.tpl";
+	}	
 }

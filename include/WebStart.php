@@ -4,18 +4,11 @@ if(!defined("HMS")) die("Invalid entry point");
 
 class WebStart
 {
-	private $managementMode = false;
-
 	public function run()
 	{
 		$this->setupEnvironment();
 		$this->main();
 		$this->cleanupEnvironment();
-	}
-	
-	public function setManagementMode()
-	{
-		$this->managementMode = true;
 	}
 	
 	public static function exceptionHandler($exception)
@@ -77,12 +70,6 @@ HTML;
 		if(file_exists($cIncludePath . "/DataObjects/" . $class_name . ".php"))
 		{
 			require_once($cIncludePath . "/DataObjects/" . $class_name . ".php");
-			return;
-		}
-
-		if(file_exists($cIncludePath . "/ManagementPage/" . $class_name . ".php"))
-		{
-			require_once($cIncludePath . "/ManagementPage/" . $class_name . ".php");
 			return;
 		}
 		
@@ -178,10 +165,8 @@ HTML;
 	
 	protected function main()
 	{
-		$basePage = $this->managementMode ? "ManagementPageBase" : "PageBase";
-	
 		// create a page...
-		$page = $basePage::create();
+		$page = PageBase::create();
 		
 		// ...and execute it.
 		$page->execute();
