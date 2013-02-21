@@ -70,7 +70,7 @@
 	    <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
-          	<div id="well sidebar-nav">
+          	<div class="well sidebar-nav">
 		<ul class="nav nav-list">
 			{foreach from="$mainmenu" item="menuitem" }
 				

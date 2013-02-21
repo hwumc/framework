@@ -39,11 +39,16 @@ abstract class PageBase
 				"items" => array(...)
 				),
 			*/
+		"Main" => array( "title" => "Main", "items" => array(
 		"PageMain" => array(
 			"title" => "page-home",
 			"link" => "/",
 			),
-		);
+		"PageAbout" => array(
+			"title" => "page-about",
+			"link" => "/About",
+			),
+		)));
 		
 	// array of HTTP headers to add to the request.
 	protected $mHeaders = array();
