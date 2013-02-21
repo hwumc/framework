@@ -45,15 +45,22 @@
           </button>
           <a class="brand" href="#">{message name="sitename"}</a>
           <div class="nav-collapse collapse">
-			{if $loginoverride eq ""}
+			{*{if $loginoverride eq ""}
 				<p class="navbar-text pull-right">
-					<a href="#" class="navbar-link">Log in</a>
+					<a href="{$cScriptPath}/Login" class="navbar-link">Log in</a>
 				</p>
-			{else}
+			{else}*}
 				<p class="navbar-text pull-right">
-					Logged in as <a href="#" class="navbar-link">Username</a>
+				<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Logged in as Username<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+<li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+<li role="presentation" class="divider"></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+</ul>
 				</p>
-			{/if}
+			{*{/if}*}
           </div><!--/.nav-collapse -->
         </div>
       </div>
