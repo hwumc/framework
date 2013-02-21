@@ -4,6 +4,11 @@ if(!defined("HMS")) die("Invalid entry point");
 
 class Page404 extends PageBase
 {
+	public function __construct()
+	{
+		$this->mIsProtectedPage = false;
+	}
+
 	protected function runPage()
 	{
 		$this->mHeaders[] = "HTTP/1.0 404 Not Found";

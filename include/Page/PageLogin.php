@@ -4,6 +4,12 @@ if(!defined("HMS")) die("Invalid entry point");
 
 class PageLogin extends PageBase
 {
+
+	public function __construct()
+	{
+		$this->mIsProtectedPage = false;
+	}
+	
 	protected function runPage()
 	{
 		if(WebRequest::wasPosted()) // sanity check
