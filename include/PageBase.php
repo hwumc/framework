@@ -74,6 +74,7 @@ abstract class PageBase
 		
 		if(Session::getLoggedInUser()) {
 			$this->mSmarty->assign( "loggedin","true" );
+			$this->mSmarty->assign( "userfullname", User::getById( Session::getLoggedInUser() )->getFullName() );
 		} else {
 			$this->mSmarty->assign( "loggedin","true" );
 		}

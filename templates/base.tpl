@@ -45,14 +45,14 @@
           </button>
           <a class="brand" href="#">{message name="sitename"}</a>
           <div class="nav-collapse collapse">
-			{if $loginoverride eq ""}
+			{if $loggedin eq ""}
 				<p class="navbar-text pull-right">
 					<a href="{$cScriptPath}/Login" class="navbar-link">Log in</a>
 				</p>
 			{else}
 				<ul class="nav pull-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as Username <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as {$userfullname} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="nav-header">Account</li>
 							<li><a href="{$cScriptPath}/ChangePassword">Change Password</a></li>
