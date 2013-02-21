@@ -45,21 +45,27 @@
           </button>
           <a class="brand" href="#">{message name="sitename"}</a>
           <div class="nav-collapse collapse">
+
+		 
 			{*{if $loginoverride eq ""}
 				<p class="navbar-text pull-right">
 					<a href="{$cScriptPath}/Login" class="navbar-link">Log in</a>
 				</p>
 			{else}*}
-				<p class="navbar-text pull-right">
-				<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Logged in as Username<b class="caret"></b></a>
-<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-<li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
-<li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
-<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-<li role="presentation" class="divider"></li>
-<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-</ul>
-				</p>
+			<ul class="nav pull-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as Username <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li class="divider"></li>
+						<li class="nav-header">Nav header</li>
+						<li><a href="#">Separated link</a></li>
+						<li><a href="#">One more separated link</a></li>
+					</ul>
+				</li>
+			</ul>
 			{*{/if}*}
           </div><!--/.nav-collapse -->
         </div>
