@@ -57,10 +57,10 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as Username <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="nav-header">Account</li>
-						<li><a href="#">Change Password</a></li>
-						<li><a href="#">Edit Profile</a></li>
+						<li><a href="{$cScriptPath}/ChangePassword">Change Password</a></li>
+						<li><a href="{$cScriptPath}/EditProfile">Edit Profile</a></li>
 						<li class="divider"></li>						
-						<li><a href="#">Log out</a></li>
+						<li><a href="{$cScriptPath}/Logout">Log out</a></li>
 					</ul>
 				</li>
 			</ul>
