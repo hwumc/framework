@@ -14,7 +14,7 @@ class PageLogin extends PageBase
 	{
 		if(WebRequest::wasPosted()) // sanity check
 		{
-			if(! ($username = WebRequest::postString("lgEmail")))
+			if(! ($username = WebRequest::postString("lgUser")))
 			{
 				// no email address specified
 				$this->redirect("noemail");
