@@ -60,10 +60,7 @@ class PageLogin extends PageBase
 		}
 		else
 		{
-			// urm, something's not quite right here...
-			// redirect back to the main page.
-			$this->mHeaders[] = "HTTP/1.1 303 See Other";
-			$this->mHeaders[] = "Location: " . $cWebPath . "/index.php";
+			$this->mBasePage = "login.tpl";
 		}
 	}
 

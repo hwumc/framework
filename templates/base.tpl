@@ -45,15 +45,15 @@
           </button>
           <a class="brand" href="#">{message name="sitename"}</a>
           <div class="nav-collapse collapse">
-           	{if $loginoverride eq ""}
-						<p class="navbar-text pull-right">
-              <a href="#" class="navbar-link">Log in</a>
-            </p>
-		{else}
-					<p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
-            </p>
-	{/if}
+			{if $loginoverride eq ""}
+				<p class="navbar-text pull-right">
+					<a href="#" class="navbar-link">Log in</a>
+				</p>
+			{else}
+				<p class="navbar-text pull-right">
+					Logged in as <a href="#" class="navbar-link">Username</a>
+				</p>
+			{/if}
           </div><!--/.nav-collapse -->
         </div>
       </div>
