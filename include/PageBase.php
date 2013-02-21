@@ -71,20 +71,11 @@ abstract class PageBase
 	{
 		global $gLogger;
 		$gLogger->log("MPage final setup");
-		if(Session::getLoggedInUser())
-		{
-			$gLogger->log("uid is set");
-			$uid = Session::getLoggedInUser();
-			if($uid!=0)
-			{
-				$gLogger->log("uid is $uid");
-
-				$user = User::getById($uid);
-
-				$gLogger->log("name is" . $user->getUsername());
-
-				$this->mMainMenu["MPageLogout"]["data"] = " (". $user->getFullName().")";
-			}
+		
+		if(Session::getLoggedInUser()) {
+			$this->mSmarty->assign( "loggedin","true" );
+		} else {
+			$this->mSmarty->assign( "loggedin","true" );
 		}
 	
 		global $cGlobalScripts;
