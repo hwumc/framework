@@ -11,7 +11,7 @@ class PageSoftwareVersion extends PageBase
 	protected function runPage() {
 		$this->mBasePage="webmaster/git.tpl";
 		$this->mSmarty->assign( "softwaredesc", exec( "git describe --always --dirty" ) );
-		$this->mSmarty->assign( "softwarebranch", exec( 'git branch | grep "*" | cut -f 2 -d " "' ) );
+		$this->mSmarty->assign( "softwarebranch", exec( 'git symbolic-ref -q HEAD' ) );
 		$this->mSmarty->assign( "softwaresha", exec( 'git log -n1 --format=%H' ) );
 	}
 }
