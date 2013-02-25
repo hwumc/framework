@@ -9,4 +9,8 @@
 			<tr><th>Origin</th><td>{$softwareorigin}</td></tr>
 		</tbody>
 	</table>
+	<h3>Credits</h3>
+	{foreach from=$softwareauthors item=count key=name}
+		{$name|escape}, 
+	{/foreach} and others
 {/block}

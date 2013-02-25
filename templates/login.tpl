@@ -57,10 +57,10 @@
     <div class="container">
 
       <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" name="lgUser" class="input-block-level" placeholder="Username">
-        <input type="password" name="lgPasswd" class="input-block-level" placeholder="Password">
-        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+        <h2 class="form-signin-heading">{message name="login-title"}</h2>
+        <input type="text" name="lgUser" class="input-block-level" placeholder="{message name="login-username"}">
+        <input type="password" name="lgPasswd" class="input-block-level" placeholder="{message name="login-password"}">
+        <button class="btn btn-large btn-primary" type="submit">{message name="login-button"}</button>
       </form>
 
     </div> <!-- /container -->

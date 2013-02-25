@@ -39,7 +39,7 @@ abstract class PageBase
 				"items" => array(...)
 				),
 			*/
-		"Main" => array( "title" => "Main", "items" => array(
+		"Main" => array( "title" => "menu-main", "items" => array(
 		"PageMain" => array(
 			"title" => "page-home",
 			"link" => "/",
