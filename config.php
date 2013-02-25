@@ -60,6 +60,9 @@ $cTidyOptions = array(
 	"wrap" => 0, // disables wrapping
 	"vertical-space" => 1, // adds vertical spacing for readability
 	);
+	
+$cSoftwareGithubRepo = "stwalkerster/hwumc-new";
+	
 ///////////////// don't put new config options below this line
 
 if(file_exists("config.local.php"))
