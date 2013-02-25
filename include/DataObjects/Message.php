@@ -28,21 +28,6 @@ class Message extends DataObject
 		return $result;
 	}
 
-	public static function getById($id)
-	{
-		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT * FROM message WHERE id = :id LIMIT 1;");
-		$statement->bindParam(":id", $id);
-
-		$statement->execute();
-
-		$resultMessage = $statement->fetchObject("Message");
-
-		$resultMessage->isNew = false;
-
-		return $resultMessage;
-	}
-
 	public static function getByName($name, $language)
 	{
 		// language pseudocode exception

@@ -25,22 +25,6 @@ class User extends DataObject
 		return $result;
 	}
 
-	public static function getById($id)
-	{
-		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT * FROM user WHERE id = :id LIMIT 1;");
-		$statement->bindParam(":id", $id);
-
-		$statement->execute();
-
-		$resultObject = $statement->fetchObject("User");
-		if($resultObject != false)
-		{
-			$resultObject->isNew = false;
-		}
-		return $resultObject;
-	}
-
 	public static function getByName($name)
 	{
 		global $gLogger;

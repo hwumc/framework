@@ -17,7 +17,22 @@ abstract class DataObject
 	/**
 	 * Retrieves a data object by it's row ID.
 	 */
-	public abstract static function getById($id);
+	public static function getById($id) {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT * FROM " . strtolower( get_called_class() ). " WHERE id = :id LIMIT 1;");
+		$statement->bindParam(":id", $id);
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchObject( get_called_class() );
+
+		if($resultObject != false)
+		{
+			$resultObject->isNew = false;
+		}
+
+		return $resultObject;
+	}
 
 	/**
 	 * Saves a data object to the database, either updating or inserting a record.
