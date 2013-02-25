@@ -191,44 +191,44 @@ class Message extends DataObject
 	{
 		try
 		{
-		if($this->isNew)
-		{
-			global $gDatabase;
-			$statement = $gDatabase->prepare("INSERT INTO message (name, code, content) VALUES (:name, :code, :content);");
-
-			if($this->name == "")
-				throw new SaveFailedException("No name set!");
-			
-			if($this->code == "")
-				throw new SaveFailedException("No code set!");
-			
-			$statement->bindParam(":name", $this->name);
-			$statement->bindParam(":code", $this->code);
-			$statement->bindParam(":content", $this->content);
-
-			if($statement->execute())
+			if($this->isNew)
 			{
-				$this->isNew = false;
-				$this->id = $gDatabase->lastInsertId();
+				global $gDatabase;
+				$statement = $gDatabase->prepare("INSERT INTO message (name, code, content) VALUES (:name, :code, :content);");
+
+				if($this->name == "")
+					throw new SaveFailedException("No name set!");
+				
+				if($this->code == "")
+					throw new SaveFailedException("No code set!");
+				
+				$statement->bindParam(":name", $this->name);
+				$statement->bindParam(":code", $this->code);
+				$statement->bindParam(":content", $this->content);
+
+				if($statement->execute())
+				{
+					$this->isNew = false;
+					$this->id = $gDatabase->lastInsertId();
+				}
+				else
+				{
+					throw new SaveFailedException();
+				}
 			}
 			else
 			{
-				throw new SaveFailedException();
-			}
-		}
-		else
-		{
-			global $gDatabase;
-			$statement = $gDatabase->prepare("UPDATE message SET content = :content WHERE id = :id LIMIT 1;");
+				global $gDatabase;
+				$statement = $gDatabase->prepare("UPDATE message SET content = :content WHERE id = :id LIMIT 1;");
 
-			$statement->bindParam(":id", $this->id);
-			$statement->bindParam(":content", $this->content);
+				$statement->bindParam(":id", $this->id);
+				$statement->bindParam(":content", $this->content);
 
-			if(! $statement->execute())
-			{
-				throw new SaveFailedException();
+				if(! $statement->execute())
+				{
+					throw new SaveFailedException();
+				}
 			}
-		}
 		}
 		catch( PDOException $ex)
 		{
