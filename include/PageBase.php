@@ -78,10 +78,10 @@ abstract class PageBase
 		$gLogger->log("MPage final setup");
 		
 		if(Session::getLoggedInUser()) {
-			$this->mSmarty->assign( "loggedin","true" );
+			$this->mSmarty->assign( "loggedin", User::getById( Session::getLoggedInUser())->getUsername() );
 			$this->mSmarty->assign( "userfullname", User::getById( Session::getLoggedInUser() )->getFullName() );
 		} else {
-			$this->mSmarty->assign( "loggedin","true" );
+			$this->mSmarty->assign( "loggedin", "" );
 		}
 	
 		global $cGlobalScripts;
@@ -198,7 +198,7 @@ abstract class PageBase
 		if(
 			count($pathinfo) >= 1 &&
 			$pathinfo[0] != "" &&  // not empty
-			(!ereg("[^a-zA-Z0-9]", $pathinfo[0])) // contains only alphanumeric chars
+			(! preg_match( "/[^a-zA-Z0-9]/", $pathinfo[0] ) ) // contains only alphanumeric chars
 			)
 		{  //if
 			$page = $pathinfo[0];
