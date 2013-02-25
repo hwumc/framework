@@ -6,7 +6,6 @@ class User extends DataObject
 {
 	protected $username;
 	protected $password;
-	protected $userGroup;
 	protected $fullName;
 	protected $experience;
 	protected $medical;
@@ -74,10 +73,9 @@ class User extends DataObject
 
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO internaluser VALUES (null, :username, :password, :userGroup, :fullName, :experience, :medical, :emergcontact, :mobile, :emailconfirmation);");
+			$statement = $gDatabase->prepare("INSERT INTO internaluser VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :mobile, :emailconfirmation);");
 			$statement->bindParam(":username", $this->username);
 			$statement->bindParam(":password", $this->password);
-			$statement->bindParam(":userGroup", $this->userGroup);
 			$statement->bindParam(":fullName", $this->fullName);
 			$statement->bindParam(":experience", $this->experience);
 			$statement->bindParam(":medical", $this->medical);
@@ -96,10 +94,9 @@ class User extends DataObject
 		}
 		else
 		{ // update
-			$statement = $gDatabase->prepare("UPDATE internaluser SET username = :username, password = :password, userGroup = :userGroup, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, mobile = :mobile, emailconfirmation = :emailconfirmation WHERE id = :id LIMIT 1;");
+			$statement = $gDatabase->prepare("UPDATE internaluser SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, mobile = :mobile, emailconfirmation = :emailconfirmation WHERE id = :id LIMIT 1;");
 			$statement->bindParam(":username", $this->username);
 			$statement->bindParam(":password", $this->password);
-			$statement->bindParam(":userGroup", $this->userGroup);
 			$statement->bindParam(":fullName", $this->fullName);
 			$statement->bindParam(":experience", $this->experience);
 			$statement->bindParam(":medical", $this->medical);
@@ -129,17 +126,7 @@ class User extends DataObject
 	{
 		$this->username = $username;
 	}
-
-		public function getUserGroup()
-	{
-		return $this->userGroup;
-	}
-
-	public function setUserGroup($userGroup)
-	{
-		$this->userGroup = $userGroup;
-	}
-
+	
 	public function getFullName()
 	{
 		return $this->fullName;
