@@ -31,10 +31,14 @@ $cGlobalStyles = array(
 	$cWebPath . '/style/bootstrap.css',
 	);
 	
+// Languages accepted by the system
 $cAvailableLanguages = array(
 	'zxx' => "(Language Tag Codes)",
 	'en-GB' => "English (British)",
 	);
+
+// Default language for the site to use
+$cDefaultLanguage = 'en-GB';
 	
 // list of required php extensions.
 // The PDO module required is set above, and need not be listed here also.

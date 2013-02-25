@@ -149,7 +149,8 @@ class Message extends DataObject
 		// user preference
 		
 		// site default
-		return "en-GB";
+		global $cDefaultLanguage;
+		return $cDefaultLanguage;
 	}
 	
 	/**
@@ -161,10 +162,7 @@ class Message extends DataObject
 	 *
 	 * -- Simon :D xx
 	 */
-	public static function 
-		smartyGetRealMessageContentWithDynamicLanguageFromUserPrefsAndCookies
-		($params, $smarty)
-	{
+	public static function smartyFuncMessage( $params, $smarty ) {
 		$language = self::getActiveLanguage();
 		
 		$name = $params["name"];

@@ -60,11 +60,7 @@ abstract class PageBase
 		$this->mSmarty->registerPlugin(
 			"function",
 			"message", 
-			array(
-				"Message", 
-				"smartyGetRealMessageContentWithDynamicLanguageFromUser" . 
-					"PrefsAndCookies"
-				)
+			array( "Message", "smartyFuncMessage" )
 			);
 		
 		$this->addSystemCssJs();
