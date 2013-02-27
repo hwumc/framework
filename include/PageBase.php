@@ -104,6 +104,10 @@ abstract class PageBase
 
 		$this->mHeaders[] = "Content-Type: text/html; charset=utf-8";
 		
+		$gLogger->log("   old menu: " . print_r($this->mMainMenu,true));
+		$this->mMainMenu = Hooks::run( "PreCreateMenu", array($this->mMainMenu) );
+		$gLogger->log("   new menu: " . print_r($this->mMainMenu,true));
+		
 		// setup the current page on the menu, but only if the current page 
 		// exists on the main menu in the first place
 		if(array_key_exists(get_class($this), $this->mMainMenu))

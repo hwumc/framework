@@ -232,7 +232,7 @@ class Message extends DataObject
 		}
 		catch( PDOException $ex)
 		{
-			throw new SaveFailedException($ex->getMessage(), $ex->getCode, $ex);
+			throw new SaveFailedException($ex->getMessage(), $ex->getCode(), $ex);
 		}
 	}
 

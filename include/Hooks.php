@@ -42,15 +42,20 @@ class Hooks
 		
 			if(! (isset($parameters) && is_array($parameters)))
 			{
+				$gLogger->log("Setting default parameter list");
 				$parameters = array("");
 			}
 			
 			foreach(self::$registeredHandlers[$hook] as $func)
 			{
+				$gLogger->log("Running callback $func for hook $hook");
+				//$gLogger->log("   params: " . print_r($parameters,true));
 				$retval = call_user_func($func, $parameters);
 				if($retval !== false)
 				{
+					$gLogger->log("	Callback successful.");
 					$parameters[0] = $retval;
+					//$gLogger->log("   new params: " . print_r($parameters,true));
 				}
 			}
 		}
