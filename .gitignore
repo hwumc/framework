@@ -7,3 +7,4 @@ web.config
 
 # local config file
 config.local.php
+application.log

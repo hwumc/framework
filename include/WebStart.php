@@ -115,7 +115,7 @@ HTML;
 		Session::start();
 
 		$gLogger = new $cLoggerName;
-		$gLogger->log("Initialising logger!");
+		$gLogger->log("Initialising logger for path " . $_SERVER["REQUEST_URI"]);
 			
 		if(!extension_loaded($cDatabaseModule))
 		{
