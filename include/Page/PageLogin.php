@@ -8,6 +8,7 @@ class PageLogin extends PageBase
 	public function __construct()
 	{
 		$this->mIsProtectedPage = false;
+		$this->mIsSpecialPage = true;
 	}
 	
 	protected function runPage()

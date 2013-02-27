@@ -9,6 +9,9 @@ abstract class PageBase
 	// unprotect if desired.
 	protected $mIsProtectedPage = true;
 
+	// is this page a special page which should not be listed?
+	protected $mIsSpecialPage = false;
+	
 	// array of extra (per-page) javascript files to add
 	protected $mScripts = array();
 
@@ -52,6 +55,10 @@ abstract class PageBase
 		
 	// array of HTTP headers to add to the request.
 	protected $mHeaders = array();
+	
+	public function isSpecialPage() {
+		return $this->mIsSpecialPage;
+	}
 
 	protected function setupPage()
 	{
