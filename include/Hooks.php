@@ -48,7 +48,7 @@ class Hooks
 			
 			foreach(self::$registeredHandlers[$hook] as $func)
 			{
-				$gLogger->log("Running callback $func for hook $hook");
+				//$gLogger->log("Running callback $func for hook $hook");
 				//$gLogger->log("   params: " . print_r($parameters,true));
 				$retval = call_user_func($func, $parameters);
 				if($retval !== false)
