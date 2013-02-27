@@ -188,6 +188,41 @@ class User extends DataObject
 		return true;
 	}
 	
+	public static function addMenuItems( $menu ) {
+		$menu = $menu[0];
+		$user = User::getById( Session::getLoggedInUser());
+		
+		global $gLogger;
+		
+		foreach( PageBase::getRegisteredPages() as $pc ) {
+			$page = new $pc();
+			$pagename = preg_replace( "/^Page(.*)$/", "\${1}", $pc );
+			$gLogger->log("Menu generator: Using URL name of page class $pc as $pagename");
+			
+			if( ! $page->isProtected() ) {
+			
+				$gLogger->log("Page $pc is not protected, adding entry");
+				
+				$menu[ "Main" ][ "items" ][ $pc ] = array(
+					"title" => "page-" . strtolower( $pagename ),
+					"link" => "/" . $pagename,
+				);
+			} else if( $user->isAllowed( $page->getAccessName() ) ) {
+			
+				$gLogger->log("Page $pc is protected, user allowed access, adding entry");
+			
+				$menu[ "Main" ][ "items" ][ $pc ] = array(
+					"title" => "page-" . strtolower( $pagename ),
+					"link" => "/" . $pagename,
+				);
+			} else {
+				$gLogger->log("Page $pc is protected, not adding entry.");
+			}
+			
+		}
+				
+		return $menu;
+	}
 	
 	public function delete()
 	{

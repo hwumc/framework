@@ -46,7 +46,7 @@ abstract class PageBase
 			*/
 		"Main" => array( "title" => "menu-main", "items" => array(
 			"PageMain" => array(
-				"title" => "page-home",
+				"title" => "page-main",
 				"link" => "/",
 				),
 			"PageAbout" => array(
@@ -87,6 +87,7 @@ abstract class PageBase
 			$user = User::getById( Session::getLoggedInUser());
 			$this->mSmarty->assign( "loggedin", $user->getUsername() );
 			$this->mSmarty->assign( "userfullname", $user->getFullName() );
+			Hooks::register( "PreCreateMenu", "User::addMenuItems" );
 		} else {
 			$this->mSmarty->assign( "loggedin", "" );
 		}
