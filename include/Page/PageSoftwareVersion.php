@@ -6,6 +6,7 @@ class PageSoftwareVersion extends PageBase
 {
 	public function __construct() {
 		$this->mIsProtectedPage = true;
+		$this->mMenuGroup = "SystemInfo";
 	}
 
 	protected function runPage() {

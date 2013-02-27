@@ -12,6 +12,9 @@ abstract class PageBase
 	// is this page a special page which should not be listed?
 	protected $mIsSpecialPage = false;
 	
+	// menu group
+	protected $mMenuGroup = "Main";
+	
 	// array of extra (per-page) javascript files to add
 	protected $mScripts = array();
 
@@ -347,5 +350,9 @@ abstract class PageBase
 		}
 		
 		return $pages;
+	}
+	
+	public function getMenuGroup() {
+		return $this->mMenuGroup;
 	}
 }

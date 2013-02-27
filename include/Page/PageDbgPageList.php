@@ -6,6 +6,7 @@ class PageDbgPageList extends PageBase
 {
 	public function __construct() {
 		$this->mIsProtectedPage = true;
+		$this->mMenuGroup = "Diagnostics";
 	}
 
 	protected function runPage() {
