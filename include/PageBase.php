@@ -85,8 +85,9 @@ abstract class PageBase
 		$gLogger->log("MPage final setup");
 		
 		if(Session::getLoggedInUser()) {
-			$this->mSmarty->assign( "loggedin", User::getById( Session::getLoggedInUser())->getUsername() );
-			$this->mSmarty->assign( "userfullname", User::getById( Session::getLoggedInUser() )->getFullName() );
+			$user = User::getById( Session::getLoggedInUser());
+			$this->mSmarty->assign( "loggedin", $user->getUsername() );
+			$this->mSmarty->assign( "userfullname", $user->getFullName() );
 		} else {
 			$this->mSmarty->assign( "loggedin", "" );
 		}
