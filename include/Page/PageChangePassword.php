@@ -13,6 +13,6 @@ class PageChangePassword extends PageBase
 
 	protected function runPage()
 	{
-		$this->mSmarty->assign("content","Not yet available.".$pinfo);
+		$this->mSmarty->assign("content","Not yet available.");
 	}
 }
