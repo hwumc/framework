@@ -5,7 +5,7 @@ if(!defined("HMS")) die("Invalid entry point");
 class PageSoftwareVersion extends PageBase
 {
 	public function __construct() {
-		$this->mIsProtectedPage = false;
+		$this->mIsProtectedPage = true;
 	}
 
 	protected function runPage() {

@@ -7,7 +7,7 @@ class PagePhpInfo extends PageBase
 
 	public function __construct()
 	{
-		$this->mIsProtectedPage = false;
+		$this->mIsProtectedPage = true;
 	}
 
 	protected function runPage()

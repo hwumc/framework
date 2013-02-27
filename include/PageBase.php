@@ -324,4 +324,28 @@ abstract class PageBase
 		$this->mHeaders = "HTTP/1.1 403 Forbidden";
 		$this->mBasePage = "mgmt/accessdenied.tpl";
 	}	
+	
+	public static function getRegisteredPages() {
+		global $cIncludePath ;
+		$filelist = scandir( $cIncludePath . "/Page/" );
+		
+		$pages = array();
+		
+		foreach( $filelist as $f ) {
+			if( preg_match( "/^Page(.*)\.php$/", $f ) !== 1 ) {
+				continue;
+			}
+			
+			require_once( $cIncludePath . "/Page/" . $f );
+			
+			$f = preg_replace( "/^(.*)\.php$/", "\${1}", $f );
+			$obj = new $f();
+			
+			if( $obj->isProtected() && (! $obj->isSpecialPage() ) ) {
+				$pages[] = $f;
+			}
+		}
+		
+		return $pages;
+	}
 }
