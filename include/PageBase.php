@@ -46,15 +46,16 @@ abstract class PageBase
 				),
 			*/
 		"Main" => array( "title" => "menu-main", "items" => array(
-		"PageMain" => array(
-			"title" => "page-home",
-			"link" => "/",
-			),
-		"PageAbout" => array(
-			"title" => "page-about",
-			"link" => "/About",
-			),
-		)));
+			"PageMain" => array(
+				"title" => "page-home",
+				"link" => "/",
+				),
+			"PageAbout" => array(
+				"title" => "page-about",
+				"link" => "/About",
+				),
+		))
+	);
 		
 	// array of HTTP headers to add to the request.
 	protected $mHeaders = array();
@@ -108,6 +109,7 @@ abstract class PageBase
 		{
 			$this->mMainMenu[get_class($this)]["current"] = true;
 		}
+		
 		$this->mSmarty->assign("mainmenu", $this->mMainMenu);
 
 		global $cWebPath, $cScriptPath;

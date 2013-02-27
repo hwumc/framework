@@ -35,6 +35,7 @@ class Hooks
 	{
 		global $gLogger;
 		$gLogger->log("Checking hook registry for $hook");
+		// is there a hook registered?
 		if(isset(self::$registeredHandlers[$hook]))
 		{
 			$gLogger->log("Running callbacks for hook $hook");
