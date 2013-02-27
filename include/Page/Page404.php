@@ -6,7 +6,6 @@ class Page404 extends PageBase
 {
 	public function __construct()
 	{
-		$this->mIsProtectedPage = false;
 		$this->mIsSpecialPage = true;
 	}
 

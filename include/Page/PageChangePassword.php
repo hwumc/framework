@@ -7,7 +7,7 @@ class PageChangePassword extends PageBase
 
 	public function __construct()
 	{
-		$this->mIsProtectedPage = true;
+		$this->mPageUseRight = "user";
 		$this->mIsSpecialPage = true;
 	}
 

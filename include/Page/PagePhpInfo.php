@@ -7,7 +7,7 @@ class PagePhpInfo extends PageBase
 
 	public function __construct()
 	{
-		$this->mIsProtectedPage = true;
+		$this->mPageUseRight = "diagnostic";
 		$this->mMenuGroup = "Diagnostics";
 	}
 

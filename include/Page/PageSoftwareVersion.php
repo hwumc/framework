@@ -5,7 +5,7 @@ if(!defined("HMS")) die("Invalid entry point");
 class PageSoftwareVersion extends PageBase
 {
 	public function __construct() {
-		$this->mIsProtectedPage = true;
+		$this->mPageUseRight = "sysinfo";
 		$this->mMenuGroup = "SystemInfo";
 	}
 

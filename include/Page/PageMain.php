@@ -6,7 +6,6 @@ class PageMain extends PageBase
 {
 	public function __construct()
 	{
-		$this->mIsProtectedPage = false;
 	}
 
 	protected function runPage()

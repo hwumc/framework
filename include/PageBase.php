@@ -5,9 +5,8 @@ if(!defined("HMS")) die("Invalid entry point");
 abstract class PageBase
 {
 	// is this page a protected by login page?
-	// defaults to true, so we protect everything and have to explicitly 
-	// unprotect if desired.
-	protected $mIsProtectedPage = true;
+	// defaults to false (public access)	
+	protected $mPageUseRight = "public";
 
 	// is this page a special page which should not be listed?
 	protected $mIsSpecialPage = false;
@@ -299,12 +298,12 @@ abstract class PageBase
 
 	public function isProtected()
 	{
-		return $this->mIsProtectedPage;
+		return $this->mPageUseRight !== "public";
 	}
 	
 	public function getAccessName()
 	{
-		return $this->mAccessName;
+		return $this->mPageUseRight;
 	}	
 
 	public static function checkAccess($actionName)

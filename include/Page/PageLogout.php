@@ -6,7 +6,6 @@ class PageLogout extends PageBase
 {
 	public function __construct()
 	{
-		$this->mIsProtectedPage = false;
 		$this->mIsSpecialPage = true;
 	}
 	
