@@ -43,10 +43,10 @@ class Usergroup extends DataObject
 		$this->isNew = true;
 	}
 	
-	public function getGroup() { return $this->group; }
-	public function getUser() { return $this->user; }
-	public function setGroup( $group ) { $this->group = $group; }
-	public function setUser( $user ) { $this->user = $user; }
-
-	
+	public function getGroupID() { return $this->group; }
+	public function getUserID() { return $this->user; }
+	public function getGroup() { return Group::getById( $this->group ); }
+	public function getUser() { return User::getById( $this->user ); }
+	public function setGroupID( $group ) { $this->group = $group; }
+	public function setUserID( $user ) { $this->user = $user; }
 }

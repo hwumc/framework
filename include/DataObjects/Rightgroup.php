@@ -43,9 +43,10 @@ class Rightgroup extends DataObject
 		$this->isNew = true;
 	}
 	
-	public function getGroup() { return $this->group; }
+	public function getGroupID() { return $this->group; }
+	public function getGroup() { return Group::getById( $this->group ); }
 	public function getRight() { return $this->right; }
-	public function setGroup( $group ) { $this->group = $group; }
+	public function setGroupID( $group ) { $this->group = $group; }
 	public function setRight( $right ) { $this->right = $right; }
 	
 }
