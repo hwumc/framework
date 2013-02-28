@@ -1,6 +1,5 @@
 {extends file="base.tpl"}
 {block name="body"}
-	<h2>Software Version</h2>
 	<table class="table table-bordered table-condensed">
 		<tbody>
 			<tr><th>Branch</th><td><a href="https://github.com/{$softwarerepo}/tree/{$softwarebranch}">{$softwarebranch}</a></td></tr>

@@ -48,6 +48,6 @@ class PagePhpInfo extends PageBase
 		$pinfo = str_replace('class="v"', 'style="background-color: #cccccc; color: #000000;border: 1px solid #000000; font-size: 75%; vertical-align: baseline;"', $pinfo);
 		$pinfo = str_replace('<table ', '<table style="border-collapse: collapse;font-family: sans-serif;" ', $pinfo);
 
-		$this->mSmarty->assign("content","<a href=\"$linktarget\">Toggle all/variables</a>".$pinfo);
+		$this->mSmarty->assign("content",$pinfo);
 	}
 }

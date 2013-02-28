@@ -124,6 +124,11 @@ abstract class PageBase
 		
 		$this->mSmarty->assign("subnavigation", $this->mSubMenu);
 		$this->mSmarty->assign("hasSubmenu", count($this->mSubMenu) == 0 ? "no" : "yes" );
+		
+		// page slug
+		$this->mSmarty->assign( "pageslug", preg_replace( "/^Page(.*)$/", "\${1}", get_class($this) ) );
+		
+		
 	}
 
 	/**
@@ -165,7 +170,7 @@ abstract class PageBase
 		$this->finalSetup();
 
 		Hooks::run("PostFinalSetup");
-
+		
 		try
 		{
 			// get the page content
