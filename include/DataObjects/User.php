@@ -234,4 +234,29 @@ class User extends DataObject
 		$this->id=0;
 		$this->isNew = true;
 	}
+
+	
+	public function getGroups() {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT g.id, g.name FROM usergroup ug INNER JOIN `group` g ON g.id = ug.`group` WHERE ug.user = :id;");
+		$statement->bindParam(":id", $this->id);
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchAll( PDO::FETCH_CLASS, "Group" );
+		
+		return $resultObject;
+	}
+	
+	public function getRights() {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT DISTINCT rightgroup.right FROM rightgroup INNER JOIN `group` ON `group`.id = rightgroup.`group` INNER JOIN usergroup ON `group`.id = usergroup.`group` WHERE usergroup.user = :id;");
+		$statement->bindParam(":id", $this->id);
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchAll( );
+		
+		return $resultObject;
+	}
 }
