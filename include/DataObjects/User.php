@@ -199,19 +199,19 @@ class User extends DataObject
 			$pagename = preg_replace( "/^Page(.*)$/", "\${1}", $pc );
 			$gLogger->log("Menu generator: Using URL name of page class $pc as $pagename");
 			
-			if( ! $page->isProtected() ) {
+			if( ( ! $page->isProtected() ) || ( $user->isAllowed( $page->getAccessName() ) ) ) {
 			
-				$gLogger->log("Page $pc is not protected, adding entry");
+				$group = $page->getMenuGroup();
+				$groupkey = "menu-" . strtolower( $group );
 				
-				$menu[ "Main" ][ "items" ][ $pc ] = array(
-					"title" => "page-" . strtolower( $pagename ),
-					"link" => "/" . $pagename,
-				);
-			} else if( $user->isAllowed( $page->getAccessName() ) ) {
-			
-				$gLogger->log("Page $pc is protected, user allowed access, adding entry");
-			
-				$menu[ "Main" ][ "items" ][ $pc ] = array(
+				if( ! isset( $menu[ $group ] ) ) {
+					$menu[ $group ] = array(
+						"items" => array(),
+						"title" => $groupkey,
+					);
+				}
+				
+				$menu[ $group ][ "items" ][ $pc ] = array(
 					"title" => "page-" . strtolower( $pagename ),
 					"link" => "/" . $pagename,
 				);
