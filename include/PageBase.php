@@ -51,10 +51,6 @@ abstract class PageBase
 				"title" => "page-main",
 				"link" => "/",
 				),
-			"PageAbout" => array(
-				"title" => "page-about",
-				"link" => "/About",
-				),
 		))
 	);
 		
