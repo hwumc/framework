@@ -21,6 +21,16 @@ class WebRequest
 			return false;
 		}
 	}
+	public static function pathInfoExtension()
+	{
+		$pi = explode("/",WebRequest::pathInfo());
+	
+		if(count($pi) > 1) {
+			array_shift($pi);
+			array_shift($pi);
+			return implode("/", $pi);
+		} else return "";
+	}
 
 	public static function httpHost()
 	{
