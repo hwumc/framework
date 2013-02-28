@@ -48,5 +48,7 @@ class PageManageGroups extends PageBase
 	
 	private function createMode( $data ) {
 		$this->mBasePage = "groups/groupcreate.tpl";
+		
+		$this->mSmarty->assign("rightslist", Right::getAllRegisteredRights() );
 	}
 }
