@@ -7,6 +7,8 @@ abstract class PageBase
 	// is this page a protected by login page?
 	// defaults to false (public access)	
 	protected $mPageUseRight = "public";
+	
+	protected $mPageRegisteredRights = array();
 
 	// is this page a special page which should not be listed?
 	protected $mIsSpecialPage = false;
@@ -305,7 +307,11 @@ abstract class PageBase
 	public function getAccessName()
 	{
 		return $this->mPageUseRight;
-	}	
+	}
+	
+	public function getRegisteredRights() {
+		return $this->mPageRegisteredRights;
+	}
 
 	public static function checkAccess($actionName)
 	{
