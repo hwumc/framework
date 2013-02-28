@@ -91,6 +91,17 @@
         <div class="span9">
           
 				{if $showError == "yes"}{include file="errorbar.tpl"}{/if}
+				{if $hasSubmenu == "yes"}
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#">This</a></li>
+						<li><a href="#">needs</a></li>
+						<li><a href="#">building</a></li>
+						<li><a href="#">in</a></li>
+						<li><a href="#">the</a></li>
+						<li><a href="#">template</a></li>
+					</ul>
+				{/if}
 				{block name="body"}{$content|default:"<p>Nothing to see here!</p>"}{/block}
         </div><!--/span-->
       </div><!--/row-->

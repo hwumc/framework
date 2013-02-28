@@ -123,6 +123,7 @@ abstract class PageBase
 		$this->mSmarty->assign("currentPagePath", WebRequest::pathInfo());
 		
 		$this->mSmarty->assign("subnavigation", $this->mSubMenu);
+		$this->mSmarty->assign("hasSubmenu", count($this->mSubMenu) == 0 ? "no" : "yes" );
 	}
 
 	/**
