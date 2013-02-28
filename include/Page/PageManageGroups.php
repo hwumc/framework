@@ -39,14 +39,14 @@ class PageManageGroups extends PageBase
 	}
 	
 	private function editMode( $data ) {
-	
+		$this->mBasePage = "groups/groupedit.tpl";
 	}
 	
 	private function deleteMode( $data ) {
-	
+		$this->mBasePage = "groups/groupdelete.tpl";
 	}
 	
 	private function createMode( $data ) {
-	
+		$this->mBasePage = "groups/groupcreate.tpl";
 	}
 }
