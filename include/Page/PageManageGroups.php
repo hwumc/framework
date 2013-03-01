@@ -7,9 +7,9 @@ class PageManageGroups extends PageBase
 
 	public function __construct()
 	{
-		$this->mPageUseRight = "viewgroups";
+		$this->mPageUseRight = "groups-view";
 		$this->mMenuGroup = "Users";
-		$this->mPageRegisteredRights = array( "editgroups" );
+		$this->mPageRegisteredRights = array( "groups-edit", "groups-create", "groups-delete" );
 		
 	}
 
@@ -40,14 +40,17 @@ class PageManageGroups extends PageBase
 	
 	private function editMode( $data ) {
 		$this->mBasePage = "groups/groupedit.tpl";
+		self::checkAccess( "groups-edit" );
 	}
 	
 	private function deleteMode( $data ) {
 		$this->mBasePage = "groups/groupdelete.tpl";
+		self::checkAccess( "groups-delete" );
 	}
 	
 	private function createMode( $data ) {
 		$this->mBasePage = "groups/groupcreate.tpl";
+		self::checkAccess( "groups-create" );
 		
 		$this->mSmarty->assign("rightslist", Right::getAllRegisteredRights() );
 	}
