@@ -7,7 +7,7 @@
 	<div class="control-group">
 		<label class="control-label" for="groupname">{message name="{$pageslug}-create-groupname"}</label>
 		<div class="controls">
-			<input type="text" id="groupname" name="groupname" placeholder="{message name="{$pageslug}-create-groupname-placeholder"}" required="true" value="{$groupname}" {if $groupname != ""}disabled="true" {/if} />
+			<input type="text" id="groupname" name="groupname" placeholder="{message name="{$pageslug}-create-groupname-placeholder"}" required="true" value="{$groupname}" />
 		</div>
 	</div>
 	

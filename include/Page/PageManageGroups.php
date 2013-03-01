@@ -44,6 +44,8 @@ class PageManageGroups extends PageBase
 		
 		if( WebRequest::wasPosted() ) {
 			$g = Group::getById( $data[ 1 ] );
+			$g->setName( WebRequest::post( "groupname" ) );
+			$g->save();
 			$g->clearRights();
 			
 			$r = array();
@@ -66,10 +68,16 @@ class PageManageGroups extends PageBase
 			header( "Location: " . $cScriptPath . "/ManageGroups" );
 		} else {
 			$rightlist = Right::getAllRegisteredRights();
+			$rights = array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) );
+			$group = Group::getById( $data[ 1 ] );
+		
+			foreach( $group->getRights() as $r ) {
+				$rights[ $r ] = "true";
+			}
 		
 			$this->mBasePage = "groups/groupcreate.tpl";
-			$this->mSmarty->assign("rightslist", array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) ) );
-			$this->mSmarty->assign("groupname", Group::getById( $data[ 1 ] )->getName() );
+			$this->mSmarty->assign( "rightslist", $rights );
+			$this->mSmarty->assign( "groupname", $group->getName() );
 		}
 	}
 	
