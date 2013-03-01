@@ -9,7 +9,7 @@ class Group extends DataObject
 	public static function getIdList()
 	{
 		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT id FROM group;");
+		$statement = $gDatabase->prepare("SELECT id FROM `group`;");
 		$statement->execute();
 
 		$result = $statement->fetchAll(PDO::FETCH_COLUMN,0);
@@ -17,13 +17,25 @@ class Group extends DataObject
 		return $result;
 	}
 
+	public static function getArray() {
+		$output = array();
+		$input = Group::getIdList();
+		
+		foreach( $input as $g ) {
+			$group = Group::getById( $g );
+			$output[ $g ] = $group->getName();
+		}
+		
+		return $output;
+	}
+	
 	public function save()
 	{
 		global $gDatabase;
 
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO group VALUES (null, :name);");
+			$statement = $gDatabase->prepare("INSERT INTO `group` VALUES (null, :name);");
 			$statement->bindParam(":name", $this->name);
 			if($statement->execute())
 			{
@@ -37,7 +49,7 @@ class Group extends DataObject
 		}
 		else
 		{ // update
-			$statement = $gDatabase->prepare("UPDATE group SET name = :name WHERE id = :id LIMIT 1;");
+			$statement = $gDatabase->prepare("UPDATE `group` SET name = :name WHERE id = :id LIMIT 1;");
 			$statement->bindParam(":name", $this->name);
 			$statement->bindParam(":id", $this->id);
 
@@ -51,7 +63,7 @@ class Group extends DataObject
 	public function delete()
 	{
 		global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM group WHERE id = :id LIMIT 1;");
+		$statement = $gDatabase->prepare("DELETE FROM `group` WHERE id = :id LIMIT 1;");
 		$statement->bindParam(":id", $this->id);
 		$statement->execute();
 

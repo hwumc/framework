@@ -19,7 +19,7 @@ abstract class DataObject
 	 */
 	public static function getById($id) {
 		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT * FROM " . strtolower( get_called_class() ). " WHERE id = :id LIMIT 1;");
+		$statement = $gDatabase->prepare("SELECT * FROM `" . strtolower( get_called_class() ). "` WHERE id = :id LIMIT 1;");
 		$statement->bindParam(":id", $id);
 
 		$statement->execute();
