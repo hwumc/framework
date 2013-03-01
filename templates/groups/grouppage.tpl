@@ -9,7 +9,7 @@
 			</thead>
 			<tbody>
 				{foreach from="$grouplist" item="groupname" key="groupid" }
-				<tr><th>{$groupname}</th><td><a href="{$cScriptPath}/ManageGroups/edit/{$groupid}" class="btn btn-small btn-warning">{message name="ManageGroups-button-editgroup"}</a></td><td><a href="{$cScriptPath}/ManageGroups/delete/{$groupid}" class="btn btn-small btn-danger">{message name="ManageGroups-button-deletegroup"}</a></td></tr>
+				<tr><th>{$groupname|escape}</th><td><a href="{$cScriptPath}/ManageGroups/edit/{$groupid}" class="btn btn-small btn-warning">{message name="ManageGroups-button-editgroup"}</a></td><td><a href="{$cScriptPath}/ManageGroups/delete/{$groupid}" class="btn btn-small btn-danger">{message name="ManageGroups-button-deletegroup"}</a></td></tr>
 				{/foreach}
 			</tbody>
 		</table>

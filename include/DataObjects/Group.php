@@ -70,6 +70,14 @@ class Group extends DataObject
 		$this->id=0;
 		$this->isNew = true;
 	}
+	
+	public function clearRights() {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("DELETE FROM `rightgroup` WHERE group = :id;");
+		$statement->bindParam(":id", $this->id);
+		$statement->execute();
+
+	}
 
 	public function getName() { return $this->name; }
 	public function setName( $name ) { $this->name = $name; }
