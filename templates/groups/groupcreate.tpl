@@ -9,6 +9,12 @@
 		<div class="controls">
 			<input type="text" id="groupname" name="groupname" placeholder="{message name="{$pageslug}-create-groupname-placeholder"}" required="true" value="{$groupname}" />
 		</div>
+	</div>	
+	<div class="control-group">
+		<label class="control-label" for="description">{message name="{$pageslug}-create-description"}</label>
+		<div class="controls">
+			<input class="input-xxlarge" type="text" id="description" name="description" placeholder="{message name="{$pageslug}-create-description-placeholder"}" required="true" value="{$description}" />
+		</div>
 	</div>
 	
 	<fieldset>
@@ -18,6 +24,10 @@
 				<label class="checkbox">
 					<input type="checkbox" value="" checked="true" disabled="true" />
 					<tt>public</tt>: {message name="accessright-public"}
+				</label>				
+				<label class="checkbox">
+					<input type="checkbox" value="" checked="true" disabled="true" />
+					<tt>user</tt>: {message name="accessright-user"}
 				</label>
 				
 				{foreach from="$rightslist" key="rightname" item="check"}
@@ -33,7 +43,7 @@
 	</fieldset>
 	<div class="control-group">
 		<div class="controls">
-			<button type="submit" class="btn btn-primary">{message name="save"}</button>
+			<div class="btn-group"><button type="submit" class="btn btn-primary">{message name="save"}</button><a href="{$cScriptPath}/ManageGroups" class="btn">{message name="getmeoutofhere"}</a></div>
 		</div>
 	</div>
 </form>

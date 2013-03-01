@@ -5,6 +5,7 @@ if(!defined("HMS")) die("Invalid entry point");
 class Group extends DataObject
 {
 	protected $name;
+	protected $description;
 
 	public static function getIdList()
 	{
@@ -35,8 +36,9 @@ class Group extends DataObject
 
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO `group` VALUES (null, :name);");
+			$statement = $gDatabase->prepare("INSERT INTO `group` VALUES (null, :name, :desc);");
 			$statement->bindParam(":name", $this->name);
+			$statement->bindParam(":desc", $this->description);
 			if($statement->execute())
 			{
 				$this->isNew = false;
@@ -49,9 +51,10 @@ class Group extends DataObject
 		}
 		else
 		{ // update
-			$statement = $gDatabase->prepare("UPDATE `group` SET name = :name WHERE id = :id LIMIT 1;");
+			$statement = $gDatabase->prepare("UPDATE `group` SET name = :name, description = :desc WHERE id = :id LIMIT 1;");
 			$statement->bindParam(":name", $this->name);
 			$statement->bindParam(":id", $this->id);
+			$statement->bindParam(":desc", $this->description);
 
 			if(!$statement->execute())
 			{
@@ -91,6 +94,8 @@ class Group extends DataObject
 	}
 
 	public function getName() { return $this->name; }
+	public function getDescription() { return $this->description; }
 	public function setName( $name ) { $this->name = $name; }
+	public function setDescription( $desc ) { $this->description = $desc; }
 	
 }
