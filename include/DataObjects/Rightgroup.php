@@ -13,7 +13,7 @@ class Rightgroup extends DataObject
 
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO usergroup VALUES (null, :group, :right);");
+			$statement = $gDatabase->prepare("INSERT INTO rightgroup VALUES (null, :group, :right);");
 			$statement->bindParam(":right", $this->right);
 			$statement->bindParam(":group", $this->group);
 			if($statement->execute())
@@ -35,7 +35,7 @@ class Rightgroup extends DataObject
 	public function delete()
 	{
 		global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM usergroup WHERE id = :id LIMIT 1;");
+		$statement = $gDatabase->prepare("DELETE FROM rightgroup WHERE id = :id LIMIT 1;");
 		$statement->bindParam(":id", $this->id);
 		$statement->execute();
 
