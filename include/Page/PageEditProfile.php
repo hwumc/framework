@@ -14,5 +14,14 @@ class PageEditProfile extends PageBase
 	protected function runPage()
 	{
 		$this->mBasePage = "profile/edit.tpl";
+		$this->mSmarty->assign( "email", "" );
+		$this->mSmarty->assign( "realname", "" );
+		$this->mSmarty->assign( "mobile", "" );
+		$this->mSmarty->assign( "experience", "" );
+		$this->mSmarty->assign( "medicalcheck", "checked=\"true\"" );
+		$this->mSmarty->assign( "medical", "" );
+		$this->mSmarty->assign( "contactname", "" );
+		$this->mSmarty->assign( "contactphone", "" );
+		
 	}
 }
