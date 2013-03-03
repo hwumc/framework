@@ -12,6 +12,8 @@ class PageLogin extends PageBase
 	
 	protected function runPage()
 	{
+		$this->mBasePage = "login.tpl";
+	
 		if(WebRequest::wasPosted()) // sanity check
 		{
 			if(! ($username = WebRequest::postString("lgUser")))
@@ -60,7 +62,6 @@ class PageLogin extends PageBase
 		}
 		else
 		{
-			$this->mBasePage = "login.tpl";
 		}
 	}
 

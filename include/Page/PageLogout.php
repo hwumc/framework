@@ -15,6 +15,7 @@ class PageLogout extends PageBase
 		
 		global $cScriptPath;
 		$this->mHeaders[] = "HTTP/1.1 303 See Other";
-		$this->mHeaders[] = "Location: " . $cScriptPath;;
+		$this->mHeaders[] = "Location: " . $cScriptPath;
+		$this->mBasePage = "blank.tpl";
 	}
 }
