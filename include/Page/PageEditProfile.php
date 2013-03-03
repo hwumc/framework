@@ -13,6 +13,6 @@ class PageEditProfile extends PageBase
 
 	protected function runPage()
 	{
-		$this->mSmarty->assign("content","Not yet available.");
+		$this->mBasePage = "profile/edit.tpl";
 	}
 }
