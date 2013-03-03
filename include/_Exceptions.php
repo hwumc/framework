@@ -25,3 +25,5 @@ class AccessDeniedException extends Exception{}
 class YouShouldntBeDoingThatException extends Exception{}
 
 class DeprecatedException extends Exception{}
+
+class MissingFieldException extends Exception{}
