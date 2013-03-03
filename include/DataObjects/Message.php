@@ -187,7 +187,7 @@ class Message extends DataObject
 		
 		$name = $params["name"];
 		
-		return htmlentities( self::retrieveContent( $name, $language ), ENT_COMPAT | ENT_HTML5, 'UTF-8' );
+		return htmlentities( self::retrieveContent( $name, $language ), ENT_COMPAT , 'UTF-8' );
 	}
 	
 	public static function clearAll( ) {
