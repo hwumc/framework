@@ -13,6 +13,29 @@ class PageChangePassword extends PageBase
 
 	protected function runPage()
 	{
-		$this->mSmarty->assign("content","Not yet available.");
+		$user = User::getById( Session::getLoggedInUser());
+	
+		if( WebRequest::wasPosted() ) {
+			$this->mBasePage = "blank.tpl";
+			
+			if( $user->authenticate( WebRequest::post( "old" ) ) ) {
+				if( WebRequest::post( "new" ) == "" || WebRequest::post( "new" ) === false )  throw new MissingFieldException();
+				if( WebRequest::post( "confirm" ) != WebRequest::post( "new" ) )  throw new ArgumentException();
+
+				$user->setPassword( WebRequest::post( "new" ) );
+				
+				$user->save();
+			}
+			
+			
+			
+			global $cScriptPath;
+			$this->mHeaders[] = "HTTP/1.1 303 See Other";
+			$this->mHeaders[] = "Location: " . $cScriptPath . "/EditProfile";
+		
+		} else {
+			$this->mBasePage = "profile/chpw.tpl";
+		}
+
 	}
 }

@@ -140,6 +140,8 @@ class User extends DataObject
 
 	public function setFullName($fullName)
 	{
+		if( $fullName === "" ) return;
+		
 		$this->fullName = $fullName;
 	}
 
@@ -189,6 +191,8 @@ class User extends DataObject
 
 	public function setMobile($mobile)
 	{
+		if( $mobile === "" ) return;
+	
 		$this->mobile = $mobile;
 	}
 
