@@ -25,10 +25,27 @@ class PageMessageEditor extends PageBase
 			
 			if( WebRequest::wasPosted() ) {
 				Message::clearAll();
+				
+				$this->mBasePage = "blank.tpl";
 				global $cScriptPath;
 				header( "Location: " . $cScriptPath . "/MessageEditor" );
 			} else {
 				$this->mBasePage = "messageeditor/clear.tpl";
+			}
+			
+			return;
+		}	
+		
+		if( $data[0] === "rmunset" ) {
+			self::checkAccess( "messages-clear" );
+			
+			if( WebRequest::wasPosted() ) {
+				$this->mBasePage = "blank.tpl";
+				Message::clearAllUnset();
+				global $cScriptPath;
+				header( "Location: " . $cScriptPath . "/MessageEditor" );
+			} else {
+				$this->mBasePage = "messageeditor/rmunset.tpl";
 			}
 			
 			return;

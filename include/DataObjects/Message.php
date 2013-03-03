@@ -174,7 +174,12 @@ class Message extends DataObject
 		global $gDatabase;
 		$statement = $gDatabase->prepare("TRUNCATE TABLE message;");
 		$statement->execute();
-	}
+	}	
+	public static function clearAllUnset( ) {
+		global $gDatabase;
+		$statement = $gDatabase->prepare('DELETE FROM message WHERE content = concat("<", code, ":", name, ">");');
+		$statement->execute();
+	}	
 	
 	public function getName()
 	{
