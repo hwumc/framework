@@ -121,6 +121,11 @@ class WebRequest
 		$gCookieJar[$name] = $content;
 	}
 	
+	public static function getRequestUri() {
+		return $_SERVER["REQUEST_URI"];
+	
+	}
+	
 	public static function sendCookies()
 	{	
 		global $gCookieJar;

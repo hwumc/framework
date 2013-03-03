@@ -12,12 +12,95 @@ class PageMessageEditor extends PageBase
 	}
 
 	protected function runPage()
-	{
+	{	
 		$this->mBasePage = "messageeditor/messages.tpl";
 		$this->mSmarty->assign( "allowTruncate", "true" );
 		$this->mSmarty->assign( "pager", $this->makePager() );
-	//	$this->mSmarty->assign( "content", print_r($this->makePager()) );
+		$this->mSmarty->assign("showtable", 0);
+		
+		$data = explode( "/", WebRequest::pathInfoExtension() );
 	
+		if( $data[0] === "clear" ) {
+			self::checkAccess( "messages-clear" );
+			
+			if( WebRequest::wasPosted() ) {
+				Message::clearAll();
+				global $cScriptPath;
+				header( "Location: " . $cScriptPath . "/MessageEditor" );
+			} else {
+				$this->mBasePage = "messageeditor/clear.tpl";
+			}
+			
+			return;
+		}
+	
+	
+	
+		if( WebRequest::wasPosted() ) {
+			self::checkAccess('messages-edit');
+		
+			global $cScriptPath;
+			$this->mHeaders[] = "HTTP/1.1 303 See Other";
+			$this->mHeaders[] = "Location: " . $cScriptPath . "/MessageEditor";
+			
+			$this->save();
+			return;
+		} else {
+			// try to get more access than we may have.
+			try	{
+				self::checkAccess('messages-edit');
+				$this->mSmarty->assign("readonly", '');
+			} catch(AccessDeniedException $ex) { // nope, catch the error and handle gracefully
+				// caution: if you're copying this, this is a hack to make sure 
+				//			users know they don't have the access to do this, not
+				// 			to actually stop them from doing it, though it will have
+				// 			that effect to the non-tech-savvy.
+				$this->mSmarty->assign("readonly", 'disabled="disabled"');
+			}
+		
+			$keys = Message::getMessageKeys();
+			$keys = array_filter($keys, function($value){
+				$prefix = WebRequest::get("filter");
+				return (strtolower(substr($value, 0, strlen($prefix))) == strtolower($prefix));
+			});
+			
+			if(count($keys) > 0)
+			{
+				$this->mSmarty->assign("showtable", 1);
+				global $cAvailableLanguages;
+
+				// retrieve the message table as an array (of message keys) of arrays 
+				// (of languages) of arrays (of id/current content)
+				$messagetable = array();
+				foreach($keys as $mkey)
+				{
+					$completelySet = true;
+					$messagetable[$mkey] = array();
+					foreach($cAvailableLanguages as $lang => $langname)
+					{				
+						$message = Message::getByName($mkey, $lang);
+						if($message->getContent() == "<$lang:$mkey>")
+						{
+							if($lang==Message::getActiveLanguage())
+							{
+								$completelySet = false;
+							}
+						}
+						$messagetable[$mkey][$lang] = array(
+							"id" => $message->getId(),
+							"content" => $message->getContent()
+							);
+					}
+				}
+
+				$this->mSmarty->assign("languagetable", $messagetable);
+				$this->mSmarty->assign("languages",$cAvailableLanguages);
+			}
+			else
+			{
+				$this->mSmarty->assign("showtable", 0);
+			}
+		}
 	}
 
 	private function makePager() {
@@ -76,5 +159,37 @@ class PageMessageEditor extends PageBase
 		return $values;
 	}
 	
-	
+	private function save()
+	{
+		$keys = WebRequest::getPostKeys();
+
+		foreach($keys as $k)
+		{
+			// extract id from POST request
+			$id = str_replace( "lang", "", $k);
+			$id = str_replace( "msg", "", $id);
+			if( ! is_numeric( $id ) )
+			{
+				throw new ArgumentException("$k: [$id] is not an integer", 0);
+			}
+
+			// retrieve message object
+			$message = Message::getById( $id );
+			if($message == null)
+			{
+				throw new ArgumentException("Message ID $id could not be found");
+			}
+
+			$value=WebRequest::post($k);
+
+			if($message->getContent() != $value)
+			{
+				// write content
+				$message->setContent($value);
+
+				// save object
+				$message->save();
+			}
+		}
+	}
 }

@@ -93,7 +93,7 @@ class Message extends DataObject
 		$em = new Message();
 		$em->code = $language;
 		$em->name = $name;
-		$em->content = "&lt;$language:$name&gt;";
+		$em->content = "<$language:$name>";
 		$em->isNew = true;
 
 		$em->save();
@@ -167,7 +167,13 @@ class Message extends DataObject
 		
 		$name = $params["name"];
 		
-		return self::retrieveContent($name, $language);
+		return htmlentities( self::retrieveContent( $name, $language ), ENT_COMPAT | ENT_HTML5, 'UTF-8' );
+	}
+	
+	public static function clearAll( ) {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("TRUNCATE TABLE message;");
+		$statement->execute();
 	}
 	
 	public function getName()

@@ -9,7 +9,33 @@
 {/if}
 {include file="messageeditor/pager.tpl"}
 
-
-
-{include file="messageeditor/pager.tpl"}
+{if $showtable == 1}
+<form method="post">
+<table class="table table-hover">
+	<tr>
+		{foreach from="$languages" item="lang"}
+			<th>
+				{$lang}
+			</th>
+		{/foreach}
+	</tr>
+	{foreach from="$languagetable" item="messagerow"}
+		<tr>
+			{foreach from="$messagerow" item="message"}
+			<td>
+				{if $message@key eq 'zxx'}
+					{$message.content}
+				{else}
+					<textarea {$readonly} name="lang{$message.id}msg" class="input-xxlarge" rows="3" xml:space="preserve">{$message.content}</textarea>
+				{/if}
+			</td>
+			{/foreach}
+		</tr>
+	{/foreach}
+</table>
+<button class="btn btn-primary" {$readonly} id="submitbuttonLang" type="submit" >{message name="{$pageslug}-save"}</button>
+</form>
+{else}
+{message name="{$pageslug}-noprefix"}
+{/if}
 {/block}
