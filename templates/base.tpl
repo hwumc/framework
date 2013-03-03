@@ -47,6 +47,7 @@
           <div class="nav-collapse collapse">
 			{if $loggedin eq ""}
 				<p class="navbar-text pull-right">
+					<a href="{$cScriptPath}/Register" class="navbar-link">{message name="register"}</a>
 					<a href="{$cScriptPath}/Login" class="navbar-link">{message name="login"}</a>
 				</p>
 			{else}
