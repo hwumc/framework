@@ -5,6 +5,8 @@ if(!defined("HMS")) die("Invalid entry point");
 class Message extends DataObject
 {
 
+	protected static $cache = array();
+
 	protected static $requestLanguage = "";
 
 	/**
@@ -44,6 +46,34 @@ class Message extends DataObject
 		}
 		// end of language pseudocode exception
 
+		// check local cache
+		if( isset( self::$cache[ $language ] ) ) {
+			if( isset( self::$cache[ $language ][ $name ] ) ) {
+				return self::$cache[ $language ][ $name ];
+			}
+		} else {
+			self::$cache[ $language ] = array();
+		}
+
+		$resultMessage = self::reallyGetByName( $name, $language );
+		
+		if($resultMessage != false)
+		{
+			$resultMessage->isNew = false;
+			
+			self::$cache[ $language ][ $name ] = $resultMessage;
+			
+			return $resultMessage;
+		}
+		else
+		{
+			self::$cache[ $language ][ $name ] = self::getError($name, $language);
+		
+			return self::$cache[ $language ][ $name ];
+		}
+	}
+	
+	private static function reallyGetByName( $name, $language ) {
 		global $gDatabase;
 		$statement = $gDatabase->prepare("SELECT * FROM message WHERE name = :name AND code = :language LIMIT 1;");
 		$statement->bindParam(":name", $name);
@@ -51,17 +81,7 @@ class Message extends DataObject
 
 		$statement->execute();
 
-		$resultMessage = $statement->fetchObject("Message");
-
-		if($resultMessage != false)
-		{
-			$resultMessage->isNew = false;
-			return $resultMessage;
-		}
-		else
-		{
-			return self::getError($name, $language);
-		}
+		return $statement->fetchObject("Message");
 	}
 
 	public static function retrieveContent($name, $language)
