@@ -223,6 +223,9 @@ class User extends DataObject
 
 	public function isAllowed($action)
 	{
+		if( $action == "user" ) {
+			return true;
+		}
 		if( $this->isGod() ) {
 			return true;
 		}

@@ -3,7 +3,6 @@
 <form class="form-horizontal" method="post">
 
 	<fieldset>
-		<legend>{message name="{$pageslug}-header-user"}</legend>
 
 		<div class="control-group">
 			<label class="control-label" for="old">{message name="{$pageslug}-old-label"}</label>
