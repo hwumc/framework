@@ -35,13 +35,14 @@
 						<input type="checkbox" checked="true" disabled="true"/>
 						<strong>{message name="GodMode"}</strong>: {message name="GodMode-description"}
 					</label>
+				{else}
+					{foreach from="$grouplist" key="id" item="group"}
+						<label class="checkbox">
+							<input type="checkbox" name="group-{$id}" {if $group.assigned == "true"}checked="true" {/if} />
+							<strong>{$group.name|escape}</strong>: {$group.description|escape}
+						</label>
+					{/foreach}
 				{/if}
-				{foreach from="$grouplist" key="id" item="group"}
-					<label class="checkbox">
-						<input type="checkbox" name="group-{$id}" {if $group.assigned == "true"}checked="true" {/if} />
-						<strong>{$group.name|escape}</strong>: {$group.description|escape}
-					</label>
-				{/foreach}
 			</div>
 		</div>
 	</fieldset>

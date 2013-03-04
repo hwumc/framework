@@ -30,6 +30,19 @@ class PageManageUsers extends PageBase
 	
 		}
 		
+		try	{
+			self::checkAccess('users-delete');
+			$this->mSmarty->assign("allowDelete", 'true');
+		} catch(AccessDeniedException $ex) { 
+			$this->mSmarty->assign("allowDelete", 'false');
+		} 
+		try	{
+			self::checkAccess('users-edit');
+			$this->mSmarty->assign("allowEdit", 'true');
+		} catch(AccessDeniedException $ex) { 
+			$this->mSmarty->assign("allowEdit", 'false');
+		} 
+		
 		$this->mBasePage = "users/userlist.tpl";
 		$users = User::getArray();
 		$this->mSmarty->assign("userlist", $users );

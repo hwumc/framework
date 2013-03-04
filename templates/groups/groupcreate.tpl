@@ -7,13 +7,13 @@
 	<div class="control-group">
 		<label class="control-label" for="groupname">{message name="{$pageslug}-create-groupname"}</label>
 		<div class="controls">
-			<input type="text" id="groupname" name="groupname" placeholder="{message name="{$pageslug}-create-groupname-placeholder"}" required="true" value="{$groupname}" />
+			<input type="text" id="groupname" name="groupname" placeholder="{message name="{$pageslug}-create-groupname-placeholder"}" required="true" value="{$groupname}" {if $allowEdit == "false"}disabled="true" {/if}/>
 		</div>
 	</div>	
 	<div class="control-group">
 		<label class="control-label" for="description">{message name="{$pageslug}-create-description"}</label>
 		<div class="controls">
-			<input class="input-xxlarge" type="text" id="description" name="description" placeholder="{message name="{$pageslug}-create-description-placeholder"}" required="true" value="{$description}" />
+			<input class="input-xxlarge" type="text" id="description" name="description" placeholder="{message name="{$pageslug}-create-description-placeholder"}" required="true" value="{$description}" {if $allowEdit == "false"}disabled="true" {/if}/>
 		</div>
 	</div>
 	
@@ -32,7 +32,7 @@
 				
 				{foreach from="$rightslist" key="rightname" item="check"}
 					<label class="checkbox">
-						<input type="checkbox" name="right-{$rightname}" {if $check == "true"}checked="true" {/if} />
+						<input type="checkbox" name="right-{$rightname}" {if $check == "true"}checked="true" {/if} {if $allowEdit == "false"}disabled="true" {/if}/>
 						<tt>{$rightname}</tt>: {message name="accessright-{$rightname}"}
 					</label>
 				{/foreach}
@@ -43,7 +43,7 @@
 	</fieldset>
 	<div class="control-group">
 		<div class="controls">
-			<div class="btn-group"><button type="submit" class="btn btn-primary">{message name="save"}</button><a href="{$cScriptPath}/ManageGroups" class="btn">{message name="getmeoutofhere"}</a></div>
+			<div class="btn-group">{if $allowEdit == "true"}<button type="submit" class="btn btn-primary">{message name="save"}</button>{/if}<a href="{$cScriptPath}/ManageGroups" class="btn">{message name="getmeoutofhere"}</a></div>
 		</div>
 	</div>
 </form>

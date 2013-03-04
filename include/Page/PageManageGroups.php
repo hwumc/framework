@@ -34,15 +34,36 @@ class PageManageGroups extends PageBase
 	
 		}
 		
+		// try to get more access than we may have.
+		try	{
+			self::checkAccess('groups-create');
+			$this->mSmarty->assign("allowCreate", 'true');
+		} catch(AccessDeniedException $ex) { 
+			$this->mSmarty->assign("allowCreate", 'false');
+		} 
+		try {
+			self::checkAccess('groups-delete');
+			$this->mSmarty->assign("allowDelete", 'true');
+		} catch(AccessDeniedException $ex) { 
+			$this->mSmarty->assign("allowDelete", 'false');
+		}
+		
 		$this->mBasePage = "groups/grouppage.tpl";
 		$groups = Group::getArray();
 		$this->mSmarty->assign("grouplist", $groups );
 	}
 	
 	private function editMode( $data ) {
-		self::checkAccess( "groups-edit" );
+		try {
+			self::checkAccess('groups-edit');
+			$this->mSmarty->assign("allowEdit", 'true');
+		} catch(AccessDeniedException $ex) { 
+			$this->mSmarty->assign("allowEdit", 'false');
+		}
 		
 		if( WebRequest::wasPosted() ) {
+			self::checkAccess( "groups-edit" );
+			
 			$g = Group::getById( $data[ 1 ] );
 			$g->setName( WebRequest::post( "groupname" ) );
 			$g->setDescription( WebRequest::post( "description" ) );
@@ -106,6 +127,7 @@ class PageManageGroups extends PageBase
 	
 	private function createMode( $data ) {
 		self::checkAccess( "groups-create" );
+		$this->mSmarty->assign("allowEdit", 'true');
 	
 		if( WebRequest::wasPosted() ) {
 			$g = new Group();

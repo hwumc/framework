@@ -13,7 +13,14 @@ class PageMessageEditor extends PageBase
 
 	protected function runPage()
 	{	
-		$this->mSmarty->assign( "allowTruncate", "true" );
+		// try to get more access than we may have.
+		try	{
+			self::checkAccess('messages-clear');
+			$this->mSmarty->assign("allowTruncate", 'true');
+		} catch(AccessDeniedException $ex) { 
+			$this->mSmarty->assign("allowTruncate", 'false');
+		}
+	
 		$this->mSmarty->assign( "pager", $this->makePager() );
 		$this->mSmarty->assign("showtable", 0);
 		$this->mSmarty->assign("content", "erm...");
