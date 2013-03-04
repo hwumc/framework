@@ -14,6 +14,7 @@ class User extends DataObject
 	protected $mobile;
 	protected $email;
 	protected $emailconfirmation;
+	protected $godmode;
 
 	public static function getIdList()
 	{
@@ -86,7 +87,7 @@ class User extends DataObject
 
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation);");
+			$statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode);");
 			$statement->bindParam(":username", $this->username);
 			$statement->bindParam(":password", $this->password);
 			$statement->bindParam(":fullName", $this->fullName);
@@ -97,6 +98,8 @@ class User extends DataObject
 			$statement->bindParam(":mobile", $this->mobile);
 			$statement->bindParam(":email", $this->email);
 			$statement->bindParam(":emailconfirmation", $this->emailconfirmation);
+			$statement->bindParam(":godmode", 0); // force to zero - we don't 
+								//want godmode users created without good reason.
 			if($statement->execute())
 			{
 				$this->isNew = false;
@@ -120,6 +123,7 @@ class User extends DataObject
 			$statement->bindParam(":mobile", $this->mobile);
 			$statement->bindParam(":email", $this->email);
 			$statement->bindParam(":emailconfirmation", $this->emailconfirmation);
+			// not including godmode here. It should never be changed from the interface.
 			$statement->bindParam(":id", $this->id);
 
 			if(!$statement->execute())
@@ -219,13 +223,22 @@ class User extends DataObject
 
 	public function isAllowed($action)
 	{
+		if( $this->isGod() ) {
+			return true;
+		}
+	
 		// TODO: fix me
-		return true;
+		return in_array( $action, $this->getRights() );
 	}
 	public function isMailConfirmed()
 	{
 		// TODO: fix me
 		return true;
+	}	
+	
+	public function isGod()
+	{
+		return $this->godmode;
 	}
 	
 	public static function addMenuItems( $menu ) {
@@ -274,11 +287,10 @@ class User extends DataObject
 		$this->id=0;
 		$this->isNew = true;
 	}
-
 	
 	public function getGroups() {
 		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT g.id, g.name FROM usergroup ug INNER JOIN `group` g ON g.id = ug.`group` WHERE ug.user = :id;");
+		$statement = $gDatabase->prepare("SELECT g.*, 'false' as isNew FROM usergroup ug INNER JOIN `group` g ON g.id = ug.`group` WHERE ug.user = :id;");
 		$statement->bindParam(":id", $this->id);
 
 		$statement->execute();
@@ -288,6 +300,13 @@ class User extends DataObject
 		return $resultObject;
 	}
 	
+	public function clearGroups() {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("DELETE FROM `usergroup` WHERE `user` = :id;");
+		$statement->bindParam(":id", $this->id);
+		$statement->execute();
+	}
+	
 	public function getRights() {
 		global $gDatabase;
 		$statement = $gDatabase->prepare("SELECT DISTINCT rightgroup.right FROM rightgroup INNER JOIN `group` ON `group`.id = rightgroup.`group` INNER JOIN usergroup ON `group`.id = usergroup.`group` WHERE usergroup.user = :id;");
@@ -295,7 +314,7 @@ class User extends DataObject
 
 		$statement->execute();
 
-		$resultObject = $statement->fetchAll( );
+		$resultObject = $statement->fetchAll( PDO::FETCH_COLUMN, 0 );
 		
 		return $resultObject;
 	}

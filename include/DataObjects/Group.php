@@ -13,7 +13,7 @@ class Group extends DataObject
 		$statement = $gDatabase->prepare("SELECT id FROM `group`;");
 		$statement->execute();
 
-		$result = $statement->fetchAll(PDO::FETCH_COLUMN,0);
+		$result = $statement->fetchAll( PDO::FETCH_COLUMN, 0 );
 
 		return $result;
 	}
@@ -76,19 +76,18 @@ class Group extends DataObject
 	
 	public function clearRights() {
 		global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM `rightgroup` WHERE `group` = :id;");
-		$statement->bindParam(":id", $this->id);
+		$statement = $gDatabase->prepare( "DELETE FROM `rightgroup` WHERE `group` = :id;" );
+		$statement->bindParam( ":id", $this->id );
 		$statement->execute();
-
 	}	
 	
 	public function getRights() {
 		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT `right` FROM `rightgroup` WHERE `group` = :id;");
-		$statement->bindParam(":id", $this->id);
+		$statement = $gDatabase->prepare( "SELECT `right` FROM `rightgroup` WHERE `group` = :id;" );
+		$statement->bindParam( ":id", $this->id ) ;
 		$statement->execute();
 		
-		$result = $statement->fetchAll(PDO::FETCH_COLUMN,0);
+		$result = $statement->fetchAll( PDO::FETCH_COLUMN, 0 );
 
 		return $result;
 	}

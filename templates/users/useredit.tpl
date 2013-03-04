@@ -25,10 +25,17 @@
 		</div>	
 	
 	</fieldset>
+	
 	<fieldset>
 		<legend>{message name="{$pageslug}-edit-groupsheader"}</legend>
 		<div class="control-group">
 			<div class="controls">
+				{if $user->isGod() }
+					<label class="checkbox">
+						<input type="checkbox" checked="true" disabled="true"/>
+						<strong>{message name="GodMode"}</strong>: {message name="GodMode-description"}
+					</label>
+				{/if}
 				{foreach from="$grouplist" key="id" item="group"}
 					<label class="checkbox">
 						<input type="checkbox" name="group-{$id}" {if $group.assigned == "true"}checked="true" {/if} />

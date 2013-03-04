@@ -48,24 +48,25 @@ class PageManageUsers extends PageBase
 			$u->setEmail( WebRequest::post( "email" ) );
 			$u->save();
 			
-			//$g->clearRights();
-			/*
+			$u->clearGroups();
+			
+			
 			$r = array();
 			foreach( $_POST as $k => $v ) {
 				if( $v !== "on" ) continue;
 				
-				if( preg_match( "/^right\-.*$/", $k ) === 1 ) {
+				if( preg_match( "/^group\-.*$/", $k ) === 1 ) {
 					$r[ ] = $k;
 				}
 			}
 
 			foreach( $r as $k ) {
-				$rg = new Rightgroup();
-				$rg->setGroupID( $g->getId() );
-				$rg->setRight( preg_replace( "/^right\-(.*)$/", "\${1}", $k ) );
-				$rg->save();
+				$ug = new Usergroup();
+				$ug->setUserID( $u->getId() );
+				$ug->setGroupID( preg_replace( "/^group\-(.*)$/", "\${1}", $k ) );
+				$ug->save();
 			}
-			*/
+			
 			
 			global $cScriptPath;
 			$this->mBasePage = "blank.tpl";
@@ -84,10 +85,11 @@ class PageManageUsers extends PageBase
 			
 			$user = User::getById( $data[ 1 ] );
 		
-			foreach( $user->getGroups() as $id => $g ) {
-				$groups[ $id ][ "assigned" ] = true;
+			foreach( $user->getGroups() as $g ) {
+				if( isset( $groups[ $g->getId() ] ) ) {
+					$groups[ $g->getId() ][ "assigned" ] = true;
+				}
 			}
-
 			
 			$this->mSmarty->assign( "grouplist", $groups );
 			$this->mSmarty->assign( "user", $user );
