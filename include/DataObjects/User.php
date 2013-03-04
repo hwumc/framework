@@ -226,11 +226,16 @@ class User extends DataObject
 		if( $action == "user" ) {
 			return true;
 		}
+		
+		if( $action == "x-denyall" ) {
+			return false;
+		}
+		
+		
 		if( $this->isGod() ) {
 			return true;
 		}
-	
-		// TODO: fix me
+		
 		return in_array( $action, $this->getRights() );
 	}
 	public function isMailConfirmed()

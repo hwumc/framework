@@ -315,32 +315,30 @@ abstract class PageBase
 		return $this->mPageRegisteredRights;
 	}
 
-	public static function checkAccess($actionName)
-	{
+	public static function checkAccess($actionName) {
 		global $gLogger;
-		$gLogger->log("Entering checkPageAccessLevel");
-			
-		$userAccessLevel = User::getById(Session::getLoggedInUser())->isAllowed($actionName);
+		$gLogger->log( "Entering checkPageAccessLevel" );
 		
 		if($actionName == "public")
 		{
 			return true;
 		}
-		else
+			
+		$userAccessLevel = User::getById( Session::getLoggedInUser() )->isAllowed( $actionName );
+		
+
+		if($userAccessLevel) 
 		{
-			if($userAccessLevel) 
-			{
-				return true;
-			}
+			return true;
 		}
-				
+		
 		throw new AccessDeniedException();
 	}
 
 	public function handleAccessDeniedException($ex)
 	{
-		$this->mHeaders = "HTTP/1.1 403 Forbidden";
-		$this->mBasePage = "mgmt/accessdenied.tpl";
+		$this->mHeaders[] = "HTTP/1.1 403 Forbidden";
+		$this->mBasePage = "403.tpl";
 	}	
 	
 	public static function getRegisteredPages() {

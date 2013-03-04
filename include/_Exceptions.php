@@ -13,9 +13,6 @@ class SaveFailedException extends Exception{}
 class LoginFailedException extends Exception{}
 
 class CreateUserException extends Exception{}
-class CreateRoomException extends Exception{}
-class CreateCustomerException extends Exception{}
-class CreateBookingException extends Exception{}
 
 class NonexistantObjectException extends Exception{}
 class InvalidChecksumException extends Exception{}
@@ -23,6 +20,7 @@ class InvalidChecksumException extends Exception{}
 class AccessDeniedException extends Exception{}
 
 class YouShouldntBeDoingThatException extends Exception{}
+class WeirdWonderfulException extends Exception{}
 
 class DeprecatedException extends Exception{}
 

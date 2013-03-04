@@ -89,10 +89,10 @@
 		</ul>
 	</div>
         </div><!--/span-->
-        <div class="span9">
+        <div class="span9">{block name="pageheader"}
 				<div class="page-header">
   <h1>{message name="{$pageslug}-header"} <small>{message name="{$pageslug}-header-subtext"}</small></h1>
-</div>
+</div>{/block}
 {block name="pagedescription"}<p>{message name="{$pageslug}-description"}</p>{/block}
 
 				{if $showError == "yes"}{include file="errorbar.tpl"}{/if}
