@@ -24,6 +24,17 @@ class User extends DataObject
 		$result = $statement->fetchAll(PDO::FETCH_COLUMN,0);
 
 		return $result;
+	}	
+	
+	public static function getArray() {
+		$output = array();
+		$input = User::getIdList();
+		
+		foreach( $input as $g ) {
+			$output[ $g ] = User::getById( $g );
+		}
+		
+		return $output;
 	}
 
 	public static function getByName($name)

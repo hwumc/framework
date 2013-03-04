@@ -24,7 +24,7 @@ class Group extends DataObject
 		
 		foreach( $input as $g ) {
 			$group = Group::getById( $g );
-			$output[ $g ] = $group->getName();
+			$output[ $g ] = $group;
 		}
 		
 		return $output;
