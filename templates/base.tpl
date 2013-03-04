@@ -46,10 +46,14 @@
           <a class="brand" href="#">{message name="sitename"}</a>
           <div class="nav-collapse collapse">
 			{if $loggedin eq ""}
-				<p class="navbar-text pull-right">
-					<a href="{$cScriptPath}/Register" class="navbar-link">{message name="register"}</a>
-					<a href="{$cScriptPath}/Login" class="navbar-link">{message name="login"}</a>
-				</p>
+				<ul class="nav pull-right">
+					<li>
+						<a href="{$cScriptPath}/Register" class="navbar-link">{message name="register"}</a>
+					</li>
+					<li>
+						<a href="{$cScriptPath}/Login" class="navbar-link">{message name="login"}</a>
+					</li>
+				</ul>
 			{else}
 				<ul class="nav pull-right">
 					<li class="dropdown">
