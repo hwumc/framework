@@ -58,15 +58,11 @@
   <body>
 
     <div class="container">
-
-      <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">{message name="login-title"}</h2>
-        <input type="text" name="lgUser" class="input-block-level" placeholder="{message name="login-username"}">
-        <input type="password" name="lgPasswd" class="input-block-level" placeholder="{message name="login-password"}">
-        <button class="btn btn-large btn-primary" type="submit">{message name="login-button"}</button>
-		<a href="{$cScriptPath}/ForgotPassword" class="forgotpassword">{message name="login-forgotpassword"}</a>
-      </form>
-
+		<div class="form-signin">
+		  <h2 class="form-signin-heading">{message name="forgotpassword-title"}</h2>
+		  <p>{message name="forgotpassword-sent"}</p>
+		  <p><a href="{$cScriptPath}">{message name="forgotpassword-return"}</a></p>
+		</div>
     </div> <!-- /container -->
 
   </body>

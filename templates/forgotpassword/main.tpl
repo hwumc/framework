@@ -60,11 +60,10 @@
     <div class="container">
 
       <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">{message name="login-title"}</h2>
+        <h2 class="form-signin-heading">{message name="forgotpassword-title"}</h2>
+		<label for="lgUser">{message name="forgotpassword-text"}</label>
         <input type="text" name="lgUser" class="input-block-level" placeholder="{message name="login-username"}">
-        <input type="password" name="lgPasswd" class="input-block-level" placeholder="{message name="login-password"}">
-        <button class="btn btn-large btn-primary" type="submit">{message name="login-button"}</button>
-		<a href="{$cScriptPath}/ForgotPassword" class="forgotpassword">{message name="login-forgotpassword"}</a>
+        <button class="btn btn-large btn-primary" type="submit">{message name="forgotpassword-button"}</button>
       </form>
 
     </div> <!-- /container -->

@@ -25,3 +25,5 @@ class WeirdWonderfulException extends Exception{}
 class DeprecatedException extends Exception{}
 
 class MissingFieldException extends Exception{}
+
+class NotImplementedException extends Exception{}

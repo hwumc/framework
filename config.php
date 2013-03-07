@@ -47,6 +47,7 @@ $cDefaultLanguage = 'en-GB';
 $cRequiredExtensions = array(
 	"PDO",
 	"SPL",
+	"OpenSSL",
 	);
 	
 // use Tidy to make pretty HTML.

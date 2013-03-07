@@ -326,4 +326,28 @@ class User extends DataObject
 		
 		return $resultObject;
 	}
+	
+	public function sendPasswordReset() {
+		// build a state salt for the random bytes
+		$state = sha1 ( md5( uniqid( getmypid() . gethostname() . mt_rand() . microtime() . memory_get_usage(), true ) ) . mt_rand() );
+		$cstrong = false;
+		// generate some cool randomness
+		$bytes = openssl_random_pseudo_bytes(160, $cstrong);
+		$hex   = bin2hex($bytes);
+		// build a password
+		$pass = ( substr( base_convert( sha1( $state . $bytes ), 16, 32 ) , 0, 11 ) );	
+	
+		// get mail from the DB
+		$email = Message::getMessage( "forgotpassword-email" );
+		$emailsubj = Message::getMessage( "forgotpassword-email-subject" );
+		// subst in the password
+		$email = str_replace( '$1', $pass, $email );
+		
+		Mail::send( $this->getEmail() , $emailsubj, $email );
+	
+		$this->setPassword( $pass );
+		$this->save();
+		
+		throw new NotImplementedException();
+	}
 }
