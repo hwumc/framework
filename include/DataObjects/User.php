@@ -85,6 +85,8 @@ class User extends DataObject
 	{
 		global $gDatabase;
 
+		$godmodevalue = 0;
+		
 		if($this->isNew)
 		{ // insert
 			$statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode);");
@@ -98,7 +100,7 @@ class User extends DataObject
 			$statement->bindParam(":mobile", $this->mobile);
 			$statement->bindParam(":email", $this->email);
 			$statement->bindParam(":emailconfirmation", $this->emailconfirmation);
-			$statement->bindParam(":godmode", 0); // force to zero - we don't 
+			$statement->bindParam(":godmode", $godmodevalue); // force to zero - we don't 
 								//want godmode users created without good reason.
 			if($statement->execute())
 			{
