@@ -11,7 +11,9 @@ $cFilePath = __DIR__;
 $cScriptPath = $_SERVER['SCRIPT_NAME'];
 
 $pparts = pathinfo($_SERVER["SCRIPT_NAME"]);
-$cWebPath = $pparts["dirname"] == "/" ? "" : $pparts["dirname"];
+$webdirname = str_replace("\\", "/", $pparts['dirname']);
+$cWebPath = $webdirname == "/" ? "" : $webdirname;
+$cWebPath = str_replace("//","/",$cWebPath);
 
 // database details
 $cDatabaseConnectionString = 'mysql:host=dbmaster.srv.stwalkerster.net;dbname=hwumc_new_devel';
