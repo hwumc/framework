@@ -33,9 +33,15 @@
 		<div class="control-group">
 			<label class="control-label" for="experience">{message name="{$pageslug}-experience-label"}</label>
 			<div class="controls">
-				<textarea rows="3" class="input-xxlarge" id="experience" name="experience" placeholder="{message name="{$pageslug}-experience-placeholder"}" >{$experience}</textarea>
+				<textarea rows="3" class="input-xxlarge" id="experience" name="experience" placeholder="{message name="{$pageslug}-experience-placeholder"}" required="true" >{$experience}</textarea>
 			</div>
 		</div>
+		
+		
+	</fieldset>
+
+	<fieldset>
+		<legend>{message name="{$pageslug}-header-emerg"}</legend>
 		
 		<div class="control-group">
 			<label class="control-label" for="medical">{message name="{$pageslug}-medical-label"}</label>
@@ -47,21 +53,17 @@
 				<textarea class="input-xxlarge" rows="3" id="medical" name="medical" placeholder="{message name="{$pageslug}-medical-placeholder"}">{$medical}</textarea>
 			</div>
 		</div>
-	</fieldset>
 
-	<fieldset>
-		<legend>{message name="{$pageslug}-header-emerg"}</legend>
-		
 		<div class="control-group">
 			<label class="control-label" for="contactname">{message name="{$pageslug}-contactname-label"}</label>
 			<div class="controls">
-				<input type="text" id="contactname" class="input-xlarge" name="contactname" placeholder="{message name="{$pageslug}-contactname-placeholder"}" value="{$contactname}" />
+				<input type="text" id="contactname" class="input-xlarge" name="contactname" placeholder="{message name="{$pageslug}-contactname-placeholder"}" value="{$contactname}" required="true" />
 			</div>
 		</div>		
 		<div class="control-group">
 			<label class="control-label" for="contactphone">{message name="{$pageslug}-contactphone-label"}</label>
 			<div class="controls">
-				<input type="text" id="contactphone" class="input-medium" name="contactphone" placeholder="{message name="{$pageslug}-contactphone-placeholder"}" value="{$contactphone}" />
+				<input type="text" id="contactphone" class="input-medium" name="contactphone" placeholder="{message name="{$pageslug}-contactphone-placeholder"}" value="{$contactphone}" required="true" />
 			</div>
 		</div>
 	</fieldset>
