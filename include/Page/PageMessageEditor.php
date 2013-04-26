@@ -8,7 +8,7 @@ class PageMessageEditor extends PageBase
 	{
 		$this->mPageUseRight = "messages-view";
 		$this->mMenuGroup = "SystemInfo";
-		$this->mPageRegisteredRights = array( "messages-edit", "messages-clear" );
+		$this->mPageRegisteredRights = array( "messages-edit", "messages-clear", "messages-delete" );
 	}
 
 	protected function runPage()
@@ -16,9 +16,16 @@ class PageMessageEditor extends PageBase
 		// try to get more access than we may have.
 		try	{
 			self::checkAccess('messages-clear');
+			self::checkAccess('messages-delete');
 			$this->mSmarty->assign("allowTruncate", 'true');
 		} catch(AccessDeniedException $ex) { 
 			$this->mSmarty->assign("allowTruncate", 'false');
+		}
+        try	{
+			self::checkAccess('messages-delete');
+			$this->mSmarty->assign("allowDelete", 'true');
+		} catch(AccessDeniedException $ex) { 
+			$this->mSmarty->assign("allowDelete", 'false');
 		}
 	
 		$this->mSmarty->assign( "pager", $this->makePager() );
@@ -29,6 +36,7 @@ class PageMessageEditor extends PageBase
 	
 		if( $data[0] === "clear" ) {
 			self::checkAccess( "messages-clear" );
+			self::checkAccess( "messages-delete" );
 			
 			if( WebRequest::wasPosted() ) {
 				Message::clearAll();
@@ -68,6 +76,8 @@ class PageMessageEditor extends PageBase
 			$this->mHeaders[] = "Location: " . $cScriptPath . "/MessageEditor";
 			
 			$this->save();
+            
+            $this->mSmarty->assign("content", "<pre>".print_r($_POST,true)."</pre>");
 			return;
 		} else {
 		
@@ -211,8 +221,23 @@ class PageMessageEditor extends PageBase
 	{
 		$keys = WebRequest::getPostKeys();
 
+        $saveQ = array();
+        
 		foreach($keys as $k)
 		{
+            $matchdata = array();
+            if( preg_match( "/delete-(.*)/", $k, $matchdata ) )
+            {
+                // check we have the needed access
+                self::checkAccess('messages-delete');
+                
+                // delete key
+                Message::clearAllKey( $matchdata[1] );
+                
+                // skip save of everything else.
+                return;
+            }
+            
 			// extract id from POST request
 			$id = str_replace( "lang", "", $k);
 			$id = str_replace( "msg", "", $id);
@@ -235,9 +260,14 @@ class PageMessageEditor extends PageBase
 				// write content
 				$message->setContent($value);
 
-				// save object
-				$message->save();
+                // queue message to be saved - we can skip this later
+				$saveQ[] = $message;
 			}
 		}
+        
+        // actually save the messages
+        foreach( $saveQ as $message ) {
+            $message->save();   
+        }
 	}
 }

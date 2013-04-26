@@ -18,6 +18,7 @@
 				{$lang}
 			</th>
 		{/foreach}
+		<th />
 	</tr>
 	{foreach from="$languagetable" item="messagerow"}
 		<tr>
@@ -30,6 +31,12 @@
 				{/if}
 			</td>
 			{/foreach}
+			
+			<td>
+			{if $allowDelete == "true"}
+				<button class="btn btn-danger" type="submit" name="delete-{$messagerow@key}">{message name="{$pageslug}-button-delete"}</button>
+			{/if}
+			</td>
 		</tr>
 	{/foreach}
 </table>

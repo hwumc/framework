@@ -199,7 +199,13 @@ class Message extends DataObject
 		global $gDatabase;
 		$statement = $gDatabase->prepare('DELETE FROM message WHERE content = concat("<", code, ":", name, ">");');
 		$statement->execute();
-	}	
+	}
+    public static function clearAllKey( $key ) {
+        global $gDatabase;
+        $statement = $gDatabase->prepare( 'DELETE FROM message WHERE name = :key;' );
+        $statement->bindParam( ":key", $key );
+        $statement->execute();
+    }
 	
 	public function getName()
 	{
