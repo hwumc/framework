@@ -150,7 +150,13 @@ class PageManageGroups extends PageBase
 				$rg->setRight( preg_replace( "/^right\-(.*)$/", "\${1}", $k ) );
 				$rg->save();
 			}
-			
+            
+            // add the current user to this group
+            $tug = new Usergroup();
+            $tug->setUserID( Session::getLoggedInUser() );
+			$tug->setGroupID( $g->getId() );
+			$tug->save();
+            			
 			global $cScriptPath;
 			header( "Location: " . $cScriptPath . "/ManageGroups" );
 		} else {
