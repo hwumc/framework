@@ -23,6 +23,9 @@
     <Compile Include="include\Page\PageDbgSudo.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="include\Page\PageDbgAllPageList.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="index.php" />
     <Compile Include=".git\COMMIT_EDITMSG" />
     <Compile Include=".git\config" />
