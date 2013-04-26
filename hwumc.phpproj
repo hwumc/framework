@@ -20,6 +20,9 @@
     <Compile Include=".my.cnf" />
     <Compile Include="config.local.php" />
     <Compile Include="config.php" />
+    <Compile Include="include\Page\PageDbgSudo.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="index.php" />
     <Compile Include=".git\COMMIT_EDITMSG" />
     <Compile Include=".git\config" />
@@ -1823,5 +1826,10 @@
     <Folder Include="templates\register" />
     <Folder Include="templates\users" />
     <Folder Include="templates\webmaster" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="templates\webmaster\sudo.tpl">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
 </Project>
