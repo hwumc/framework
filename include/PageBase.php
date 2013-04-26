@@ -363,6 +363,27 @@ abstract class PageBase
 		}
 		
 		return $pages;
+	}	
+    
+	public static function getAllPages() {
+		global $cIncludePath ;
+		$filelist = scandir( $cIncludePath . "/Page/" );
+		
+		$pages = array();
+		
+		foreach( $filelist as $f ) {
+			if( preg_match( "/^Page(.*)\.php$/", $f ) !== 1 ) {
+				continue;
+			}
+			
+			require_once( $cIncludePath . "/Page/" . $f );
+			
+			$f = preg_replace( "/^(.*)\.php$/", "\${1}", $f );
+			$pages[] = $f;
+			
+		}
+		
+		return $pages;
 	}
 	
 	public function getMenuGroup() {
