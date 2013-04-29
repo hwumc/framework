@@ -10,11 +10,10 @@
 			</thead>
 			<tbody>
 				{foreach from="$grouplist" item="group" key="groupid" }
-				<tr><th>{$group->getName()|escape}</th><td><a href="{$cScriptPath}/ManageGroups/edit/{$groupid}" class="btn btn-small btn-warning">{message name="ManageGroups-button-editgroup"}</a></td>{if $allowDelete == "true"}<td><a href="{$cScriptPath}/ManageGroups/delete/{$groupid}" class="btn btn-small btn-danger">{message name="ManageGroups-button-deletegroup"}</a></td>{/if}</tr>
+				<tr><th>{$group->getName()|escape}</th><td><a href="{$cScriptPath}/ManageGroups/edit/{$groupid}" class="btn btn-small {if $group->isManager($currentUser)}btn-warning{/if}">{if $group->isManager($currentUser)}{message name="ManageGroups-button-editgroup"}{else}{message name="ManageGroups-button-viewgroup"}{/if}</a></td>{if $allowDelete == "true"}<td><a href="{$cScriptPath}/ManageGroups/delete/{$groupid}" class="btn btn-small btn-danger">{message name="ManageGroups-button-deletegroup"}</a></td>{/if}</tr>
 				{/foreach}
 			</tbody>
 		</table>
 	</p>
 {/block}
-
 {if $allowDelete == "true"}{/if}

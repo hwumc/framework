@@ -139,4 +139,13 @@ class Group extends DataObject
         
         return Group::getById( $this->owner );
     }
+  
+    // returns if the specified User is a manager (owner) of this group
+    public function isManager( $user ) {
+        if( $user->isAllowed( "groups-edit" ) ) {
+            return true;   
+        }
+        
+        return ( $user->inGroup( $this->getOwner() ) );
+    }
 }

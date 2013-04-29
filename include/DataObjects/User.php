@@ -317,6 +317,20 @@ class User extends DataObject
 		
 		return $resultObject;
 	}
+    
+    public function inGroup( $group ) {
+        global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT g.*, 'false' as isNew FROM usergroup ug INNER JOIN `group` g ON g.id = ug.`group` WHERE ug.user = :id AND ug.group = :group;");
+		$statement->bindParam(":id", $this->id);
+        $groupid = $group->getId();
+		$statement->bindParam(":group", $groupid );
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchAll( PDO::FETCH_CLASS, "Group" );
+		
+		return count( $resultObject ) == 1;
+    }
 	
 	public function clearGroups() {
 		global $gDatabase;

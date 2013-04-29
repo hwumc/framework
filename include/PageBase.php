@@ -74,6 +74,13 @@ abstract class PageBase
 		$this->addSystemCssJs();
 		
 		$this->mSmarty->assign("showError", "no");
+		
+        if( Session::isLoggedIn() )
+        {
+            $this->mSmarty->assign("currentUser", User::getById( Session::getLoggedInUser() ) );
+        } else {
+            $this->mSmarty->assign("currentUser", null );
+        }
 	}
 	
 	protected function finalSetup()

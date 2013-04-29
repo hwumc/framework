@@ -54,17 +54,22 @@ class PageManageGroups extends PageBase
 	}
 	
 	private function editMode( $data ) {
+        $allowEdit = "false";
 		try {
 			self::checkAccess('groups-edit');
-			$this->mSmarty->assign("allowEdit", 'true');
+			$allowEdit = "true";
 		} catch(AccessDeniedException $ex) { 
-			$this->mSmarty->assign("allowEdit", 'false');
+            $allowEdit = "false";
 		}
-		
+		$g= Group::getById( $data[ 1 ] );
+        if( $g->isManager( User::getById( Session::getLoggedInUser() ) ) ) {
+            $allowEdit = "true";   
+        }
+        $this->mSmarty->assign("allowEdit", $allowEdit);
+        
 		if( WebRequest::wasPosted() ) {
-			self::checkAccess( "groups-edit" );
+			if( ! $allowEdit ) throw new AccessDeniedException();
 			
-			$g = Group::getById( $data[ 1 ] );
             $parentdescription = WebRequest::post( "parent" );
             $parent = Group::getByName( $parentdescription );
             $g->setOwner( $parent );
@@ -94,18 +99,18 @@ class PageManageGroups extends PageBase
 		} else {
 			$rightlist = Right::getAllRegisteredRights();
 			$rights = array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) );
-			$group = Group::getById( $data[ 1 ] );
+			
 		
-			foreach( $group->getRights() as $r ) {
+			foreach( $g->getRights() as $r ) {
 				$rights[ $r ] = "true";
 			}
 		
 			$this->mBasePage = "groups/groupcreate.tpl";
 			$this->mSmarty->assign( "rightslist", $rights );
-			$this->mSmarty->assign( "groupname", $group->getName() );
-			$this->mSmarty->assign( "description", $group->getDescription() );
+			$this->mSmarty->assign( "groupname", $g->getName() );
+			$this->mSmarty->assign( "description", $g->getDescription() );
             $this->mSmarty->assign( "lockparent", "false" );
-            $this->mSmarty->assign( "parent", $group->getOwner()->getName() == $group->getName() ? "" : $group->getOwner()->getName() );
+            $this->mSmarty->assign( "parent", $g->getOwner()->getName() == $g->getName() ? "" : $g->getOwner()->getName() );
             
             $groupnames= array();
             foreach (Group::getArray() as $k => $v)
