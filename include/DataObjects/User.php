@@ -25,6 +25,11 @@ class User extends DataObject
 		$result = $statement->fetchAll(PDO::FETCH_COLUMN,0);
 
 		return $result;
+	}		
+    
+    public static function getLoggedIn()
+	{
+		return User::getById( Session::getLoggedInUser() );
 	}	
 	
 	public static function getArray() {
@@ -331,12 +336,26 @@ class User extends DataObject
 		
 		return count( $resultObject ) == 1;
     }
+    
+    public function leaveGroup( $group ) {
+        global $gDatabase;
+		$statement = $gDatabase->prepare("DELETE FROM usergroup WHERE `user` = :id AND `group` = :group LIMIT 1;");
+		$statement->bindParam(":id", $this->id);
+        $groupid = $group->getId();
+		$statement->bindParam(":group", $groupid );
+
+		$statement->execute();
+    }
 	
 	public function clearGroups() {
-		global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM `usergroup` WHERE `user` = :id;");
-		$statement->bindParam(":id", $this->id);
-		$statement->execute();
+        $groups = $this->getGroups();
+        $currentuser = User::getLoggedIn();
+        foreach( $groups as $group ) {
+            if( $group->isManager( $currentuser ) ) {
+                $this->leaveGroup( $group );   
+            }
+        }
+        
 	}
 	
 	public function getRights() {

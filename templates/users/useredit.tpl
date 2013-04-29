@@ -39,7 +39,7 @@
 				{/if}
 				{foreach from="$grouplist" key="id" item="group"}
 					<label class="checkbox">
-						<input type="checkbox" name="group-{$id}" {if $group.assigned == "true"}checked="true" {/if} />
+						<input type="checkbox" name="group-{$id}" {if $group.assigned == "true"}checked="true" {/if} {if $group.editable == "false" }disabled="true"{/if}  />
 						<strong>{$group.name|escape}</strong>: {$group.description|escape}
 					</label>
 				{/foreach}

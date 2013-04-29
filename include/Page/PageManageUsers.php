@@ -73,11 +73,16 @@ class PageManageUsers extends PageBase
 				}
 			}
 
+            $currentuser = User::getLoggedIn();
+            
 			foreach( $r as $k ) {
-				$ug = new Usergroup();
-				$ug->setUserID( $u->getId() );
-				$ug->setGroupID( preg_replace( "/^group\-(.*)$/", "\${1}", $k ) );
-				$ug->save();
+                $groupid = preg_replace( "/^group\-(.*)$/", "\${1}", $k );
+                if( Group::getById( $groupid )->isManager( $currentuser ) ) {
+				    $ug = new Usergroup();
+				    $ug->setUserID( $u->getId() );
+				    $ug->setGroupID( $groupid );
+				    $ug->save();
+                }
 			}
 			
 			
@@ -93,7 +98,8 @@ class PageManageUsers extends PageBase
 				$groups[ $id ] = array(
 					"name" => $g->getName(),
 					"description" => $g->getDescription(),
-					"assigned" => false );
+					"assigned" => false,
+                    "editable" => $g->isManager( User::getLoggedIn() ) ? "true" : "false" );
 			}
 			
 			$user = User::getById( $data[ 1 ] );
