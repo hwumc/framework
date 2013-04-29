@@ -112,12 +112,8 @@ class PageManageUsers extends PageBase
 	private function deleteMode( $data ) {
 		self::checkAccess( "users-delete" );
 	
-		$this->mBasePage = "users/userdelete.tpl";
-		/*
-	
-	
 		if( WebRequest::wasPosted() ) {
-			$g = Group::getById( $data[1] );
+			$g = User::getById( $data[1] );
 			if( $g !== false ) {
 				if( WebRequest::post( "confirm" ) == "confirmed" ) {
 					$g->delete();
@@ -126,11 +122,9 @@ class PageManageUsers extends PageBase
 			}
 			
 			global $cScriptPath;
-			header( "Location: " . $cScriptPath . "/ManageGroups" );
-			
-			
+			header( "Location: " . $cScriptPath . "/ManageUsers" );
 		} else {
-			$this->mBasePage = "groups/groupdelete.tpl";
+		    $this->mBasePage = "users/userdelete.tpl";
 		}
-	*/}
+	}
 }
