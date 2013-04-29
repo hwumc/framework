@@ -15,7 +15,10 @@ class PageDbgSudo extends PageBase
             Session::start();
             
             Session::setLoggedInUser( User::getByName( WebRequest::postString( "username" ) )->getId() );
-               
+            
+            // grant the user we switched to this right.
+            Session::addSessionRight( "diagnostic-sudo" );
+            
             global $cScriptPath;
 			header( "Location: " . $cScriptPath  );
         } else {

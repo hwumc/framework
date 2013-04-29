@@ -10,6 +10,9 @@ class PageDbgRightList extends PageBase
 	}
 
 	protected function runPage() {
-		$this->mSmarty->assign( "content", "<pre>" . print_r( User::getById( Session::getLoggedInUser())->getRights(), true ) . "</pre>" );
+		$this->mSmarty->assign( "content", "<pre>" . print_r( User::getById( Session::getLoggedInUser())->getRights(), true ) . "</pre>" .
+            "<h2>Session rights</h2><p>Rights assigned to this session only</p>" . 
+            "<pre>" . print_r( Session::getSessionRights(), true ) . "</pre>"
+            );
 	}
 }

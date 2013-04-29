@@ -14,6 +14,18 @@ class Session
 		$_SESSION['uid'] = $id;
 	}
 	
+    public static function addSessionRight( $right ) {
+        if( ! is_array( $_SESSION['session_rights'] ) ) {
+            $_SESSION['session_rights'] = array();
+        }
+        
+        $_SESSION['session_rights'][] = $right;
+    }
+    
+    public static function getSessionRights() {
+        return isset($_SESSION['session_rights']) ? $_SESSION['session_rights'] : array();
+    }
+    
 	public static function getLoggedInUser()
 	{
 		if(isset($_SESSION['uid']))

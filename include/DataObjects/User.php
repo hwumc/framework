@@ -225,19 +225,27 @@ class User extends DataObject
 
 	public function isAllowed($action)
 	{
+        // does this require the user to be logged in?
 		if( $action == "user" ) {
 			return true;
 		}
 		
+        // never allow this user right.
 		if( $action == "x-denyall" ) {
 			return false;
 		}
 		
-		
+		// OK, we've got through the basic checks. Am I god?
 		if( $this->isGod() ) {
 			return true;
 		}
 		
+        // check the per-session rights
+        if( in_array( $action, Session::getSessionRights() ) ) {
+            return true;   
+        }
+        
+        // Finally, check the normal user rights.
 		return in_array( $action, $this->getRights() );
 	}
 	public function isMailConfirmed()
