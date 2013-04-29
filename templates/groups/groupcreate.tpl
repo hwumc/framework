@@ -8,12 +8,21 @@
 		<label class="control-label" for="groupname">{message name="{$pageslug}-create-groupname"}</label>
 		<div class="controls">
 			<input type="text" id="groupname" name="groupname" placeholder="{message name="{$pageslug}-create-groupname-placeholder"}" required="true" value="{$groupname}" {if $allowEdit == "false"}disabled="true" {/if}/>
+			<span class="help-inline">{message name="{$pageslug}-create-groupname-help"}</span>
 		</div>
 	</div>	
 	<div class="control-group">
 		<label class="control-label" for="description">{message name="{$pageslug}-create-description"}</label>
 		<div class="controls">
 			<input class="input-xxlarge" type="text" id="description" name="description" placeholder="{message name="{$pageslug}-create-description-placeholder"}" required="true" value="{$description}" {if $allowEdit == "false"}disabled="true" {/if}/>
+			<span class="help-inline">{message name="{$pageslug}-create-description-help"}</span>
+		</div>
+	</div>	
+	<div class="control-group">
+		<label class="control-label" for="parent">{message name="{$pageslug}-create-parent"}</label>
+		<div class="controls">
+			<input type="text" id="parent" name="parent" placeholder="{message name="{$pageslug}-create-parent-placeholder"}" value="{$parent}" {if $allowEdit == "false" || $lockparent == "true" }disabled="true" {/if} data-provide="typeahead" data-items="4" data-source='{$jsgrouplist}'  />
+			<span class="help-inline">{message name="{$pageslug}-create-parent-help"}</span>
 		</div>
 	</div>
 	

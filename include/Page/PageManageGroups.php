@@ -65,6 +65,9 @@ class PageManageGroups extends PageBase
 			self::checkAccess( "groups-edit" );
 			
 			$g = Group::getById( $data[ 1 ] );
+            $parentdescription = WebRequest::post( "parent" );
+            $parent = Group::getByName( $parentdescription );
+            $g->setOwner( $parent );
 			$g->setName( WebRequest::post( "groupname" ) );
 			$g->setDescription( WebRequest::post( "description" ) );
 			$g->save();
@@ -101,6 +104,15 @@ class PageManageGroups extends PageBase
 			$this->mSmarty->assign( "rightslist", $rights );
 			$this->mSmarty->assign( "groupname", $group->getName() );
 			$this->mSmarty->assign( "description", $group->getDescription() );
+            $this->mSmarty->assign( "lockparent", "false" );
+            $this->mSmarty->assign( "parent", $group->getOwner()->getName() == $group->getName() ? "" : $group->getOwner()->getName() );
+            
+            $groupnames= array();
+            foreach (Group::getArray() as $k => $v)
+            {
+                $groupnames[] = "\"" . $v->getName() . "\"";
+            }  
+            $this->mSmarty->assign( "jsgrouplist", "[" . implode(",", $groupnames ) . "]" );
 		}
 	}
 	
@@ -163,9 +175,12 @@ class PageManageGroups extends PageBase
 			$rightlist = Right::getAllRegisteredRights();
 		
 			$this->mBasePage = "groups/groupcreate.tpl";
-			$this->mSmarty->assign("rightslist", array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) ) );
-			$this->mSmarty->assign("groupname", "" );
-			$this->mSmarty->assign("description", "" );
+			$this->mSmarty->assign( "rightslist", array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) ) );
+			$this->mSmarty->assign( "groupname", "" );
+			$this->mSmarty->assign( "description", "" );
+            $this->mSmarty->assign( "lockparent", "true" );
+            $this->mSmarty->assign( "parent", "" );
+            $this->mSmarty->assign( "jsgrouplist", "[" . "]" );
 		}
 	}
 }
