@@ -4,11 +4,12 @@
     <meta charset="utf-8">
 	<title>{block name="pagetitle"}{message name={$pagetitle}}{/block}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
+	<meta name="description" content="">
+    <meta name="author" content="">
+
+
 	<!-- styles -->
-	{foreach from="$styles" item="thisstyle"}
-		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
-	{/foreach}
+	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap.min.css" />
 	<style type="text/css">
       body {
         padding-top: 60px;
@@ -27,12 +28,24 @@
         }
       }
     </style>
-	
-	<!-- scripts -->
-	{foreach from="$scripts" item="thisscript"}
-		<script src="{$thisscript}" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap-responsive.min.css" />    
+	{foreach from="$styles" item="thisstyle"}
+		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
 	{/foreach}
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="lib/bootstrap-2.3.1/js/html5shiv.js"></script>
+    <![endif]-->
 
+    <!-- Fav and touch icons -->
+    <!--
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="lib/bootstrap-2.3.1/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="lib/bootstrap-2.3.1/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="lib/bootstrap-2.3.1/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="lib/bootstrap-2.3.1/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="lib/bootstrap-2.3.1/ico/favicon.png">
+        -->
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -122,6 +135,10 @@
       </footer>
 
     </div><!--/.fluid-container-->	
-	
+		
+	<!-- scripts -->
+	{foreach from="$scripts" item="thisscript"}
+		<script src="{$thisscript}" type="text/javascript"></script>
+	{/foreach}
 </body>
 </html>
