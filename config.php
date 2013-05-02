@@ -49,6 +49,9 @@ $cRequiredExtensions = array(
 	"PDO",
 	"SPL",
 	"OpenSSL",
+	"pcre",
+	"session",
+	"date",
 	);
 	
 // use Tidy to make pretty HTML.
