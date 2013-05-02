@@ -38,11 +38,12 @@ HTML;
 		$message = "Unhandled " . $exception;
 		
 		// strip out database passwords from the error message
-		global $cMyDotCnfFile;
+		global $cMyDotCnfFile, $cFilePath;
 		$mycnf = parse_ini_file($cMyDotCnfFile);
 		
 		$message = str_replace($mycnf['user'], "webserver", $message);
 		$message = str_replace($mycnf['password'], "sekrit", $message);
+		$message = str_replace($cFilePath, "", $message);
 		
 		ob_end_clean();
 		
@@ -84,7 +85,7 @@ HTML;
 		{
 			if(!extension_loaded($ext))
 			{
-				throw new ExtensionUnavailableException($ext);
+				throw new ExtensionUnavailableException("The required PHP extension $ext is not installed.");
 			}
 		}
 	}
@@ -95,9 +96,6 @@ HTML;
 			$cDatabaseModule, $cIncludePath, $cLoggerName, $gLogger;
 
 		set_exception_handler(array("WebStart","exceptionHandler"));
-	
-		// check all the required PHP extensions are enabled on this SAPI
-		$this->checkPhpExtensions();
 	
 		// start output buffering before anything is sent to the browser.
 		ob_start();
@@ -111,6 +109,9 @@ HTML;
 		require_once($cIncludePath . "/_Exceptions.php");
 		
 		spl_autoload_register("WebStart::autoLoader");
+        
+		// check all the required PHP extensions are enabled on this SAPI
+		$this->checkPhpExtensions();
 
 		Session::start();
 
