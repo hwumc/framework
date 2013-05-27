@@ -13,6 +13,9 @@ class WebStart
 	
 	public static function exceptionHandler($exception)
 	{
+        // smarty would be nice to use, but it COULD BE smarty that throws the errors.
+        // Let's build something ourselves, and hope it works.
+        
 		$errorDocument = <<<HTML
 <!DOCTYPE html>
 <html lang="en"><head>
@@ -37,15 +40,22 @@ HTML;
 		global $cMyDotCnfFile, $cFilePath;
 		$mycnf = parse_ini_file($cMyDotCnfFile);
 		
+        // clean any secret variables
 		$message = str_replace($mycnf['user'], "webserver", $message);
 		$message = str_replace($mycnf['password'], "sekrit", $message);
 		$message = str_replace($cFilePath, "", $message);
 		
+        // clear and discard any content that's been saved to the output buffer
 		ob_end_clean();
 		
 		global $cWebPath;
 		
-		print str_replace('$1$', $message, $errorDocument);
+        // push exception into the document.
+        $message = str_replace('$1$', $message, $errorDocument);
+        
+        // output the document
+		print $message;
+        
 		die;
 	}
 	
@@ -86,6 +96,12 @@ HTML;
 		}
 	}
 	
+	/**
+	 * Setup the environment ready to start main execution.
+     * 
+     * Assume nothing is running yet.
+	 * @return
+	 */
 	private function setupEnvironment()
 	{
 		global $gDatabase, $cDatabaseConnectionString, $cMyDotCnfFile, 
@@ -104,11 +120,13 @@ HTML;
 		// (Depends on some smarty stuff)
 		require_once($cIncludePath . "/_Exceptions.php");
 		
+        // register our autoloader
 		spl_autoload_register("WebStart::autoLoader");
         
 		// check all the required PHP extensions are enabled on this SAPI
 		$this->checkPhpExtensions();
 
+        // start session management
 		Session::start();
 
 		$gLogger = new $cLoggerName;
