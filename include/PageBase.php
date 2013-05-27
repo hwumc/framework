@@ -61,15 +61,24 @@ abstract class PageBase
 		return $this->mIsSpecialPage;
 	}
 
-	protected function setupPage()
-	{
-		$this->mSmarty = new Smarty();
+    private function setupSmarty()
+    {
+        Hooks::run("PreSetupSmarty", array($this->mSmarty) );
+        
+    	$this->mSmarty = new Smarty();
 
 		$this->mSmarty->registerPlugin(
 			"function",
 			"message", 
 			array( "Message", "smartyFuncMessage" )
 			);
+       
+        Hooks::run("PostSetupSmarty", array($this->mSmarty) );
+    }
+    
+	protected function setupPage()
+	{
+        $this->setupSmarty();
 		
 		$this->addSystemCssJs();
 		

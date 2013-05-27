@@ -96,6 +96,46 @@ HTML;
 		}
 	}
 	
+    private function setupAutoloader()
+    {
+        // not caught by the autoloader :(
+		require_once('smarty/Smarty.class.php');
+
+		// many exceptions defined in one file, let's not clutter stuff. 
+		// This ofc breaks the autoloading, so let's include them all now.
+		// (Depends on some smarty stuff)
+		require_once($cIncludePath . "/_Exceptions.php");
+		
+        // register our autoloader
+		spl_autoload_register("WebStart::autoLoader");
+    }
+    
+    private function setupDatabase() 
+    {
+        if(!extension_loaded($cDatabaseModule))
+		{
+			throw new ExtensionUnavailableException($cDatabaseModule);
+		}
+		
+		$mycnf = parse_ini_file($cMyDotCnfFile);
+		
+		$gDatabase = new Database($cDatabaseConnectionString,$mycnf["user"], $mycnf["password"]);
+		
+		// tidy up sensitive data we don't want lying around.
+		unset($mycnf);
+		
+		// use exceptions on failed database stuff
+		$gDatabase->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        Hooks::run("PostSetupDatabase", array( $gDatabase ) );
+    }
+    
+    private function initialiseLogger()
+    {
+        $gLogger = new $cLoggerName;
+		$gLogger->log("Initialising logger for path " . $_SERVER["REQUEST_URI"]);
+    }
+    
 	/**
 	 * Setup the environment ready to start main execution.
      * 
@@ -112,40 +152,29 @@ HTML;
 		// start output buffering before anything is sent to the browser.
 		ob_start();
 	
-		// not caught by the autoloader :(
-		require_once('smarty/Smarty.class.php');
-
-		// many exceptions defined in one file, let's not clutter stuff. 
-		// This ofc breaks the autoloading, so let's include them all now.
-		// (Depends on some smarty stuff)
-		require_once($cIncludePath . "/_Exceptions.php");
-		
-        // register our autoloader
-		spl_autoload_register("WebStart::autoLoader");
+        $this->setupAutoloader();
         
 		// check all the required PHP extensions are enabled on this SAPI
 		$this->checkPhpExtensions();
 
+        // initialise logger.
+        $this->initialiseLogger();
+		
+        // initialise database
+        $this->setupDatabase();
+        
+        // **** At this point, everything should be loaded to run normally.
+        
+        
+        
+        Hooks::run("PreSessionStart");
+        
         // start session management
 		Session::start();
 
-		$gLogger = new $cLoggerName;
-		$gLogger->log("Initialising logger for path " . $_SERVER["REQUEST_URI"]);
+        Hooks::run("PostSessionStart");
 			
-		if(!extension_loaded($cDatabaseModule))
-		{
-			throw new ExtensionUnavailableException($cDatabaseModule);
-		}
 		
-		$mycnf = parse_ini_file($cMyDotCnfFile);
-		
-		$gDatabase = new Database($cDatabaseConnectionString,$mycnf["user"], $mycnf["password"]);
-		
-		// tidy up sensitive data we don't want lying around.
-		unset($mycnf);
-		
-		// use exceptions on failed database stuff
-		$gDatabase->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
 		// can we tidy up the output with tidy before we send it?
 		if(extension_loaded("tidy"))
