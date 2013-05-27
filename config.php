@@ -25,12 +25,11 @@ $cLoggerName="FakeLogger";
 // array of global scripts to be included
 // Global scripts are included first, then local scripts second
 $cGlobalScripts = array(
-	$cWebPath . '/scripts/jquery.js',
-	$cWebPath . '/scripts/bootstrap.js',
+	$cWebPath . '/scripts/jquery-1.9.1.min.js',
+	$cWebPath . '/scripts/bootstrap.min.js',
 	);
 
 $cGlobalStyles = array(
-	$cWebPath . '/style/bootstrap.css',
 	);
 	
 // Languages accepted by the system
@@ -50,6 +49,9 @@ $cRequiredExtensions = array(
 	"PDO",
 	"SPL",
 	"OpenSSL",
+	"pcre",
+	"session",
+	"date",
 	);
 	
 // use Tidy to make pretty HTML.

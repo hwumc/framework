@@ -15,34 +15,31 @@ class WebStart
 	{
 		$errorDocument = <<<HTML
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en"><head>
+<meta charset="utf-8">
 <title>Oops! Something went wrong!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{$cWebPath}/style/bootstrap.min.css" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; }
-body { background: #fff; margin: 7% 0 0 7%; padding: 1em 1em 1em; font: 14px/21px sans-serif; color: #333; max-width: 560px; }
-img { float: left; margin: 0 2em 2em 0; }
-a img { border: 0; }
-h1 { margin-top: 1em; font-size: 1.2em; }
-p { margin: 0.7em 0 1em 0; }
-a { color: #0645AD; text-decoration: none; }
-a:hover { text-decoration: underline; }
-em { font-style: normal; color: #777; }
-p.sub { margin: 0.7em 0 1em 0; font-style: normal; color: #777;
-pre {color: #777; font-size: xx-small;}
+  body {
+	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+  }
 </style>
-</head><body><h1>Oops! Something went wrong!</h1>
-<p>We'll work on fixing this for you, so why not come back later?</p>
-<p><em>If our trained monkeys ask, tell them this:</em><pre>$1$</pre></p>
-</body></html>
+<link href="{$cWebPath}/style/bootstrap-responsive.min.css" rel="stylesheet">
+</head><body><div class="container">
+<h1>Oops! Something went wrong!</h1>
+<p>We'll work on fixing this for you, so why not come back later?</p><p class="muted">If our trained monkeys ask, tell them this:</p><pre>$1$</pre>
+</div></body></html>
 HTML;
 		$message = "Unhandled " . $exception;
 		
 		// strip out database passwords from the error message
-		global $cMyDotCnfFile;
+		global $cMyDotCnfFile, $cFilePath;
 		$mycnf = parse_ini_file($cMyDotCnfFile);
 		
 		$message = str_replace($mycnf['user'], "webserver", $message);
 		$message = str_replace($mycnf['password'], "sekrit", $message);
+		$message = str_replace($cFilePath, "", $message);
 		
 		ob_end_clean();
 		
@@ -84,7 +81,7 @@ HTML;
 		{
 			if(!extension_loaded($ext))
 			{
-				throw new ExtensionUnavailableException($ext);
+				throw new ExtensionUnavailableException("The required PHP extension $ext is not installed.");
 			}
 		}
 	}
@@ -95,9 +92,6 @@ HTML;
 			$cDatabaseModule, $cIncludePath, $cLoggerName, $gLogger;
 
 		set_exception_handler(array("WebStart","exceptionHandler"));
-	
-		// check all the required PHP extensions are enabled on this SAPI
-		$this->checkPhpExtensions();
 	
 		// start output buffering before anything is sent to the browser.
 		ob_start();
@@ -111,6 +105,9 @@ HTML;
 		require_once($cIncludePath . "/_Exceptions.php");
 		
 		spl_autoload_register("WebStart::autoLoader");
+        
+		// check all the required PHP extensions are enabled on this SAPI
+		$this->checkPhpExtensions();
 
 		Session::start();
 
