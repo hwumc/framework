@@ -98,6 +98,8 @@ HTML;
 	
     private function setupAutoloader()
     {
+        global $cIncludePath;
+        
         // not caught by the autoloader :(
 		require_once('smarty/Smarty.class.php');
 
@@ -112,6 +114,11 @@ HTML;
     
     private function setupDatabase() 
     {
+        global $gDatabase, $cDatabaseConnectionString, $cMyDotCnfFile, 
+            $cDatabaseModule;
+        
+        Hooks::run("PreSetupDatabase");
+        
         if(!extension_loaded($cDatabaseModule))
 		{
 			throw new ExtensionUnavailableException($cDatabaseModule);
@@ -132,6 +139,7 @@ HTML;
     
     private function initialiseLogger()
     {
+        global $cLoggerName, $gLogger;
         $gLogger = new $cLoggerName;
 		$gLogger->log("Initialising logger for path " . $_SERVER["REQUEST_URI"]);
     }
@@ -144,9 +152,6 @@ HTML;
 	 */
 	private function setupEnvironment()
 	{
-		global $gDatabase, $cDatabaseConnectionString, $cMyDotCnfFile, 
-			$cDatabaseModule, $cIncludePath, $cLoggerName, $gLogger;
-
 		set_exception_handler(array("WebStart","exceptionHandler"));
 	
 		// start output buffering before anything is sent to the browser.
@@ -165,17 +170,13 @@ HTML;
         
         // **** At this point, everything should be loaded to run normally.
         
-        
-        
         Hooks::run("PreSessionStart");
-        
         // start session management
 		Session::start();
-
         Hooks::run("PostSessionStart");
-			
 		
-		
+        
+        
 		// can we tidy up the output with tidy before we send it?
 		if(extension_loaded("tidy"))
 		{ // Yes!
