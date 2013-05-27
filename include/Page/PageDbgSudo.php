@@ -20,7 +20,7 @@ class PageDbgSudo extends PageBase
             Session::addSessionRight( "diagnostic-sudo" );
             
             global $cScriptPath;
-			header( "Location: " . $cScriptPath  );
+            $this->mHeaders[] = "Location: " . $cScriptPath;
         } else {
             $this->mBasePage = "webmaster/sudo.tpl";
             

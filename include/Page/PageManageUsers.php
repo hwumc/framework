@@ -128,7 +128,7 @@ class PageManageUsers extends PageBase
 			}
 			
 			global $cScriptPath;
-			header( "Location: " . $cScriptPath . "/ManageUsers" );
+			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageUsers" );
 		} else {
 		    $this->mBasePage = "users/userdelete.tpl";
 		}
