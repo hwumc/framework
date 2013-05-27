@@ -75,9 +75,9 @@ HTML;
 
 	private function checkPhpExtensions()
 	{
-		global $cRequiredExtensions;
+		global $cRequiredPhpExtensions;
 		
-		foreach($cRequiredExtensions as $ext)
+		foreach($cRequiredPhpExtensions as $ext)
 		{
 			if(!extension_loaded($ext))
 			{

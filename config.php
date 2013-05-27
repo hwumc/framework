@@ -45,7 +45,7 @@ $cDefaultLanguage = 'en-GB';
 // The PDO module required is set above, and need not be listed here also.
 // Optional ones such as Tidy should not be listed here - the site will run 
 // without them. 
-$cRequiredExtensions = array(
+$cRequiredPhpExtensions = array(
 	"PDO",
 	"SPL",
 	"OpenSSL",
