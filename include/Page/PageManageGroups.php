@@ -134,7 +134,7 @@ class PageManageGroups extends PageBase
 			}
 			
 			global $cScriptPath;
-			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageGroups" );
+			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageGroups";
 			
 			
 		} else {
@@ -175,7 +175,7 @@ class PageManageGroups extends PageBase
 			$tug->save();
             			
 			global $cScriptPath;
-			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageGroups" );
+			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageGroups";
 		} else {
 			$rightlist = Right::getAllRegisteredRights();
 		
