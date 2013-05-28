@@ -315,9 +315,19 @@ abstract class PageBase
     
     private static function findPageFile($pagename) {
         global $cIncludePath;
-        $filepath = $cIncludePath . "/Page/" . $pagename . ".php";
         
-        return file_exists($filepath) ? $filepath : false;
+        $pageSearchPaths = array($cIncludePath . "/Page/");
+        $pageSearchPaths = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        
+        foreach($pageSearchPaths as $path) 
+        {
+            if(file_exists($path . $pagename . ".php"))
+            {
+                return $path . $pagename . ".php"; 
+            }
+        }
+        
+        return false;
     }
 	
 	protected function error($messageTag)
@@ -367,46 +377,59 @@ abstract class PageBase
 	}	
 	
 	public static function getRegisteredPages() {
-		global $cIncludePath ;
-		$filelist = scandir( $cIncludePath . "/Page/" );
+		global $cIncludePath;
+        
+        $pageSearchPaths = array($cIncludePath . "/Page/");
+        $pageSearchPaths = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        
+        $pages = array();
+        
+        foreach($pageSearchPaths as $path) 
+        {
+		    $filelist = scandir( $path );
 		
-		$pages = array();
-		
-		foreach( $filelist as $f ) {
-			if( preg_match( "/^Page(.*)\.php$/", $f ) !== 1 ) {
-				continue;
-			}
+		    foreach( $filelist as $f ) {
+			    if( preg_match( "/^Page(.*)\.php$/", $f ) !== 1 ) {
+				    continue;
+			    }
 			
-			require_once( $cIncludePath . "/Page/" . $f );
+			    require_once( $path . $f );
 			
-			$f = preg_replace( "/^(.*)\.php$/", "\${1}", $f );
-			$obj = new $f();
+			    $f = preg_replace( "/^(.*)\.php$/", "\${1}", $f );
+			    $obj = new $f();
 			
-			if( $obj->isProtected() && (! $obj->isSpecialPage() ) ) {
-				$pages[] = $f;
-			}
-		}
+			    if( $obj->isProtected() && (! $obj->isSpecialPage() ) ) {
+				    $pages[] = $f;
+			    }
+		    }
+        }
 		
 		return $pages;
 	}	
     
 	public static function getAllPages() {
-		global $cIncludePath ;
-		$filelist = scandir( $cIncludePath . "/Page/" );
+		global $cIncludePath;
+        
+        $pageSearchPaths = array($cIncludePath . "/Page/");
+        $pageSearchPaths = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        
+        $pages = array();
+        
+        foreach($pageSearchPaths as $path) 
+        {
+		    $filelist = scandir( $path );
 		
-		$pages = array();
-		
-		foreach( $filelist as $f ) {
-			if( preg_match( "/^Page(.*)\.php$/", $f ) !== 1 ) {
-				continue;
-			}
+		    foreach( $filelist as $f ) {
+			    if( preg_match( "/^Page(.*)\.php$/", $f ) !== 1 ) {
+				    continue;
+			    }
 			
-			require_once( $cIncludePath . "/Page/" . $f );
+			    require_once( $path . $f );
 			
-			$f = preg_replace( "/^(.*)\.php$/", "\${1}", $f );
-			$pages[] = $f;
-			
-		}
+			    $f = preg_replace( "/^(.*)\.php$/", "\${1}", $f );
+				$pages[] = $f;
+		    }
+        }
 		
 		return $pages;
 	}
