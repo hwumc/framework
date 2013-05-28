@@ -26,6 +26,13 @@ class PageSoftwareVersion extends PageBase
 		global $cSoftwareGithubRepo;
 		$this->mSmarty->assign( "softwarerepo", $cSoftwareGithubRepo );
         
+        global $cRequiredPhpExtensions;
+        $this->mSmarty->assign( "phpextensions", $cRequiredPhpExtensions);
+        
+        global $gDatabase;
+        $this->mSmarty->assign( "pdodriver", $gDatabase->getAttribute(PDO::ATTR_DRIVER_NAME));
+        $this->mSmarty->assign( "pdoserverversion", $gDatabase->getAttribute(PDO::ATTR_SERVER_VERSION));
+        
         global $gLoadedExtensions;
         $this->mSmarty->assign( "extensions", $gLoadedExtensions );
         $this->mSmarty->assign( "extensionsCount", count($gLoadedExtensions) );

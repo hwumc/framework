@@ -13,26 +13,41 @@
 	<h3>{message name="SoftwareVersion-extensions-header"}</h3>
 	{if $extensionsCount > 0}
 		<table class="table table-striped table-hover">
-		<tr>
-			<th>{message name="SoftwareVersion-extensions-name"}</th>
-			<th>{message name="SoftwareVersion-extensions-revision"}</th>
-			<th>{message name="SoftwareVersion-extensions-description"}</th>
-			<th>{message name="SoftwareVersion-extensions-authors"}</th>
-		</tr>
-		{foreach from=$extensions item=ext}
-			{$info=$ext->getExtensionInformation()}
-			<tr>
-				<th>{$info.name}</th>
-				<td><a href="{$info.gitviewer}{$ext->getGitInformation()}">{$ext->getGitInformation()|truncate:9:"":true}</a></td>
-				<td>{$info.description}</td>
-				<td>
-					{foreach $ext->getAuthors() as $name}{$name|escape}{if not $name@last}, {/if}{/foreach}
+			<thead>
+				<tr>
+					<th>{message name="SoftwareVersion-extensions-name"}</th>
+					<th>{message name="SoftwareVersion-extensions-revision"}</th>
+					<th>{message name="SoftwareVersion-extensions-description"}</th>
+					<th>{message name="SoftwareVersion-extensions-authors"}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach from=$extensions item=ext}
+					{$info=$ext->getExtensionInformation()}
+					<tr>
+						<th>{$info.name}</th>
+						<td><a href="{$info.gitviewer}{$ext->getGitInformation()}">{$ext->getGitInformation()|truncate:9:"":true}</a></td>
+						<td>{$info.description}</td>
+						<td>
+							{foreach $ext->getAuthors() as $name}{$name|escape}{if not $name@last}, {/if}{/foreach}
 					
-				</td>
-			</tr>
-		{/foreach}
+						</td>
+					</tr>
+				{/foreach}
+			</tbody>
 		</table>
 	{else}
 		{message name="SoftwareVersion-extensions-none"}
 	{/if}
+	<h3>{message name="SoftwareVersion-server-header"}</h3>
+	<table class="table table-bordered table-condensed">
+		<tbody>
+			<tr><th>{message name="SoftwareVersion-server-phpversion"}</th><td>{phpversion()}</td></tr>
+			{foreach $phpextensions as $phpext}
+				<tr><th>PHP: {$phpext}</th><td>{phpversion($phpext)}</td></tr>
+			{/foreach}
+			<tr><th>{message name="SoftwareVersion-server-pdodriver"}</th><td>{$pdodriver}</td></tr>
+			<tr><th>{message name="SoftwareVersion-server-pdoserverversion"}</th><td>{$pdoserverversion}</td></tr>
+		</tbody>
+	</table>
 {/block}
