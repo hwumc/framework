@@ -68,6 +68,8 @@ $cTidyOptions = array(
 	
 $cSoftwareGithubRepo = "stwalkerster/siteframework";
 
+$cExtensions = array();
+
 ///////////////// don't put new config options below this line
 
 if(file_exists("config.local.php"))

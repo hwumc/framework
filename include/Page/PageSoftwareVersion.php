@@ -14,6 +14,7 @@ class PageSoftwareVersion extends PageBase
 		exec( 'git log --format="%cN <%cE>"', $authors );
 		$authors = array_count_values( $authors );
 		arsort( $authors );
+        $authors = array_keys( $authors);
 	
 		$this->mBasePage="webmaster/git.tpl";
 		$this->mSmarty->assign( "softwaredesc", exec( "git describe --always --dirty" ) );
@@ -24,5 +25,9 @@ class PageSoftwareVersion extends PageBase
 		
 		global $cSoftwareGithubRepo;
 		$this->mSmarty->assign( "softwarerepo", $cSoftwareGithubRepo );
+        
+        global $gLoadedExtensions;
+        $this->mSmarty->assign( "extensions", $gLoadedExtensions );
+        $this->mSmarty->assign( "extensionsCount", count($gLoadedExtensions) );
 	}
 }

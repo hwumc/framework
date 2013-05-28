@@ -80,7 +80,7 @@ HTML;
 			return;
 		}
 		
-		throw new Exception("File not found");
+		//throw new Exception("File not found");
 	}	
 
 	private function checkPhpExtensions()
@@ -144,6 +144,38 @@ HTML;
 		$gLogger->log("Initialising logger for path " . $_SERVER["REQUEST_URI"]);
     }
     
+    private function loadExtensions()
+    {
+        global $cExtensions, $gLogger, $gLoadedExtensions;
+        
+        $gLoadedExtensions = array();
+        
+        foreach ($cExtensions as $class => $file)
+        {
+            if( class_exists($class) ) continue;
+            
+            if( file_exists( $file ) )
+            {
+                require_once( $file );
+                if( class_exists($class) && array_key_exists("Extension", class_parents($class) ))
+                {
+                    $ext = new $class();
+                    $ext->setup();
+                    $gLoadedExtensions[] = $ext;
+                }
+                else
+                {
+                    $gLogger->log("Could not load extension $class: class does not exist or does not inherit Extension.");
+                }
+            }
+            else
+            {
+                $gLogger->log("Could not load extension $class: $file does not exist.");
+            }
+        }
+        
+    }
+    
 	/**
 	 * Setup the environment ready to start main execution.
      * 
@@ -165,6 +197,9 @@ HTML;
         // initialise logger.
         $this->initialiseLogger();
 		
+        // load extensions
+        $this->loadExtensions();
+        
         // initialise database
         $this->setupDatabase();
         
