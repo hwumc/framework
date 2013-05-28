@@ -26,7 +26,7 @@ abstract class Extension
     public abstract function getExtensionInformation();
     
     /**
-     * Returns file path of entered class
+     * Returns relative file path of entered class
      * 
      */
     protected abstract function autoload($class);
@@ -44,10 +44,13 @@ abstract class Extension
             function($class) 
             {
                 $filepath = $this->autoload($class);
-                if(file_exists($filepath))
+                if($filepath !== null)
                 {
-	                require_once($filepath);
-	                return;
+                    $extensionFilePath = $this->getExtensionInformation()['filepath'];
+                    if(file_exists($extensionFilePath . '/' . $filepath)) {
+	                    require_once($extensionFilePath . '/' . $filepath);
+	                    return;
+                    }
                 }
             }
         );

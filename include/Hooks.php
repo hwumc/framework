@@ -37,7 +37,7 @@ class Hooks
 		$gLogger->log("Checking hook registry for $hook");
 		// is there a hook registered?
 		if(isset(self::$registeredHandlers[$hook]))
-		{
+		{            
 			$gLogger->log("Running callbacks for hook $hook");
 		
 			if(! (isset($parameters) && is_array($parameters)))
@@ -51,7 +51,7 @@ class Hooks
 				//$gLogger->log("Running callback $func for hook $hook");
 				//$gLogger->log("   params: " . print_r($parameters,true));
 				$retval = call_user_func($func, $parameters);
-				if($retval !== false)
+				if($retval !== false && $retval !== null)
 				{
 					$gLogger->log("	Callback successful.");
 					$parameters[0] = $retval;

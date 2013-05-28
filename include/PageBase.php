@@ -316,14 +316,21 @@ abstract class PageBase
     private static function findPageFile($pagename) {
         global $cIncludePath;
         
-        $pageSearchPaths = array($cIncludePath . "/Page/");
-        $pageSearchPaths = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        $pageSearchPaths = array();
+        Hooks::register("BuildPageSearchPaths", function($args) {
+            global $cIncludePath;
+            $args[0][] = $cIncludePath . "/Page/";
+            return $args;
+        });
+        
+        $result = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        $pageSearchPaths = $result[0];
         
         foreach($pageSearchPaths as $path) 
         {
-            if(file_exists($path . $pagename . ".php"))
+            if(file_exists($path . '/' . $pagename . ".php"))
             {
-                return $path . $pagename . ".php"; 
+                return $path . '/' . $pagename . ".php"; 
             }
         }
         
@@ -380,7 +387,8 @@ abstract class PageBase
 		global $cIncludePath;
         
         $pageSearchPaths = array($cIncludePath . "/Page/");
-        $pageSearchPaths = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        $result = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        $pageSearchPaths = $result[0];
         
         $pages = array();
         
@@ -411,7 +419,8 @@ abstract class PageBase
 		global $cIncludePath;
         
         $pageSearchPaths = array($cIncludePath . "/Page/");
-        $pageSearchPaths = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        $result = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
+        $pageSearchPaths = $result[0];
         
         $pages = array();
         
