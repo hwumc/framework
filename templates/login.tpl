@@ -8,9 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-	{foreach from="$styles" item="thisstyle"}
-		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
-	{/foreach}
+	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap.min.css" />
     <style type="text/css">
       body {
         padding-top: 40px;
@@ -48,7 +46,11 @@
 	  }
 
     </style>
-	
+	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap-responsive.min.css" />
+	{foreach from="$styles" item="thisstyle"}
+		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
+	{/foreach}
+
 	<!-- scripts -->
 	{foreach from="$scripts" item="thisscript"}
 		<script src="{$thisscript}" type="text/javascript"></script>
@@ -68,6 +70,9 @@
       </form>
 
     </div> <!-- /container -->
-
+	<!-- scripts -->
+	{foreach from="$scripts" item="thisscript"}
+		<script src="{$thisscript}" type="text/javascript"></script>
+	{/foreach}
   </body>
 </html>

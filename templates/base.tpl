@@ -38,14 +38,6 @@
       <script src="lib/bootstrap-2.3.1/js/html5shiv.js"></script>
     <![endif]-->
 
-    <!-- Fav and touch icons -->
-    <!--
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="lib/bootstrap-2.3.1/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="lib/bootstrap-2.3.1/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="lib/bootstrap-2.3.1/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="lib/bootstrap-2.3.1/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="lib/bootstrap-2.3.1/ico/favicon.png">
-        -->
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
