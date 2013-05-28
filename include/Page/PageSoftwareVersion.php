@@ -17,7 +17,7 @@ class PageSoftwareVersion extends PageBase
         $authors = array_keys( $authors);
 	
 		$this->mBasePage="webmaster/git.tpl";
-		$this->mSmarty->assign( "softwaredesc", exec( "git describe --always --dirty" ) );
+		$this->mSmarty->assign( "softwaredesc", exec( "git describe --always --dirty" ) . " (" . exec( 'git log -n1 --pretty=format:"%cD, %cr"' ) . ")" );
 		$this->mSmarty->assign( "softwarebranch", str_replace( "refs/heads/", "", exec( 'git symbolic-ref -q HEAD' ) ) );
 		$this->mSmarty->assign( "softwaresha", exec( 'git log -n1 --format=%H' ) );
 		$this->mSmarty->assign( "softwareorigin", exec( 'git config remote.origin.url' ) );
