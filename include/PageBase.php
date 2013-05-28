@@ -242,10 +242,12 @@ abstract class PageBase
 		$pagename = "Page" . $page;
 		
 		global $cIncludePath, $gLogger;
-		$filepath = $cIncludePath . "/Page/" . $pagename . ".php";
-		
-		if(file_exists($filepath))
-		{
+        
+        $filepath = self::findPageFile($pagename);
+        
+        
+		if($filepath !== false)
+		{ // found it.
 			require_once($filepath);
 		}
 		else
@@ -310,6 +312,13 @@ abstract class PageBase
 			throw new Exception();
 		}
 	}
+    
+    private static function findPageFile($pagename) {
+        global $cIncludePath;
+        $filepath = $cIncludePath . "/Page/" . $pagename . ".php";
+        
+        return file_exists($filepath) ? $filepath : false;
+    }
 	
 	protected function error($messageTag)
 	{
