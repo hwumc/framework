@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>siteframework</Name>
+    <ProjectGuid>{1d936447-5486-4e58-a682-1822c130bcfa}</ProjectGuid>
+    <RootNamespace>hwumc</RootNamespace>
+    <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+    <IISProjectUrl>http://localhost:48476/</IISProjectUrl>
+    <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+    <Server>IISExpress</Server>
+    <PublishEvent>None</PublishEvent>
+    <PHPDevAutoPort>True</PHPDevAutoPort>
+    <PHPDevPort>27235</PHPDevPort>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include=".gitignore" />
+    <Compile Include=".mailmap" />
+    <Compile Include=".my.cnf" />
+    <Compile Include="config.local.php" />
+    <Compile Include="config.php" />
+    <Compile Include="include\Extension.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="index.php" />
+    <Compile Include="documentation\.gitignore" />
+    <Compile Include="documentation\Doxyfile" />
+    <Compile Include="images\glyphicons-halflings-white.png" />
+    <Compile Include="images\glyphicons-halflings.png" />
+    <Compile Include="include\Database.php" />
+    <Compile Include="include\DataObject.php" />
+    <Compile Include="include\FakeLogger.php" />
+    <Compile Include="include\FileLogger.php" />
+    <Compile Include="include\Hooks.php" />
+    <Compile Include="include\ILogger.php" />
+    <Compile Include="include\Mail.php" />
+    <Compile Include="include\PageBase.php" />
+    <Compile Include="include\Right.php" />
+    <Compile Include="include\Session.php" />
+    <Compile Include="include\SystemLogger.php" />
+    <Compile Include="include\WebRequest.php" />
+    <Compile Include="include\WebStart.php" />
+    <Compile Include="include\_Exceptions.php" />
+    <Compile Include="include\DataObjects\Group.php" />
+    <Compile Include="include\DataObjects\Message.php" />
+    <Compile Include="include\DataObjects\Rightgroup.php" />
+    <Compile Include="include\DataObjects\User.php" />
+    <Compile Include="include\DataObjects\Usergroup.php" />
+    <Compile Include="include\Page\Page404.php" />
+    <Compile Include="include\Page\PageChangePassword.php" />
+    <Compile Include="include\Page\PageEditProfile.php" />
+    <Compile Include="include\Page\PageForgotPassword.php" />
+    <Compile Include="include\Page\PageLogin.php" />
+    <Compile Include="include\Page\PageLogout.php" />
+    <Compile Include="include\Page\PageMain.php" />
+    <Compile Include="include\Page\PageManageGroups.php" />
+    <Compile Include="include\Page\PageManageUsers.php" />
+    <Compile Include="include\Page\PageMessageEditor.php" />
+    <Compile Include="include\Page\PagePhpInfo.php" />
+    <Compile Include="include\Page\PageRegister.php" />
+    <Compile Include="include\Page\PageSoftwareVersion.php" />
+    <Compile Include="include\Page\README.txt" />
+    <Compile Include="scripts\bootstrap.js" />
+    <Compile Include="scripts\jquery.js" />
+    <Compile Include="scripts\readme.txt" />
+    <Compile Include="smarty\debug.tpl" />
+    <Compile Include="smarty\Smarty.class.php" />
+    <Compile Include="smarty\SmartyBC.class.php" />
+    <Compile Include="smarty\plugins\block.textformat.php" />
+    <Compile Include="smarty\plugins\function.counter.php" />
+    <Compile Include="smarty\plugins\function.cycle.php" />
+    <Compile Include="smarty\plugins\function.fetch.php" />
+    <Compile Include="smarty\plugins\function.html_checkboxes.php" />
+    <Compile Include="smarty\plugins\function.html_image.php" />
+    <Compile Include="smarty\plugins\function.html_options.php" />
+    <Compile Include="smarty\plugins\function.html_radios.php" />
+    <Compile Include="smarty\plugins\function.html_select_date.php" />
+    <Compile Include="smarty\plugins\function.html_select_time.php" />
+    <Compile Include="smarty\plugins\function.html_table.php" />
+    <Compile Include="smarty\plugins\function.mailto.php" />
+    <Compile Include="smarty\plugins\function.math.php" />
+    <Compile Include="smarty\plugins\modifier.capitalize.php" />
+    <Compile Include="smarty\plugins\modifier.date_format.php" />
+    <Compile Include="smarty\plugins\modifier.debug_print_var.php" />
+    <Compile Include="smarty\plugins\modifier.escape.php" />
+    <Compile Include="smarty\plugins\modifier.regex_replace.php" />
+    <Compile Include="smarty\plugins\modifier.replace.php" />
+    <Compile Include="smarty\plugins\modifier.spacify.php" />
+    <Compile Include="smarty\plugins\modifier.truncate.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.cat.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.count_characters.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.count_paragraphs.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.count_sentences.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.count_words.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.default.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.escape.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.from_charset.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.indent.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.lower.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.noprint.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.string_format.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.strip.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.strip_tags.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.to_charset.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.unescape.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.upper.php" />
+    <Compile Include="smarty\plugins\modifiercompiler.wordwrap.php" />
+    <Compile Include="smarty\plugins\outputfilter.trimwhitespace.php" />
+    <Compile Include="smarty\plugins\shared.escape_special_chars.php" />
+    <Compile Include="smarty\plugins\shared.literal_compiler_param.php" />
+    <Compile Include="smarty\plugins\shared.make_timestamp.php" />
+    <Compile Include="smarty\plugins\shared.mb_str_replace.php" />
+    <Compile Include="smarty\plugins\shared.mb_unicode.php" />
+    <Compile Include="smarty\plugins\shared.mb_wordwrap.php" />
+    <Compile Include="smarty\plugins\variablefilter.htmlspecialchars.php" />
+    <Compile Include="smarty\sysplugins\smarty_cacheresource.php" />
+    <Compile Include="smarty\sysplugins\smarty_cacheresource_custom.php" />
+    <Compile Include="smarty\sysplugins\smarty_cacheresource_keyvaluestore.php" />
+    <Compile Include="smarty\sysplugins\smarty_config_source.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_cacheresource_file.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compilebase.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_append.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_assign.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_block.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_break.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_call.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_capture.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_config_load.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_continue.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_debug.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_eval.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_extends.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_for.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_foreach.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_function.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_if.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_include.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_include_php.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_insert.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_ldelim.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_nocache.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_block_plugin.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_function_plugin.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_modifier.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_object_block_function.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_object_function.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_print_expression.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_registered_block.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_registered_function.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_private_special_variable.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_rdelim.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_section.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_setfilter.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_compile_while.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_config.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_configfilelexer.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_configfileparser.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_config_file_compiler.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_data.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_debug.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_filter_handler.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_function_call_handler.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_get_include_path.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_nocache_insert.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_parsetree.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_resource_eval.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_resource_extends.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_resource_file.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_resource_php.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_resource_registered.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_resource_stream.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_resource_string.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_smartytemplatecompiler.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_template.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_templatebase.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_templatecompilerbase.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_templatelexer.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_templateparser.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_utility.php" />
+    <Compile Include="smarty\sysplugins\smarty_internal_write_file.php" />
+    <Compile Include="smarty\sysplugins\smarty_resource.php" />
+    <Compile Include="smarty\sysplugins\smarty_resource_custom.php" />
+    <Compile Include="smarty\sysplugins\smarty_resource_recompiled.php" />
+    <Compile Include="smarty\sysplugins\smarty_resource_uncompiled.php" />
+    <Compile Include="smarty\sysplugins\smarty_security.php" />
+    <Compile Include="sql\blackfish database.sql" />
+    <Compile Include="sql\initial-database.sql" />
+    <Compile Include="sql\patch1 - message index.sql" />
+    <Compile Include="sql\patch2 - internaluser table.sql" />
+    <Compile Include="style\bootstrap.css" />
+    <Compile Include="style\bootstrap.min.css" />
+    <Compile Include="templates\403.tpl" />
+    <Compile Include="templates\base.tpl" />
+    <Compile Include="templates\blank.tpl" />
+    <Compile Include="templates\errorbar.tpl" />
+    <Compile Include="templates\login.tpl" />
+    <Compile Include="templates\forgotpassword\main.tpl" />
+    <Compile Include="templates\forgotpassword\sent.tpl" />
+    <Compile Include="templates\groups\groupcreate.tpl" />
+    <Compile Include="templates\groups\groupdelete.tpl" />
+    <Compile Include="templates\groups\grouppage.tpl" />
+    <Compile Include="templates\messageeditor\clear.tpl" />
+    <Compile Include="templates\messageeditor\messages.tpl" />
+    <Compile Include="templates\messageeditor\pager.tpl" />
+    <Compile Include="templates\messageeditor\rmunset.tpl" />
+    <Compile Include="templates\profile\chpw.tpl" />
+    <Compile Include="templates\profile\edit.tpl" />
+    <Compile Include="templates\register\register.tpl" />
+    <Compile Include="templates\register\registered.tpl" />
+    <Compile Include="templates\users\userdelete.tpl" />
+    <Compile Include="templates\users\useredit.tpl" />
+    <Compile Include="templates\users\userlist.tpl" />
+    <Compile Include="templates\webmaster\git.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="documentation" />
+    <Folder Include="images" />
+    <Folder Include="include" />
+    <Folder Include="scripts" />
+    <Folder Include="smarty" />
+    <Folder Include="sql" />
+    <Folder Include="style" />
+    <Folder Include="templates" />
+    <Folder Include="include\DataObjects" />
+    <Folder Include="include\Page" />
+    <Folder Include="smarty\plugins" />
+    <Folder Include="smarty\sysplugins" />
+    <Folder Include="templates\forgotpassword" />
+    <Folder Include="templates\groups" />
+    <Folder Include="templates\messageeditor" />
+    <Folder Include="templates\profile" />
+    <Folder Include="templates\register" />
+    <Folder Include="templates\users" />
+    <Folder Include="templates\webmaster" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="templates\webmaster\sudo.tpl">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+</Project>
