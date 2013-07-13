@@ -320,11 +320,12 @@ abstract class PageBase
         Hooks::register("BuildPageSearchPaths", function($args) {
             global $cIncludePath;
             $args[0][] = $cIncludePath . "/Page/";
-            return $args;
+            return $args[0];
         });
         
+        $pageSearchPaths = array();
         $result = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
-        $pageSearchPaths = $result[0];
+        $pageSearchPaths = array_unique( $result );
         
         foreach($pageSearchPaths as $path) 
         {
@@ -386,9 +387,9 @@ abstract class PageBase
 	public static function getRegisteredPages() {
 		global $cIncludePath;
         
-        $pageSearchPaths = array($cIncludePath . "/Page/");
+        $pageSearchPaths = array();
         $result = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
-        $pageSearchPaths = $result[0];
+        $pageSearchPaths = array_unique( $result );
         
         $pages = array();
         
@@ -418,9 +419,9 @@ abstract class PageBase
 	public static function getAllPages() {
 		global $cIncludePath;
         
-        $pageSearchPaths = array($cIncludePath . "/Page/");
+        $pageSearchPaths = array();
         $result = Hooks::run( "BuildPageSearchPaths", array( $pageSearchPaths ) );
-        $pageSearchPaths = $result[0];
+        $pageSearchPaths = array_unique( $result );
         
         $pages = array();
         

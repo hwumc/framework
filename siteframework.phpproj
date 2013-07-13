@@ -63,7 +63,6 @@
     <Compile Include="include\Page\PageManageGroups.php" />
     <Compile Include="include\Page\PageManageUsers.php" />
     <Compile Include="include\Page\PageMessageEditor.php" />
-    <Compile Include="include\Page\PagePhpInfo.php" />
     <Compile Include="include\Page\PageRegister.php" />
     <Compile Include="include\Page\PageSoftwareVersion.php" />
     <Compile Include="include\Page\README.txt" />
