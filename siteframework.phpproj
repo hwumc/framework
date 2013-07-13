@@ -27,7 +27,13 @@
     <Compile Include=".my.cnf" />
     <Compile Include="config.local.php" />
     <Compile Include="config.php" />
+    <Compile Include="include\DataObjects\UserPropGroup.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="include\Extension.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="include\Page\PageManageUserPropGroups.php">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="index.php" />
