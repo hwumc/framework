@@ -106,6 +106,9 @@ class Message extends DataObject
 	{
 		if(strlen($name) == 0)
 			throw new Exception("Cannot create an error Message object with no name!");
+        
+		if(strlen($name) > 75)
+			throw new FieldTooLargeException("Cannot create a Message object with a name that large!");
 	
 		if(strlen($language) == 0)
 			throw new Exception("Cannot create an error Message object with no language!");
