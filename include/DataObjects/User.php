@@ -15,34 +15,12 @@ class User extends DataObject
 	protected $email;
 	protected $emailconfirmation;
 	protected $godmode;
-
-	public static function getIdList()
-	{
-		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT id FROM user;");
-		$statement->execute();
-
-		$result = $statement->fetchAll(PDO::FETCH_COLUMN,0);
-
-		return $result;
-	}		
     
     public static function getLoggedIn()
 	{
 		return User::getById( Session::getLoggedInUser() );
 	}	
 	
-	public static function getArray() {
-		$output = array();
-		$input = User::getIdList();
-		
-		foreach( $input as $g ) {
-			$output[ $g ] = User::getById( $g );
-		}
-		
-		return $output;
-	}
-
 	public static function getByName($name)
 	{
 		global $gLogger;

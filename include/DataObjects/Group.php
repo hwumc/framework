@@ -8,17 +8,6 @@ class Group extends DataObject
 	protected $description;
 	protected $owner;
 
-	public static function getIdList()
-	{
-		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT id FROM `group`;");
-		$statement->execute();
-
-		$result = $statement->fetchAll( PDO::FETCH_COLUMN, 0 );
-
-		return $result;
-	}
-    
 	public static function getByName( $id ) {
 		global $gDatabase;
 		$statement = $gDatabase->prepare("SELECT * FROM `group` WHERE name = :id LIMIT 1;");
@@ -34,18 +23,6 @@ class Group extends DataObject
 		}
 
 		return $resultObject;
-	}
-    
-	public static function getArray() {
-		$output = array();
-		$input = Group::getIdList();
-		
-		foreach( $input as $g ) {
-			$group = Group::getById( $g );
-			$output[ $g ] = $group;
-		}
-		
-		return $output;
 	}
 	
 	public function save()

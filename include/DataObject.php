@@ -14,6 +14,28 @@ abstract class DataObject
 
 	protected $isNew = true;
 
+    public static function getIdList()
+	{
+		global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT id FROM `" . strtolower( get_called_class() ). "`;");
+		$statement->execute();
+
+		$result = $statement->fetchAll( PDO::FETCH_COLUMN, 0 );
+
+		return $result;
+	}
+    
+	public static function getArray() {
+		$output = array();
+		$input = self::getIdList();
+		
+		foreach( $input as $g ) {
+			$output[ $g ] = self::getById( $g );
+		}
+		
+		return $output;
+	}
+    
 	/**
 	 * Retrieves a data object by it's row ID.
 	 */
