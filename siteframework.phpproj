@@ -8,11 +8,12 @@
     <OutputType>Library</OutputType>
     <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
     <IISProjectUrl>http://localhost:48476/</IISProjectUrl>
-    <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
-    <Server>IISExpress</Server>
+    <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+    <Server>Custom</Server>
     <PublishEvent>None</PublishEvent>
     <PHPDevAutoPort>True</PHPDevAutoPort>
     <PHPDevPort>27235</PHPDevPort>
+    <CustomServerUrl>http://localhost:8089/hwumc/</CustomServerUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
