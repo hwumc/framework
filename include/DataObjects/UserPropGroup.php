@@ -5,8 +5,6 @@ if(!defined("HMS")) die("Invalid entry point");
 class UserPropGroup extends DataObject
 {
     protected $name;
-    protected $message;
-    
     public function getName()
     {
         return $this->name;   
@@ -15,16 +13,6 @@ class UserPropGroup extends DataObject
     public function setName($name) 
     {
         $this->name = $name;   
-    }
-    
-    public function getMessageKey()
-    {
-        return $this->message;   
-    }
-    
-    public function setMessageKey($key)
-    {
-        $this->message = $key;   
     }
     
     public function save()
@@ -42,16 +30,7 @@ class UserPropGroup extends DataObject
 			}
 			else
 			{
-                global $gDatabase;
-				$statement = $gDatabase->prepare("UPDATE userpropgroup SET name = :name WHERE id = :id LIMIT 1;");
-
-				$statement->bindParam(":id", $this->id);
-				$statement->bindParam(":name", $this->name);
-
-				if(! $statement->execute())
-				{
-					throw new SaveFailedException();
-				}
+				throw new SaveFailedException();
 			}
 		}
 		else
