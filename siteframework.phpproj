@@ -190,10 +190,6 @@
     <Compile Include="smarty\sysplugins\smarty_resource_recompiled.php" />
     <Compile Include="smarty\sysplugins\smarty_resource_uncompiled.php" />
     <Compile Include="smarty\sysplugins\smarty_security.php" />
-    <Compile Include="sql\blackfish database.sql" />
-    <Compile Include="sql\initial-database.sql" />
-    <Compile Include="sql\patch1 - message index.sql" />
-    <Compile Include="sql\patch2 - internaluser table.sql" />
     <Compile Include="style\bootstrap.css" />
     <Compile Include="style\bootstrap.min.css" />
     <Compile Include="templates\403.tpl" />
@@ -221,11 +217,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="documentation" />
+    <Folder Include="extensions\" />
     <Folder Include="images" />
     <Folder Include="include" />
     <Folder Include="scripts" />
     <Folder Include="smarty" />
-    <Folder Include="sql" />
     <Folder Include="style" />
     <Folder Include="templates" />
     <Folder Include="include\DataObjects" />
@@ -241,6 +237,9 @@
     <Folder Include="templates\webmaster" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="extensions\README.txt">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="templates\webmaster\sudo.tpl">
       <SubType>Content</SubType>
     </Content>
