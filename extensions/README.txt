@@ -1,0 +1,1 @@
+This directory is empty (ish) for you to put extensions in.
