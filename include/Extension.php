@@ -37,24 +37,23 @@ abstract class Extension
      */
     protected abstract function registerHooks();
 
+    protected function reallyAutoload($class)
+    {
+        $filepath = $this->autoload($class);
+        if($filepath !== null)
+        {
+            $extinfo = $this->getExtensionInformation();
+            $extensionFilePath = $extinfo['filepath'];
+            if(file_exists($extensionFilePath . '/' . $filepath)) {
+	            require_once($extensionFilePath . '/' . $filepath);
+	            return;
+            }
+        }
+    }
      
     public function setup()
     {
-        spl_autoload_register( 
-            function($class) 
-            {
-                $filepath = $this->autoload($class);
-                if($filepath !== null)
-                {
-                    $extinfo = $this->getExtensionInformation();
-                    $extensionFilePath = $extinfo['filepath'];
-                    if(file_exists($extensionFilePath . '/' . $filepath)) {
-	                    require_once($extensionFilePath . '/' . $filepath);
-	                    return;
-                    }
-                }
-            }
-        );
+        spl_autoload_register(array($this, 'reallyAutoload'));
             
         $this->registerHooks();
     
