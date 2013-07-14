@@ -46,7 +46,8 @@ abstract class Extension
                 $filepath = $this->autoload($class);
                 if($filepath !== null)
                 {
-                    $extensionFilePath = $this->getExtensionInformation()['filepath'];
+                    $extinfo = $this->getExtensionInformation();
+                    $extensionFilePath = $extinfo['filepath'];
                     if(file_exists($extensionFilePath . '/' . $filepath)) {
 	                    require_once($extensionFilePath . '/' . $filepath);
 	                    return;
@@ -63,7 +64,8 @@ abstract class Extension
 	public function getGitInformation()
 	{
         $dir = getcwd();
-        chdir($this->getExtensionInformation()['filepath']);
+        $extinfo = $this->getExtensionInformation();
+        chdir($extinfo['filepath']);
         return exec( 'git log -n1 --format=%H' );
         chdir($dir);
 	}
@@ -71,7 +73,8 @@ abstract class Extension
 	public function getAuthors()
 	{
         $dir = getcwd();
-        chdir($this->getExtensionInformation()['filepath']);
+        $extinfo = $this->getExtensionInformation();
+        chdir($extinfo['filepath']);
         
 		$authors = array();
 		exec( 'git log --format="%cN <%cE>"', $authors );
