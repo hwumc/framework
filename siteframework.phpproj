@@ -33,6 +33,9 @@
     <Compile Include="include\Extension.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="include\Page\PageManageDynamicRights.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="index.php" />
     <Compile Include="documentation\.gitignore" />
     <Compile Include="documentation\Doxyfile" />

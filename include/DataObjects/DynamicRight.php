@@ -25,7 +25,7 @@ class DynamicRight extends DataObject
     public function delete() 
     {
         global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM pageright WHERE id = :id LIMIT 1;");
+		$statement = $gDatabase->prepare("DELETE FROM dynamicright WHERE id = :id LIMIT 1;");
 		$statement->bindParam(":id", $this->id);
 		$statement->execute();
 
@@ -39,7 +39,7 @@ class DynamicRight extends DataObject
 
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO pageright VALUES (null, :right);");
+			$statement = $gDatabase->prepare("INSERT INTO dynamicright VALUES (null, :right);");
 			$statement->bindParam(":right", $this->right);
 			if($statement->execute())
 			{
