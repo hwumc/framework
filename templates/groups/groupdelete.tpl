@@ -17,7 +17,7 @@
 	<div class="control-group">
 		<div class="controls">
 			<div class="btn-group">
-				<button type="submit" class="btn btn-danger">{message name="delete"}</button><a href="{$cScriptPath}/ManageGroups" class="btn">{message name="getmeoutofhere"}</a>
+				<button type="submit" class="btn btn-danger">{message name="delete"}</button><a href="{$cScriptPath}/{$pageslug}" class="btn">{message name="getmeoutofhere"}</a>
 			</div>
 		</div>
 	</div>
