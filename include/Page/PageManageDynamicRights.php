@@ -9,7 +9,7 @@ class PageManageDynamicRights extends PageBase
 	{
 		$this->mPageUseRight = "dynamicrights-view";
 		$this->mMenuGroup = "Users";
-		$this->mPageRegisteredRights = array( "dynamicrights-edit", "dynamicrights-create", "dynamicrights-delete" );
+		$this->mPageRegisteredRights = array( "dynamicrights-create", "dynamicrights-delete" );
 		
 	}
 

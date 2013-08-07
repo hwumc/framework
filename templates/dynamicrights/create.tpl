@@ -7,7 +7,7 @@
 	<div class="control-group">
 		<label class="control-label" for="name">{message name="{$pageslug}-create-name"}</label>
 		<div class="controls">
-			<input type="text" id="name" name="name" placeholder="{message name="{$pageslug}-create-name-placeholder"}" required="true" value="{$name}" {if $allowEdit == "false"}disabled="true" {/if}/>
+			<input type="text" id="name" name="name" placeholder="{message name="{$pageslug}-create-name-placeholder"}" required="true" value="{$name}" />
 			<span class="help-inline">{message name="{$pageslug}-create-name-help"}</span>
 		</div>
 	</div>
