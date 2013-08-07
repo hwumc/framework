@@ -252,6 +252,11 @@ abstract class PageBase
 		}
 		else
 		{	// oops, couldn't find the requested page, let's fail gracefully.
+            $extensionContent = self::getExtensionContent( $page );
+            if( $extensionContent !== null ) {
+                return $extensionContent;   
+            }
+            
 			$pagename = "Page404";
 			$filepath = $cIncludePath . "/Page/" . $pagename . ".php";
 			require_once($filepath);
@@ -312,6 +317,17 @@ abstract class PageBase
 			throw new Exception();
 		}
 	}
+    
+    private static function getExtensionContent($page) {
+        $result = Hooks::run( "GetExtensionContent", array( null, $page ) );
+        
+        if($result !== null)
+        {
+            return $result;   
+        }
+        
+        return null;   
+    }
     
     private static function findPageFile($pagename) {
         global $cIncludePath;
