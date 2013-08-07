@@ -15,6 +15,10 @@ class Right
 			$rights = array_merge( $rights, $pr );
 		}
         
+        foreach( DynamicRight::getArray() as $dr ) {
+            $rights[] = $dr->getRight();    
+        }
+        
 		if($includePseudoRights) {
             $rights = array_merge( $rights, self::getAllPseudoRights() );
         }
