@@ -31,7 +31,7 @@ class Group extends DataObject
 
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO `group` VALUES (null, :name, :desc, 0);");
+			$statement = $gDatabase->prepare("INSERT INTO `group` VALUES (null, :name, :desc, null);");
 			$statement->bindParam(":name", $this->name);
 			$statement->bindParam(":desc", $this->description);
 			if($statement->execute())
@@ -96,7 +96,7 @@ class Group extends DataObject
     public function setOwner( $owner ) {
         // unset
         if( $owner == null ) {
-            $this->owner = 0;
+            $this->owner = null;
             return;
         }
         
@@ -105,7 +105,7 @@ class Group extends DataObject
         // special case: myself is 0
         // this means that groups are created owning themselves.
         if( $this->owner == $this->id ) {
-            $this->owner = 0;
+            $this->owner = null;
         }
     }
     

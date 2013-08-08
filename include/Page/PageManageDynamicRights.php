@@ -56,6 +56,13 @@ class PageManageDynamicRights extends PageBase
 			$g = DynamicRight::getById( $data[1] );
 			if( $g !== false ) {
 				if( WebRequest::post( "confirm" ) == "confirmed" ) {
+                    
+                    foreach( Rightgroup::getArray() as $rg ) {
+                        if( $rg->getRight() == $g->getRight() ) {
+                            $rg->delete();    
+                        }
+                    }
+                    
 					$g->delete();
 					$this->mSmarty->assign("content", "deleted" );
 				}
@@ -63,7 +70,6 @@ class PageManageDynamicRights extends PageBase
 			
 			global $cScriptPath;
 			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageDynamicRights";
-			
 			
 		} else {
 			$this->mBasePage = "dynamicrights/delete.tpl";

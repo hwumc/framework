@@ -128,6 +128,16 @@ class PageManageGroups extends PageBase
 			$g = Group::getById( $data[1] );
 			if( $g !== false ) {
 				if( WebRequest::post( "confirm" ) == "confirmed" ) {
+                    
+                    $children = Group::getArray();
+                    foreach ($children as $child)
+                    {
+                        if( $child->getOwner()->getId() == $g->getId() ) {
+                            $child->setOwner( $child );
+                            $child->save();
+                        }
+                    }
+                    
 					$g->delete();
 					$this->mSmarty->assign("content", "deleted" );
 				}
