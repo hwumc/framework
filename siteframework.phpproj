@@ -30,7 +30,13 @@
     <Compile Include="include\DataObjects\DynamicRight.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="include\DataObjects\MenuGroup.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="include\Extension.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="include\Page\PageManageMenuGroups.php">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="include\Page\PageManageDynamicRights.php">
