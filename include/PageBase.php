@@ -202,6 +202,9 @@ abstract class PageBase
 					$ex->getCode()
 					);
 			}
+            else {
+                throw $ex;
+            }
 		}
 		
 		// set any HTTP headers
