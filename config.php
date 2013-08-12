@@ -30,6 +30,7 @@ $cGlobalScripts = array(
 	);
 
 $cGlobalStyles = array(
+    $cWebPath . '/style/editor-override.css',
 	);
 	
 // Languages accepted by the system
