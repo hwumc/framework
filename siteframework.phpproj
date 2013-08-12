@@ -9,17 +9,21 @@
     <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
     <IISProjectUrl>http://localhost:48476/</IISProjectUrl>
     <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-    <Server>PHPDev</Server>
+    <Server>IISExpress</Server>
     <PublishEvent>None</PublishEvent>
     <PHPDevAutoPort>True</PHPDevAutoPort>
     <PHPDevPort>27235</PHPDevPort>
-    <CustomServerUrl>http://localhost:8089/hwumc/</CustomServerUrl>
+    <CustomServerUrl>http://beta.hwumc.co.uk/</CustomServerUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'beta' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\beta\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include=".gitignore" />
