@@ -43,10 +43,13 @@
 	tinymce.init({
 		selector: "textarea",
 		plugins: [
-			"advlist autolink lists link image charmap print preview anchor",
+			"advlist autolink lists link image charmap preview anchor",
 			"searchreplace visualblocks code fullscreen",
-			"insertdatetime media table contextmenu paste"
+			"insertdatetime media table contextmenu paste",
+			"hr wordcount visualchars nonbreaking directionality textcolor"
 		],
+		removed_menuitems: 'newdocument',
+		content_css: '{$cWebPath}/style/bootstrap-responsive.min.css',
 	});
 	</script>
 </head>
