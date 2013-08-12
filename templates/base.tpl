@@ -38,20 +38,8 @@
       <script src="lib/bootstrap-2.3.1/js/html5shiv.js"></script>
     <![endif]-->
 
-	<script src="{$cWebPath}/scripts/tinymce/tinymce.min.js"></script>
-	<script type="text/javascript">
-	tinymce.init({
-		selector: "textarea",
-		plugins: [
-			"advlist autolink lists link image charmap preview anchor",
-			"searchreplace visualblocks code fullscreen",
-			"insertdatetime media table contextmenu paste",
-			"hr wordcount visualchars nonbreaking directionality textcolor"
-		],
-		removed_menuitems: 'newdocument',
-		content_css: '{$cWebPath}/style/bootstrap-responsive.min.css',
-	});
-	</script>
+	{block name="head"}
+	{/block}
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
