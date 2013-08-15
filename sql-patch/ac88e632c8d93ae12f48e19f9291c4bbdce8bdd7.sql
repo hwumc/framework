@@ -1,1 +1,0 @@
-ALTER TABLE `group` ADD COLUMN `owner` INT(11) NOT NULL DEFAULT 0  AFTER `description` ;

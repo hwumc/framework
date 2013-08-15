@@ -38,6 +38,8 @@
       <script src="lib/bootstrap-2.3.1/js/html5shiv.js"></script>
     <![endif]-->
 
+	{block name="head"}
+	{/block}
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

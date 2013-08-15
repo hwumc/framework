@@ -9,17 +9,21 @@
     <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
     <IISProjectUrl>http://localhost:48476/</IISProjectUrl>
     <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-    <Server>Custom</Server>
+    <Server>IISExpress</Server>
     <PublishEvent>None</PublishEvent>
     <PHPDevAutoPort>True</PHPDevAutoPort>
     <PHPDevPort>27235</PHPDevPort>
-    <CustomServerUrl>http://localhost:8089/hwumc/</CustomServerUrl>
+    <CustomServerUrl>http://beta.hwumc.co.uk/</CustomServerUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'beta' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\beta\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include=".gitignore" />
@@ -30,10 +34,22 @@
     <Compile Include="include\DataObjects\UserPropGroup.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="include\DataObjects\DynamicRight.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="include\DataObjects\MenuGroup.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="include\Extension.php">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="include\Page\PageManageUserPropGroups.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="include\Page\PageManageMenuGroups.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="include\Page\PageManageDynamicRights.php">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="index.php" />
@@ -196,10 +212,6 @@
     <Compile Include="smarty\sysplugins\smarty_resource_recompiled.php" />
     <Compile Include="smarty\sysplugins\smarty_resource_uncompiled.php" />
     <Compile Include="smarty\sysplugins\smarty_security.php" />
-    <Compile Include="sql\blackfish database.sql" />
-    <Compile Include="sql\initial-database.sql" />
-    <Compile Include="sql\patch1 - message index.sql" />
-    <Compile Include="sql\patch2 - internaluser table.sql" />
     <Compile Include="style\bootstrap.css" />
     <Compile Include="style\bootstrap.min.css" />
     <Compile Include="templates\403.tpl" />
@@ -227,11 +239,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="documentation" />
+    <Folder Include="extensions\" />
     <Folder Include="images" />
     <Folder Include="include" />
     <Folder Include="scripts" />
     <Folder Include="smarty" />
-    <Folder Include="sql" />
     <Folder Include="style" />
     <Folder Include="templates" />
     <Folder Include="include\DataObjects" />
@@ -247,6 +259,9 @@
     <Folder Include="templates\webmaster" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="extensions\README.txt">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="templates\webmaster\sudo.tpl">
       <SubType>Content</SubType>
     </Content>

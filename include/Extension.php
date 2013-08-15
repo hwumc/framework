@@ -37,23 +37,23 @@ abstract class Extension
      */
     protected abstract function registerHooks();
 
+    protected function reallyAutoload($class)
+    {
+        $filepath = $this->autoload($class);
+        if($filepath !== null)
+        {
+            $extinfo = $this->getExtensionInformation();
+            $extensionFilePath = $extinfo['filepath'];
+            if(file_exists($extensionFilePath . '/' . $filepath)) {
+	            require_once($extensionFilePath . '/' . $filepath);
+	            return;
+            }
+        }
+    }
      
     public function setup()
     {
-        spl_autoload_register( 
-            function($class) 
-            {
-                $filepath = $this->autoload($class);
-                if($filepath !== null)
-                {
-                    $extensionFilePath = $this->getExtensionInformation()['filepath'];
-                    if(file_exists($extensionFilePath . '/' . $filepath)) {
-	                    require_once($extensionFilePath . '/' . $filepath);
-	                    return;
-                    }
-                }
-            }
-        );
+        spl_autoload_register(array($this, 'reallyAutoload'));
             
         $this->registerHooks();
     
@@ -63,7 +63,8 @@ abstract class Extension
 	public function getGitInformation()
 	{
         $dir = getcwd();
-        chdir($this->getExtensionInformation()['filepath']);
+        $extinfo = $this->getExtensionInformation();
+        chdir($extinfo['filepath']);
         return exec( 'git log -n1 --format=%H' );
         chdir($dir);
 	}
@@ -71,7 +72,8 @@ abstract class Extension
 	public function getAuthors()
 	{
         $dir = getcwd();
-        chdir($this->getExtensionInformation()['filepath']);
+        $extinfo = $this->getExtensionInformation();
+        chdir($extinfo['filepath']);
         
 		$authors = array();
 		exec( 'git log --format="%cN <%cE>"', $authors );

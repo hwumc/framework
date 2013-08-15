@@ -15,6 +15,7 @@ class WebStart
 	{
         // smarty would be nice to use, but it COULD BE smarty that throws the errors.
         // Let's build something ourselves, and hope it works.
+        global $cWebPath;
         
 		$errorDocument = <<<HTML
 <!DOCTYPE html>

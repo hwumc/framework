@@ -368,7 +368,5 @@ class User extends DataObject
 	
 		$this->setPassword( $pass );
 		$this->save();
-		
-		throw new NotImplementedException();
 	}
 }

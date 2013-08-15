@@ -30,6 +30,7 @@ $cGlobalScripts = array(
 	);
 
 $cGlobalStyles = array(
+    $cWebPath . '/style/editor-override.css',
 	);
 	
 // Languages accepted by the system
@@ -77,5 +78,5 @@ if(file_exists("config.local.php"))
 	require_once("config.local.php");
 }
 
-// Load the main hotel file
+// Load the main webstart file
 require_once($cIncludePath . "/WebStart.php");
