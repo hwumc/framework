@@ -31,13 +31,6 @@
 						<div class="controls">
 							<input type="email" id="email" name="email" placeholder="{message name="{$pageslug}-email-placeholder"}" required="true" />
 						</div>
-					</div>	
-				</fieldset>
-			</div>
-			<div class="span6">
-				<fieldset>
-					<legend>{message name="{$pageslug}-header-you"}</legend>
-
 					<div class="control-group">
 						<label class="control-label" for="realname">{message name="{$pageslug}-realname-label"}</label>
 						<div class="controls">

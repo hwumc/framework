@@ -11,11 +11,6 @@
 				<input type="email" id="email" class="input-xlarge" name="email" placeholder="{message name="{$pageslug}-email-placeholder"}" required="true" value="{$email}" />
 			</div>
 		</div>	
-	</fieldset>
-
-	<fieldset>
-		<legend>{message name="{$pageslug}-header-you"}</legend>
-
 		<div class="control-group">
 			<label class="control-label" for="realname">{message name="{$pageslug}-realname-label"}</label>
 			<div class="controls">
