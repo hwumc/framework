@@ -244,8 +244,10 @@
     <Folder Include="include\Page" />
     <Folder Include="smarty\plugins" />
     <Folder Include="smarty\sysplugins" />
+    <Folder Include="templates\dynamicrights\" />
     <Folder Include="templates\forgotpassword" />
     <Folder Include="templates\groups" />
+    <Folder Include="templates\menugroup\" />
     <Folder Include="templates\messageeditor" />
     <Folder Include="templates\profile" />
     <Folder Include="templates\register" />
@@ -254,6 +256,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="extensions\README.txt">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\dynamicrights\create.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\dynamicrights\delete.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\dynamicrights\list.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\menugroup\create.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\menugroup\delete.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\menugroup\list.tpl">
       <SubType>Content</SubType>
     </Content>
     <Content Include="templates\webmaster\sudo.tpl">
