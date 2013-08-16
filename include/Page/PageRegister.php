@@ -29,21 +29,6 @@ class PageRegister extends PageBase
 			if( WebRequest::post( "realname" ) == "" || WebRequest::post( "realname" ) === false )  throw new MissingFieldException();
 			$u->setFullName( WebRequest::post( "realname" ) );
 			
-			if( WebRequest::post( "mobile" ) == "" || WebRequest::post( "mobile" ) === false )  throw new MissingFieldException();
-			$u->setMobile( WebRequest::post( "mobile" ) );
-		
-			if( WebRequest::post( "contactname" ) == "" || WebRequest::post( "contactname" ) === false )  throw new MissingFieldException();
-			$u->setEmergencyContact( WebRequest::post( "contactname" ) );
-            
-            if( WebRequest::post( "contactphone" ) == "" || WebRequest::post( "contactphone" ) === false )  throw new MissingFieldException();
-			$u->setEmergencyContactPhone( WebRequest::post( "contactphone" ) );    
-            
-            if( WebRequest::post( "experience" ) == "" || WebRequest::post( "experience" ) === false )  throw new MissingFieldException();
-			$u->setExperience( WebRequest::post( "experience" ) );
-            
-            if( WebRequest::post( "medical" ) === false )  throw new MissingFieldException();
-			$u->setExperience( WebRequest::post( "medical" ) );
-		
 			$u->save();
 		
 			$this->mBasePage = "register/registered.tpl";

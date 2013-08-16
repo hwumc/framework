@@ -22,17 +22,6 @@ class DynamicRight extends DataObject
         $this->right = $right;
     }
     
-    public function delete() 
-    {
-        global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM dynamicright WHERE id = :id LIMIT 1;");
-		$statement->bindParam(":id", $this->id);
-		$statement->execute();
-
-		$this->id=0;
-		$this->isNew = true;
-    }
-    
     public function save()
     {
         global $gDatabase;

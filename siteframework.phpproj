@@ -9,11 +9,11 @@
     <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
     <IISProjectUrl>http://localhost:48476/</IISProjectUrl>
     <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-    <Server>IISExpress</Server>
+    <Server>Custom</Server>
     <PublishEvent>None</PublishEvent>
     <PHPDevAutoPort>True</PHPDevAutoPort>
     <PHPDevPort>27235</PHPDevPort>
-    <CustomServerUrl>http://beta.hwumc.co.uk/</CustomServerUrl>
+    <CustomServerUrl>http://localhost:8089/shopping/</CustomServerUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
@@ -250,8 +250,10 @@
     <Folder Include="include\Page" />
     <Folder Include="smarty\plugins" />
     <Folder Include="smarty\sysplugins" />
+    <Folder Include="templates\dynamicrights\" />
     <Folder Include="templates\forgotpassword" />
     <Folder Include="templates\groups" />
+    <Folder Include="templates\menugroup\" />
     <Folder Include="templates\messageeditor" />
     <Folder Include="templates\profile" />
     <Folder Include="templates\register" />
@@ -260,6 +262,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="extensions\README.txt">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\dynamicrights\create.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\dynamicrights\delete.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\dynamicrights\list.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\menugroup\create.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\menugroup\delete.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="templates\menugroup\list.tpl">
       <SubType>Content</SubType>
     </Content>
     <Content Include="templates\webmaster\sudo.tpl">

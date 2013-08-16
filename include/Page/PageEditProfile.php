@@ -20,11 +20,6 @@ class PageEditProfile extends PageBase
 			
 			$user->setEmail( WebRequest::post( "email" ) );
 			$user->setFullName( WebRequest::post( "realname" ) );
-			$user->setMobile( WebRequest::post( "mobile" ) );
-			$user->setEmergencyContact( WebRequest::post( "contactname" ) );
-			$user->setEmergencyContactPhone( WebRequest::post( "contactphone" ) );
-			$user->setExperience( WebRequest::post( "experience" ) );
-			$user->setMedical( WebRequest::post( "medical" ) );
 			
 			$user->save();
 			
@@ -37,12 +32,6 @@ class PageEditProfile extends PageBase
 			$this->mBasePage = "profile/edit.tpl";
 			$this->mSmarty->assign( "email", $user->getEmail() );
 			$this->mSmarty->assign( "realname", $user->getFullName() );
-			$this->mSmarty->assign( "mobile", $user->getMobile() );
-			$this->mSmarty->assign( "experience", $user->getExperience() );
-			$this->mSmarty->assign( "medicalcheck", ($user->getMedical() == "" ? "" : 'checked="true"') );
-			$this->mSmarty->assign( "medical", $user->getMedical() );
-			$this->mSmarty->assign( "contactname", $user->getEmergencyContact() );
-			$this->mSmarty->assign( "contactphone", $user->getEmergencyContactPhone() );
 		}
 	}
 }
