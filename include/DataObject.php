@@ -76,4 +76,28 @@ abstract class DataObject
 		$this->id=0;
 		$this->isNew = true;
     }
+    
+    public function canDelete()
+    {
+        global $gDatabase;
+        if($gDatabase->beginTransaction())
+        {
+            $success = false;
+            
+            try
+            {
+                $this->delete();
+                $success = true;
+            }    
+            catch (PDOException $ex)
+            {
+                $success = false;   
+            }
+            
+            $gDatabase->rollBack();
+            
+            return $success;
+        }
+        else return false;
+    }
 }
