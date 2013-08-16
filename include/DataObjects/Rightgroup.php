@@ -32,17 +32,6 @@ class Rightgroup extends DataObject
 		}
 	}
 	
-	public function delete()
-	{
-		global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM rightgroup WHERE id = :id LIMIT 1;");
-		$statement->bindParam(":id", $this->id);
-		$statement->execute();
-
-		$this->id=0;
-		$this->isNew = true;
-	}
-	
 	public function getGroupID() { return $this->group; }
 	public function getGroup() { return Group::getById( $this->group ); }
 	public function getRight() { return $this->right; }

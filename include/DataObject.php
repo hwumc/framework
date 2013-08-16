@@ -17,7 +17,7 @@ abstract class DataObject
     public static function getIdList()
 	{
 		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT id FROM `" . strtolower( get_called_class() ). "`;");
+		$statement = $gDatabase->prepare("SELECT id FROM `" . strtolower( get_called_class() ) . "`;");
 		$statement->execute();
 
 		$result = $statement->fetchAll( PDO::FETCH_COLUMN, 0 );
@@ -41,7 +41,7 @@ abstract class DataObject
 	 */
 	public static function getById($id) {
 		global $gDatabase;
-		$statement = $gDatabase->prepare("SELECT * FROM `" . strtolower( get_called_class() ). "` WHERE id = :id LIMIT 1;");
+		$statement = $gDatabase->prepare("SELECT * FROM `" . strtolower( get_called_class() ) . "` WHERE id = :id LIMIT 1;");
 		$statement->bindParam(":id", $id);
 
 		$statement->execute();
@@ -66,5 +66,14 @@ abstract class DataObject
 		return $this->id;
 	}
 
-	public abstract function delete();
+	public function delete() 
+    {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("DELETE FROM `" . strtolower( get_called_class() ) . "` WHERE id = :id LIMIT 1;");
+		$statement->bindParam(":id", $this->id);
+		$statement->execute();
+
+		$this->id=0;
+		$this->isNew = true;
+    }
 }

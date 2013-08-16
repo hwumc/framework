@@ -278,17 +278,6 @@ class User extends DataObject
 		return $menu;
 	}
 	
-	public function delete()
-	{
-		global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM user WHERE id = :id LIMIT 1;");
-		$statement->bindParam(":id", $this->id);
-		$statement->execute();
-
-		$this->id=0;
-		$this->isNew = true;
-	}
-	
 	public function getGroups() {
 		global $gDatabase;
 		$statement = $gDatabase->prepare("SELECT g.*, 'false' as isNew FROM usergroup ug INNER JOIN `group` g ON g.id = ug.`group` WHERE ug.user = :id;");
