@@ -7,7 +7,12 @@
 			</thead>
 			<tbody>
 				{foreach from="$userlist" item="user" key="userid" }
-				<tr><th>{$user->getFullName()}</th><td>{$user->getUsername()}</td><td>{$user->getEmail()}</td>{if $allowEdit == "true"}<td><a href="{$cScriptPath}/{$pageslug}/edit/{$userid}" class="btn btn-small btn-warning">{message name="{$pageslug}-button-edit"}</a></td>{/if}{if $allowDelete == "true"}<td>{if $user->isGod()}{else}<a href="{$cScriptPath}/{$pageslug}/delete/{$userid}" class="btn btn-small btn-danger">{message name="{$pageslug}-button-delete"}</a>{/if}</td>{/if}</tr>
+				<tr>
+					<th>{$user->getFullName()|escape}</th>
+					<td>{$user->getUsername()|escape}</td>
+					<td>{$user->getEmail()|escape}</td>
+					{if $allowEdit == "true"}<td><a href="{$cScriptPath}/{$pageslug}/edit/{$userid}" class="btn btn-small btn-warning">{message name="{$pageslug}-button-edit"}</a></td>{/if}
+					{if $allowDelete == "true"}<td>{if $user->isGod()}{else}<a href="{if $group->canDelete()}{$cScriptPath}{$cScriptPath}/{$pageslug}/delete/{$userid}{else}#{/if}" class="btn btn-small btn-danger {if !$group->canDelete()}disabled{/if}">{message name="{$pageslug}-button-delete"}</a>{/if}</td>{/if}</tr>
 				{/foreach}
 			</tbody>
 		</table>

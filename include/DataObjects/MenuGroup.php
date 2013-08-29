@@ -40,16 +40,6 @@ class MenuGroup extends DataObject
         $this->displayname = $displayName;
     }
     
-    public function delete() {
-        global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM menugroup WHERE id = :id LIMIT 1;");
-		$statement->bindParam(":id", $this->id);
-		$statement->execute();
-
-		$this->id=0;
-		$this->isNew = true;
-    }
-    
     public function save()
     {
         global $gDatabase;

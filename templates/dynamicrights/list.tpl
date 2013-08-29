@@ -10,7 +10,9 @@
 			</thead>
 			<tbody>
 				{foreach from="$grouplist" item="group" key="groupid" }
-				<tr><th>{$group->getRight()|escape}</th>{if $allowDelete == "true"}<td><a href="{$cScriptPath}/{$pageslug}/delete/{$groupid}" class="btn btn-small btn-danger">{message name="{$pageslug}-button-delete"}</a></td>{/if}</tr>
+				<tr>
+					<th>{$group->getRight()|escape}</th>
+					{if $allowDelete == "true"}<td><a href="{if $group->canDelete()}{$cScriptPath}/{$pageslug}/delete/{$groupid}{else}#{/if}" class="btn btn-small btn-danger {if !$group->canDelete()}disabled{/if}">{message name="{$pageslug}-button-delete"}</a></td>{/if}</tr>
 				{/foreach}
 			</tbody>
 		</table>
