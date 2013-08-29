@@ -7,6 +7,11 @@ class User extends DataObject
 	protected $username;
 	protected $password;
 	protected $fullName;
+	protected $experience;
+	protected $medical;
+	protected $emergcontact;
+	protected $emergcontactphone;
+	protected $mobile;
 	protected $email;
 	protected $emailconfirmation;
 	protected $godmode;
@@ -67,10 +72,15 @@ class User extends DataObject
 		
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :email, :emailconfirmation, :godmode);");
+			$statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode);");
 			$statement->bindParam(":username", $this->username);
 			$statement->bindParam(":password", $this->password);
 			$statement->bindParam(":fullName", $this->fullName);
+			$statement->bindParam(":experience", $this->experience);
+			$statement->bindParam(":medical", $this->medical);
+			$statement->bindParam(":emergcontact", $this->emergcontact);
+			$statement->bindParam(":emergcontactphone", $this->emergcontactphone);
+			$statement->bindParam(":mobile", $this->mobile);
 			$statement->bindParam(":email", $this->email);
 			$statement->bindParam(":emailconfirmation", $this->emailconfirmation);
 			$statement->bindParam(":godmode", $godmodevalue); // force to zero - we don't 
@@ -87,10 +97,15 @@ class User extends DataObject
 		}
 		else
 		{ // update
-			$statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, email = :email, emailconfirmation = :emailconfirmation WHERE id = :id LIMIT 1;");
+			$statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation WHERE id = :id LIMIT 1;");
 			$statement->bindParam(":username", $this->username);
 			$statement->bindParam(":password", $this->password);
 			$statement->bindParam(":fullName", $this->fullName);
+			$statement->bindParam(":experience", $this->experience);
+			$statement->bindParam(":medical", $this->medical);
+			$statement->bindParam(":emergcontact", $this->emergcontact);
+			$statement->bindParam(":emergcontactphone", $this->emergcontactphone);
+			$statement->bindParam(":mobile", $this->mobile);
 			$statement->bindParam(":email", $this->email);
 			$statement->bindParam(":emailconfirmation", $this->emailconfirmation);
 			// not including godmode here. It should never be changed from the interface.
@@ -129,6 +144,58 @@ class User extends DataObject
 		
 		$this->fullName = $fullName;
 	}
+
+	public function getExperience()
+	{
+		return $this->experience;
+	}
+
+	public function setExperience($experience)
+	{
+		$this->experience = $experience;
+	}
+
+	public function getMedical()
+	{
+		return $this->medical;
+	}
+
+	public function setMedical($medical)
+	{
+		$this->medical = $medical;
+	}
+
+	public function getEmergencyContact()
+	{
+		return $this->emergcontact;
+	}
+
+	public function setEmergencyContact($emergcontact)
+	{
+		$this->emergcontact = $emergcontact;
+	}
+	public function getEmergencyContactPhone()
+	{
+		return $this->emergcontactphone;
+	}
+
+	public function setEmergencyContactPhone($emergcontact)
+	{
+		$this->emergcontactphone = $emergcontact;
+	}
+
+	public function getMobile()
+	{
+		return $this->mobile;
+	}
+
+	public function setMobile($mobile)
+	{
+		if( $mobile === "" ) return;
+	
+		$this->mobile = $mobile;
+	}
+
 	public function getEmail()
 	{
 		return $this->email;
