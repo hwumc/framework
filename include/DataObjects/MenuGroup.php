@@ -7,6 +7,23 @@ class MenuGroup extends DataObject
     protected $slug;
     protected $displayname;
     
+    public static function getBySlug( $slug ) {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT * FROM `menugroup` WHERE slug = :id LIMIT 1;");
+		$statement->bindParam(":id", $slug);
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchObject( "MenuGroup" );
+
+		if($resultObject != false)
+		{
+			$resultObject->isNew = false;
+		}
+
+		return $resultObject;
+	}
+    
     public function getSlug() {
         return $this->slug;
     }
