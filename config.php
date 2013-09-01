@@ -71,7 +71,7 @@ $cSoftwareGithubRepo = "stwalkerster/siteframework";
 
 $cExtensions = array();
 
-$cMainPageContentProvider = "CMSMainPageContentProvider";
+$cMainPageContentProvider = "DefaultMainPageContentProvider";
 
 ///////////////// don't put new config options below this line
 
