@@ -125,7 +125,7 @@
       <hr>
 
       <footer>
-        <p>{message name="footer-copyright"}</p>
+        <p>{message name="footer-copyright"|unescape}</p>
       </footer>
 
     </div><!--/.fluid-container-->	
