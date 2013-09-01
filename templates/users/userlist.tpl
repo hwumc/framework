@@ -12,7 +12,7 @@
 					<td>{$user->getUsername()|escape}</td>
 					<td>{$user->getEmail()|escape}</td>
 					{if $allowEdit == "true"}<td><a href="{$cScriptPath}/{$pageslug}/edit/{$userid}" class="btn btn-small btn-warning">{message name="{$pageslug}-button-edit"}</a></td>{/if}
-					{if $allowDelete == "true"}<td>{if $user->isGod()}{else}<a href="{if $group->canDelete()}{$cScriptPath}{$cScriptPath}/{$pageslug}/delete/{$userid}{else}#{/if}" class="btn btn-small btn-danger {if !$group->canDelete()}disabled{/if}">{message name="{$pageslug}-button-delete"}</a>{/if}</td>{/if}</tr>
+					{if $allowDelete == "true"}<td>{if $user->isGod()}{else}<a href="{if $user->canDelete()}{$cScriptPath}{$cScriptPath}/{$pageslug}/delete/{$userid}{else}#{/if}" class="btn btn-small btn-danger {if !$user->canDelete()}disabled{/if}">{message name="{$pageslug}-button-delete"}</a>{/if}</td>{/if}</tr>
 				{/foreach}
 			</tbody>
 		</table>
