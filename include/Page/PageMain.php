@@ -10,6 +10,10 @@ class PageMain extends PageBase
 
 	protected function runPage()
 	{
-		$this->mSmarty->assign("content", "foo bar");
+        global $cMainPageContentProvider;
+		$contentProvider = new $cMainPageContentProvider();
+        $content = $contentProvider->getContent($this->mSmarty);
+        $this->mBasePage = $contentProvider->getPageTemplate();
+        $this->mSmarty->assign("content", $content);
 	}
 }
