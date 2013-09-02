@@ -29,6 +29,11 @@ class MenuGroup extends DataObject
     }
     
     public function setSlug($slug) {
+        // can't change away from this.
+        if($this->slug == "main") {
+            return;    
+        }
+        
         $this->slug = $slug;
     }
     
@@ -73,4 +78,31 @@ class MenuGroup extends DataObject
 			}
 		}
     }
+
+    public function canDelete()
+    {
+        // can't delete main
+        if($this->slug == "main") {
+            return false;   
+        }
+        
+        return parent::canDelete();
+    }
+    
+    public static function addMenuItems( $menu ) {
+		$menu = $menu[0];
+
+        foreach( MenuGroup::getArray() as $group ) {
+			if( ! isset( $menu[ strtolower($group->getSlug()) ] ) ) {
+                $menu[ strtolower($group->getSlug()) ] = array(
+                    "items" => array(),
+                    "title" => strtolower($group->getSlug()),
+                    "displayname" => $group->getDisplayName()
+                );
+			}
+		}
+        
+		return $menu;
+	}
+	
 }

@@ -31,6 +31,9 @@
     <Compile Include=".my.cnf" />
     <Compile Include="config.local.php" />
     <Compile Include="config.php" />
+    <Compile Include="include\AnonymousUser.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="include\DefaultMainPageContentProvider.php">
       <SubType>Code</SubType>
     </Compile>

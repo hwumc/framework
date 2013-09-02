@@ -10,7 +10,10 @@ class Hooks
 			"PageLogin::getErrorDisplay",
 			"PageLogin::loginModuleOverride",
 		),
-	
+        "PreCreateMenu" => array (
+            "User::addMenuItems",
+			"MenuGroup::addMenuItems",
+        ),
 	);
 	
 	public static function register($name, $callback)

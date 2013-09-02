@@ -14,7 +14,7 @@ abstract class PageBase
 	protected $mIsSpecialPage = false;
 	
 	// menu group
-	protected $mMenuGroup = "Main";
+	protected $mMenuGroup = "main";
 	
 	// array of extra (per-page) javascript files to add
 	protected $mScripts = array();
@@ -38,21 +38,7 @@ abstract class PageBase
 
 	
 	// main menu
-	protected $mMainMenu = array(
-		/* Format:
-			"Class name" => array(
-				"title" => "Message name to display",
-				"link" => "Link to show",
-				"items" => array(...)
-				),
-			*/
-		"Main" => array( "title" => "menu-main", "items" => array(
-			"PageMain" => array(
-				"title" => "page-main",
-				"link" => "/",
-				),
-		))
-	);
+	protected $mMainMenu = array();
 		
 	// array of HTTP headers to add to the request.
 	protected $mHeaders = array();
@@ -78,6 +64,27 @@ abstract class PageBase
     
 	protected function setupPage()
 	{
+        $this->mMainMenu = array(
+		    /* Format:
+			    "Class name" => array(
+				    "title" => "Slug used",
+                    "displayname" => "Name to show
+				    "link" => "Link to show",
+				    "items" => array(...)
+				    ),
+                  */
+		    "main" => array( 
+                "title" => "main", 
+                "items" => array(
+			        "PageMain" => array(
+				        "title" => "page-main",
+				        "link" => "/"
+				    )
+		        ), 
+                "displayname" => MenuGroup::getBySlug("main")->getDisplayName()
+            )
+	    );
+        
         $this->setupSmarty();
 		
 		$this->addSystemCssJs();
@@ -101,7 +108,6 @@ abstract class PageBase
 			$user = User::getById( Session::getLoggedInUser());
 			$this->mSmarty->assign( "loggedin", $user->getUsername() );
 			$this->mSmarty->assign( "userfullname", $user->getFullName() );
-			Hooks::register( "PreCreateMenu", "User::addMenuItems" );
 		} else {
 			$this->mSmarty->assign( "loggedin", "" );
 		}
