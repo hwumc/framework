@@ -18,7 +18,13 @@ class User extends DataObject
     
     public static function getLoggedIn()
 	{
-		return User::getById( Session::getLoggedInUser() );
+		$user = User::getById( Session::getLoggedInUser() );
+        
+        if($user === false) {
+            $user = new AnonymousUser();   
+        }
+        
+        return $user; 
 	}	
 	
 	public static function getByName($name)
@@ -244,7 +250,7 @@ class User extends DataObject
 	
 	public static function addMenuItems( $menu ) {
 		$menu = $menu[0];
-		$user = User::getById( Session::getLoggedInUser());
+		$user = User::getLoggedIn();
 		
 		global $gLogger;
 		
@@ -255,14 +261,25 @@ class User extends DataObject
 			
 			if( ( ! $page->isProtected() ) || ( $user->isAllowed( $page->getAccessName() ) ) ) {
 			
-				$group = $page->getMenuGroup();
+				$group = strtolower($page->getMenuGroup());
 				$groupkey = "menu-" . strtolower( $group );
 				
-				if( ! isset( $menu[ $group ] ) ) {
-					$menu[ $group ] = array(
-						"items" => array(),
-						"title" => $groupkey,
-					);
+				if( ! isset( $menu[ strtolower($group) ] ) ) {
+                    $menugroup = MenuGroup::getBySlug( $group );
+                    if($menugroup == null) {   
+                        $menu[ strtolower($group) ] = array(
+                            "items" => array(),
+                            "title" => strtolower($group),
+                            "displayname" => Message::getMessage( $groupkey )
+                        );
+                    }
+                    else {
+                        $menu[ strtolower($group) ] = array(
+                            "items" => array(),
+                            "title" => strtolower($menugroup->getSlug()),
+                            "displayname" => $menugroup->getDisplayName()
+                        );
+                    }
 				}
 				
 				$menu[ $group ][ "items" ][ $pc ] = array(
