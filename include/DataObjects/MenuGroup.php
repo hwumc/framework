@@ -7,6 +7,23 @@ class MenuGroup extends DataObject
     protected $slug;
     protected $displayname;
     
+    public static function getBySlug( $slug ) {
+		global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT * FROM `menugroup` WHERE slug = :id LIMIT 1;");
+		$statement->bindParam(":id", $slug);
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchObject( "MenuGroup" );
+
+		if($resultObject != false)
+		{
+			$resultObject->isNew = false;
+		}
+
+		return $resultObject;
+	}
+    
     public function getSlug() {
         return $this->slug;
     }
@@ -21,16 +38,6 @@ class MenuGroup extends DataObject
     
     public function setDisplayName($displayName) {
         $this->displayname = $displayName;
-    }
-    
-    public function delete() {
-        global $gDatabase;
-		$statement = $gDatabase->prepare("DELETE FROM menugroup WHERE id = :id LIMIT 1;");
-		$statement->bindParam(":id", $this->id);
-		$statement->execute();
-
-		$this->id=0;
-		$this->isNew = true;
     }
     
     public function save()

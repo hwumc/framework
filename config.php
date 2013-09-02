@@ -71,6 +71,8 @@ $cSoftwareGithubRepo = "stwalkerster/siteframework";
 
 $cExtensions = array();
 
+$cMainPageContentProvider = "DefaultMainPageContentProvider";
+
 ///////////////// don't put new config options below this line
 
 if(file_exists("config.local.php"))

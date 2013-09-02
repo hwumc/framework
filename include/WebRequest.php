@@ -155,10 +155,13 @@ class WebRequest
 		// final transformations?
 		$content = Hooks::run("BeforeOutputSend",array($content));
 	
-		// clean the output buffer so anything that's been rogue sent to the 
-		// browser is hidden nicely
-		$data = ob_get_clean();
-		
+        $data = "";
+        $bufferlevels = ob_get_level();
+        for( $x = $bufferlevels; $x > 0; $x-- ) {
+            $data .= ob_get_contents();
+            ob_end_clean();
+        }
+		   
 		// write the HTML to the buffer
 		print $content;
 		
@@ -171,8 +174,8 @@ class WebRequest
 		{
 			print "<!-- " . $data . " -->";
 		}
-		
-		// flush the buffer to the browser
-		ob_flush();
+        
+        // catch anything else
+        ob_start();
 	}
 }
