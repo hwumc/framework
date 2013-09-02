@@ -100,13 +100,20 @@ class PageManageGroups extends PageBase
 			$rightlist = Right::getAllRegisteredRights();
 			$rights = array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) );
 			
-		
+            $users = User::getArray();
+            $usersarray = array();
+            foreach ($users as $u)
+            {
+                $usersarray[$u->getUsername()] = $u->inGroup( $g );
+            }
+            
 			foreach( $g->getRights() as $r ) {
 				$rights[ $r ] = "true";
 			}
 		
 			$this->mBasePage = "groups/groupcreate.tpl";
 			$this->mSmarty->assign( "rightslist", $rights );
+			$this->mSmarty->assign( "userslist", $usersarray );
 			$this->mSmarty->assign( "groupname", $g->getName() );
 			$this->mSmarty->assign( "description", $g->getDescription() );
             $this->mSmarty->assign( "lockparent", "false" );
@@ -189,8 +196,16 @@ class PageManageGroups extends PageBase
 		} else {
 			$rightlist = Right::getAllRegisteredRights();
 		
+            $users = User::getArray();
+            $usersarray = array();
+            foreach ($users as $u)
+            {
+                $usersarray[$u->getUsername()] = $u->getId() == Session::getLoggedInUser() ? true : false;
+            }
+            
 			$this->mBasePage = "groups/groupcreate.tpl";
 			$this->mSmarty->assign( "rightslist", array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) ) );
+			$this->mSmarty->assign( "userslist", $usersarray );
 			$this->mSmarty->assign( "groupname", "" );
 			$this->mSmarty->assign( "description", "" );
             $this->mSmarty->assign( "lockparent", "true" );
