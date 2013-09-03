@@ -9,6 +9,25 @@ class Session
 		session_start();
 	}
 	
+    public static function appendError($errorcode)
+    {
+        if(! isset( $_SESSION['errorqueue'] ) ) {
+            $_SESSION['errorqueue'] = array();   
+        }
+        
+        $_SESSION['errorqueue'][] = $errorcode;
+    }
+    
+    public static function getErrorQueue() 
+    {
+        return isset($_SESSION['errorqueue']) ? $_SESSION['errorqueue'] : array();    
+    }
+    
+    public static function clearErrorQueue()
+    {
+        $_SESSION['errorqueue'] = array();
+    }
+    
 	public static function setLoggedInUser($id)
 	{
 		$_SESSION['uid'] = $id;

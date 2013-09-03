@@ -60,7 +60,7 @@
   <body>
 
     <div class="container">
-
+	{include file="sessionerrors.tpl"}
       <form class="form-signin" method="post">
         <h2 class="form-signin-heading">{message name="login-title"}</h2>
         <input type="text" name="lgUser" class="input-block-level" placeholder="{message name="login-username"}">

@@ -100,7 +100,7 @@
 		</ul>
 	</div>
         </div><!--/span-->
-        <div class="span9">{block name="pageheader"}
+        <div class="span9">{include file="sessionerrors.tpl"}{block name="pageheader"}
 				<div class="page-header">
   <h1>{message name="{$pageslug}-header"} <small>{message name="{$pageslug}-header-subtext"}</small></h1>
 </div>{/block}

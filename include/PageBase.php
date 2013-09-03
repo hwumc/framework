@@ -36,6 +36,8 @@ abstract class PageBase
 	// subnav
 	protected $mSubMenu = array();
 
+    // is this redirecting (hence don't clear session-based stuff like errors)
+    protected $mIsRedirecting = false;
 	
 	// main menu
 	protected $mMainMenu = array();
@@ -150,7 +152,13 @@ abstract class PageBase
 		// page slug
 		$this->mSmarty->assign( "pageslug", preg_replace( "/^Page(.*)$/", "\${1}", get_class($this) ) );
 		
-		
+        // errors:
+        $errorlist = Session::getErrorQueue();
+        
+		$this->mSmarty->assign( "sessionerrors", $errorlist );
+        if(! $this->mIsRedirecting) {
+            Session::clearErrorQueue();
+        }
 	}
 
 	/**
