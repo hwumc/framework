@@ -267,6 +267,9 @@
     <Content Include="extensions\README.txt">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="templates\sessionerrors.tpl">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="templates\dynamicrights\create.tpl">
       <SubType>Content</SubType>
     </Content>
