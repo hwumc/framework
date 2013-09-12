@@ -26,7 +26,11 @@
 					{$info=$ext->getExtensionInformation()}
 					<tr>
 						<th>{$info.name}</th>
-						<td><a href="{$info.gitviewer}{$ext->getGitInformation()}">{$ext->getGitInformation()|truncate:9:"":true}</a></td>
+						<td>
+							<a href="{$info.gitviewer}{$ext->getGitInformation()}">{$ext->getGitInformation()|truncate:9:"":true}</a>
+							<br />
+							{$ext->getGitTimeInformation()}
+						</td>
 						<td>{$info.description}</td>
 						<td>
 							{foreach $ext->getAuthors() as $name}{$name|escape}{if not $name@last}, {/if}{/foreach}
