@@ -400,7 +400,7 @@ abstract class PageBase
 			return true;
 		}
 			
-		$userAccessLevel = User::getById( Session::getLoggedInUser() )->isAllowed( $actionName );
+		$userAccessLevel = User::getLoggedIn()->isAllowed( $actionName );
 		
 
 		if($userAccessLevel) 
@@ -440,7 +440,7 @@ abstract class PageBase
 			    $f = preg_replace( "/^(.*)\.php$/", "\${1}", $f );
 			    $obj = new $f();
 			
-			    if( $obj->isProtected() && (! $obj->isSpecialPage() ) ) {
+			    if( (! $obj->isSpecialPage() ) ) {
 				    $pages[] = $f;
 			    }
 		    }
