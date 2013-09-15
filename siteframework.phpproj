@@ -58,8 +58,8 @@
     <Compile Include="index.php" />
     <Compile Include="documentation\.gitignore" />
     <Compile Include="documentation\Doxyfile" />
-    <Compile Include="images\glyphicons-halflings-white.png" />
-    <Compile Include="images\glyphicons-halflings.png" />
+    <Compile Include="img\glyphicons-halflings-white.png" />
+    <Compile Include="img\glyphicons-halflings.png" />
     <Compile Include="include\Database.php" />
     <Compile Include="include\DataObject.php" />
     <Compile Include="include\FakeLogger.php" />
@@ -243,7 +243,7 @@
   <ItemGroup>
     <Folder Include="documentation" />
     <Folder Include="extensions\" />
-    <Folder Include="images" />
+    <Folder Include="img" />
     <Folder Include="include" />
     <Folder Include="scripts" />
     <Folder Include="smarty" />
