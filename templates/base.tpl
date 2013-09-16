@@ -10,6 +10,7 @@
 
 	<!-- styles -->
 	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap.min.css" />
+	{block name="styleoverride"}
 	<style type="text/css">
       body {
         padding-top: 60px;
@@ -28,6 +29,7 @@
         }
       }
     </style>
+	{/block}
 	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap-responsive.min.css" />    
 	{foreach from="$styles" item="thisstyle"}
 		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
@@ -42,6 +44,7 @@
 	{/block}
 </head>
 <body>
+{block name="navbar"}
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -78,29 +81,31 @@
           </div><!--/.nav-collapse -->
         </div>
       </div>
-    </div>
+    </div><!-- /.navbar -->{/block}
 	    <div class="container-fluid">
       <div class="row-fluid">
+	  {block name="sidebar"}
         <div class="span3">
           	<div class="well sidebar-nav">
-		<ul class="nav nav-list">
-			{foreach from="$mainmenu" item="menuitem" }
+				<ul class="nav nav-list">
+					{foreach from="$mainmenu" item="menuitem" }
 				
-				{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
-				<li class="nav-header">{$menuitem.displayname}{if isset($menuitem.data)}{$menuitem.data}{/if}</li>
-						{foreach from="$submenu" item="subitem" }
-							<li><a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>{if isset($subitem.displayname)}{$subitem.displayname}{else}{message name={$subitem.title}}{/if}{if isset($subitem.data)}{$subitem.data}{/if}</a></li>
-						{/foreach}
-						<li class="divider"></li>
-				{else}
-				<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data}{/if}</a>
-				{/if}
-				</li>
-			{/foreach}
-		</ul>
-	</div>
+						{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
+						<li class="nav-header">{$menuitem.displayname}{if isset($menuitem.data)}{$menuitem.data}{/if}</li>
+								{foreach from="$submenu" item="subitem" }
+									<li><a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>{if isset($subitem.displayname)}{$subitem.displayname}{else}{message name={$subitem.title}}{/if}{if isset($subitem.data)}{$subitem.data}{/if}</a></li>
+								{/foreach}
+								<li class="divider"></li>
+						{else}
+						<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data}{/if}</a>
+						{/if}
+						</li>
+					{/foreach}
+				</ul>
+			</div>
         </div><!--/span-->
-        <div class="span9">{include file="sessionerrors.tpl"}{block name="pageheader"}
+		{/block}
+        {block name="rowinit"}<div class="span9">{/block}{include file="sessionerrors.tpl"}{block name="pageheader"}
 				<div class="page-header">
   <h1>{message name="{$pageslug}-header"} <small>{message name="{$pageslug}-header-subtext"}</small></h1>
 </div>{/block}
