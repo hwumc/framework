@@ -19,7 +19,7 @@ class PageLogin extends PageBase
 			if(! ($username = WebRequest::postString("lgUser")))
 			{
 				// no email address specified
-				$this->redirect("noemail");
+				$this->redirect("nouser");
 				return;
 			}
 			if(! ($password = WebRequest::postString("lgPasswd")))
@@ -67,17 +67,18 @@ class PageLogin extends PageBase
 
 	private function redirect($error = null)
 	{
-		$append = "";
-		if($error)
-		{
-			$append = "?lgerror=" . $error;
-		}
-		
-		global $cWebPath;
+        global $cWebPath;
 		
 		// redirect back to the main page.
 		$this->mHeaders[] = "HTTP/1.1 303 See Other";
-		$this->mHeaders[] = "Location: " . $cWebPath . "/index.php" . WebRequest::get("returnto") . $append;
+        $this->mIsRedirecting = true;
+        
+		if($error) {
+            Session::appendError( "login-" . $error );
+            $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/Login";
+		} else {
+            $this->mHeaders[] = "Location: " . $cWebPath . "/index.php" . WebRequest::get("returnto");            
+        }
 		return;
 	}
 

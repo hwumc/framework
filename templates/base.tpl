@@ -64,13 +64,13 @@
 			{else}
 				<ul class="nav pull-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$userfullname} <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$userfullname} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="nav-header">{message name="account"}</li>
-							<li><a href="{$cScriptPath}/ChangePassword">{message name="changepassword"}</a></li>
-							<li><a href="{$cScriptPath}/EditProfile">{message name="editprofile"}</a></li>
+							<li><a href="{$cScriptPath}/ChangePassword"><i class="icon-lock"></i> {message name="changepassword"}</a></li>
+							<li><a href="{$cScriptPath}/EditProfile"><i class="icon-tasks"></i> {message name="editprofile"}</a></li>
 							<li class="divider"></li>						
-							<li><a href="{$cScriptPath}/Logout">{message name="logout"} {$loggedin}</a></li>
+							<li><a href="{$cScriptPath}/Logout"><i class="icon-off"></i> {message name="logout"} {$loggedin}</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -100,7 +100,7 @@
 		</ul>
 	</div>
         </div><!--/span-->
-        <div class="span9">{block name="pageheader"}
+        <div class="span9">{include file="sessionerrors.tpl"}{block name="pageheader"}
 				<div class="page-header">
   <h1>{message name="{$pageslug}-header"} <small>{message name="{$pageslug}-header-subtext"}</small></h1>
 </div>{/block}

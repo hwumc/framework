@@ -223,7 +223,12 @@ class User extends DataObject
 		if( $action == "x-denyall" ) {
 			return false;
 		}
-		
+
+        // always allow this userright
+        if( $action == "public" ) {
+            return true;   
+        }
+        
 		// OK, we've got through the basic checks. Am I god?
 		if( $this->isGod() ) {
 			return true;

@@ -69,6 +69,15 @@ abstract class Extension
         chdir($dir);
 	}
 	
+    public function getGitTimeInformation()
+	{
+        $dir = getcwd();
+        $extinfo = $this->getExtensionInformation();
+        chdir($extinfo['filepath']);
+        return exec( 'git log -n1 --pretty=format:"%cr"' );
+        chdir($dir);
+	}
+    
 	public function getAuthors()
 	{
         $dir = getcwd();
