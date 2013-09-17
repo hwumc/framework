@@ -19,6 +19,7 @@ $cWebPath = str_replace("//","/",$cWebPath);
 $cDatabaseConnectionString = 'mysql:host=dbmaster.srv.stwalkerster.net;dbname=hwumc_new_devel';
 $cDatabaseModule = "pdo_mysql";
 $cMyDotCnfFile = ".my.cnf";
+$cMyDotRoDotCnfFile = ".my.ro.cnf";
 
 $cLoggerName="FakeLogger";
 

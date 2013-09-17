@@ -3,6 +3,7 @@ templates_c/*
 *.ipr
 *.iws
 .my.cnf
+.my.ro.cnf
 web.config
 
 # local config file

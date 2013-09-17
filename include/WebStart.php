@@ -115,7 +115,7 @@ HTML;
     
     private function setupDatabase() 
     {
-        global $gDatabase, $cDatabaseConnectionString, $cMyDotCnfFile, 
+        global $gDatabase, $gReadOnlyDatabase, $cDatabaseConnectionString, $cMyDotCnfFile, $cMyDotRoDotCnfFile,
             $cDatabaseModule;
         
         Hooks::run("PreSetupDatabase");
@@ -126,16 +126,21 @@ HTML;
 		}
 		
 		$mycnf = parse_ini_file($cMyDotCnfFile);
+		$myrocnf = parse_ini_file($cMyDotRoDotCnfFile);
 		
-		$gDatabase = new Database($cDatabaseConnectionString,$mycnf["user"], $mycnf["password"]);
+		$gDatabase = new Database($cDatabaseConnectionString, $mycnf["user"], $mycnf["password"]);
+		$gReadOnlyDatabase = new Database($cDatabaseConnectionString, $myrocnf["user"], $myrocnf["password"]);
 		
 		// tidy up sensitive data we don't want lying around.
 		unset($mycnf);
+		unset($myrocnf);
 		
 		// use exceptions on failed database stuff
 		$gDatabase->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$gReadOnlyDatabase->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         Hooks::run("PostSetupDatabase", array( $gDatabase ) );
+        Hooks::run("PostSetupDatabase", array( $gReadOnlyDatabase ) );
     }
     
     private function initialiseLogger()
