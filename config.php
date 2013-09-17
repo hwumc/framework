@@ -73,6 +73,8 @@ $cExtensions = array();
 
 $cMainPageContentProvider = "DefaultMainPageContentProvider";
 
+$cAllowUserSqlQueries = false;
+
 ///////////////// don't put new config options below this line
 
 if(file_exists("config.local.php"))
