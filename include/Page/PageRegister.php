@@ -42,7 +42,7 @@ class PageRegister extends PageBase
 			$u->setExperience( WebRequest::post( "experience" ) );
             
             if( WebRequest::post( "medical" ) === false )  throw new MissingFieldException();
-			$u->setExperience( WebRequest::post( "medical" ) );
+			$u->setMedical( WebRequest::post( "medical" ) );
 		
 			$u->save();
 		
