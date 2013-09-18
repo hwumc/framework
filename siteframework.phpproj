@@ -264,6 +264,9 @@
     <Folder Include="templates\webmaster" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".my.ro.cnf">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="extensions\README.txt">
       <SubType>Content</SubType>
     </Content>
