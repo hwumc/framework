@@ -138,6 +138,15 @@ abstract class PageBase
 			$this->mMainMenu[get_class($this)]["current"] = true;
 		}
 		
+        // remove empty menu groups
+        $newMenu = array();
+        foreach ($this->mMainMenu as $k => $menuGroup) {
+            if( count( $menuGroup['items'] ) > 0 ) {
+                $newMenu[$k] = $menuGroup;
+            }
+        }
+        $this->mMainMenu = $newMenu;
+        
 		$this->mSmarty->assign("mainmenu", $this->mMainMenu);
 
 		global $cWebPath, $cScriptPath;
