@@ -57,7 +57,7 @@ HTML;
         // output the document
 		print $message;
         
-        file_put_contents( $cFilePath . "/errorlog/" . date( "Y-m-d-h-i-s" ) . "_" . session_id(), serialize( $exception ) );
+        file_put_contents( $cFilePath . "/errorlog/" . microtime(true) . "_" . session_id(), serialize( $exception ) );
         
 		die;
 	}
