@@ -1,4 +1,5 @@
 templates_c/*
+errorlog/*
 
 *.ipr
 *.iws

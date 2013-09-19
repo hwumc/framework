@@ -245,6 +245,7 @@
     <Folder Include="extensions\" />
     <Folder Include="img" />
     <Folder Include="include" />
+    <Folder Include="errorlog" />
     <Folder Include="scripts" />
     <Folder Include="smarty" />
     <Folder Include="style" />
@@ -265,6 +266,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".my.ro.cnf">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="errorlog\index.php">
       <SubType>Content</SubType>
     </Content>
     <Content Include="extensions\README.txt">
