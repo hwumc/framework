@@ -67,13 +67,13 @@
 			{else}
 				<ul class="nav pull-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$userfullname} <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$currentUser->getFullName()|escape} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="nav-header">{message name="account"}</li>
 							<li><a href="{$cScriptPath}/ChangePassword"><i class="icon-lock"></i> {message name="changepassword"}</a></li>
 							<li><a href="{$cScriptPath}/EditProfile"><i class="icon-tasks"></i> {message name="editprofile"}</a></li>
 							<li class="divider"></li>						
-							<li><a href="{$cScriptPath}/Logout"><i class="icon-off"></i> {message name="logout"} {$loggedin}</a></li>
+							<li><a href="{$cScriptPath}/Logout"><i class="icon-off"></i> {message name="logout"} {$currentUser->getUsername()|escape}</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -91,13 +91,22 @@
 					{foreach from="$mainmenu" item="menuitem" }
 				
 						{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
-						<li class="nav-header">{$menuitem.displayname}{if isset($menuitem.data)}{$menuitem.data}{/if}</li>
+						<li class="nav-header">{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</li>
 								{foreach from="$submenu" item="subitem" }
-									<li><a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>{if isset($subitem.displayname)}{$subitem.displayname}{else}{message name={$subitem.title}}{/if}{if isset($subitem.data)}{$subitem.data}{/if}</a></li>
+									<li>
+										<a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>
+											{if isset($subitem.displayname)}
+												{$subitem.displayname|escape}
+											{else}
+												{message name={$subitem.title}}
+											{/if}
+											{if isset($subitem.data)}{$subitem.data|escape}{/if}
+										</a>
+									</li>
 								{/foreach}
 								<li class="divider"></li>
 						{else}
-						<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data}{/if}</a>
+						<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</a>
 						{/if}
 						</li>
 					{/foreach}

@@ -95,7 +95,7 @@ abstract class PageBase
 		
         if( Session::isLoggedIn() )
         {
-            $this->mSmarty->assign("currentUser", User::getById( Session::getLoggedInUser() ) );
+            $this->mSmarty->assign("currentUser", User::getLoggedIn() );
         } else {
             $this->mSmarty->assign("currentUser", null );
         }
@@ -110,7 +110,6 @@ abstract class PageBase
 			$user = User::getById( Session::getLoggedInUser());
 			$this->mSmarty->assign( "loggedin", $user->getUsername() );
 			$this->mSmarty->assign( "userfullname", $user->getFullName() );
-			$this->mSmarty->assign( "loggedInUser", $user );
 		} else {
 			$this->mSmarty->assign( "loggedin", "" );
 		}

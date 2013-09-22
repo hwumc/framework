@@ -25,7 +25,7 @@
 			{foreach from="$messagerow" item="message"}
 			<td>
 				{if $message@key eq 'zxx'}
-					{$message.content}
+					{$message.content|escape}
 				{else}
 					<textarea {$readonly} name="lang{$message.id}msg" class="input-xxlarge" rows="3" xml:space="preserve">{$message.content}</textarea>
 				{/if}

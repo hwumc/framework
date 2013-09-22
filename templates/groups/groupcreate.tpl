@@ -42,7 +42,7 @@
 				{foreach from="$rightslist" key="rightname" item="check"}
 					<label class="checkbox">
 						<input type="checkbox" name="right-{$rightname}" {if $check == "true"}checked="true" {/if} {if $allowEdit == "false"}disabled="true" {/if}/>
-						<tt>{$rightname}</tt>: {message name="accessright-{$rightname}"}
+						<tt>{$rightname|escape}</tt>: {message name="accessright-{$rightname}"}
 					</label>
 				{/foreach}
 			
@@ -58,7 +58,7 @@
 				{foreach from="$userslist" key="username" item="check"}
 					<label class="checkbox">
 						<input type="checkbox" name="user-{$username}" {if $check == "true"}checked="true" {/if} disabled="true"/>
-						<tt>{$username}</tt>
+						<tt>{$username|escape}</tt>
 					</label>
 				{/foreach}
 			</div>
