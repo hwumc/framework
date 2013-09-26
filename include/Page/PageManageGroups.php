@@ -61,7 +61,7 @@ class PageManageGroups extends PageBase
 		} catch(AccessDeniedException $ex) { 
             $allowEdit = "false";
 		}
-		$g = Group::getById( $data[ 1 ] );
+		$g= Group::getById( $data[ 1 ] );
         if( $g->isManager( User::getById( Session::getLoggedInUser() ) ) ) {
             $allowEdit = "true";   
         }
@@ -76,42 +76,21 @@ class PageManageGroups extends PageBase
 			$g->setName( WebRequest::post( "groupname" ) );
 			$g->setDescription( WebRequest::post( "description" ) );
 			$g->save();
-            
-            // back up the current rights
-            $currentuser = User::getLoggedIn();
-            $userrights = $currentuser->getRights();
-
-            // blat this groups rights. After this point, user::isallowed won't work.
-			$oldrights = $g->getRights();
 			$g->clearRights();
-            
+			
 			$r = array();
-            
-            foreach( $oldrights as $right )
-            {
-                if(! in_array( $right, $userrights ) )
-                {
-                    // not allowed, re-add.
-                    $r[] = $right;
-                }
-            }
-            
 			foreach( $_POST as $k => $v ) {
 				if( $v !== "on" ) continue;
 				
 				if( preg_match( "/^right\-.*$/", $k ) === 1 ) {
-                    $right = preg_replace( "/^right\-(.*)$/", "\${1}", $k );
-                    if( in_array( $right, $userrights ) )
-                    {    
-                        $r[ ] = $right;
-                    }
+					$r[ ] = $k;
 				}
 			}
 
-			foreach( $r as $right ) {
+			foreach( $r as $k ) {
 				$rg = new Rightgroup();
 				$rg->setGroupID( $g->getId() );
-				$rg->setRight( $right );
+				$rg->setRight( preg_replace( "/^right\-(.*)$/", "\${1}", $k ) );
 				$rg->save();
 			}
 			
@@ -119,7 +98,7 @@ class PageManageGroups extends PageBase
 			$this->mHeaders[] = ( "Location: " . $cScriptPath . "/ManageGroups" );
 		} else {
 			$rightlist = Right::getAllRegisteredRights();
-			$rights = array_combine( $rightlist, array_fill( 0, count( $rightlist ), array('allowed' => "no", 'present' => false) ) );
+			$rights = array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) );
 			
             $users = User::getArray();
             $usersarray = array();
@@ -128,15 +107,8 @@ class PageManageGroups extends PageBase
                 $usersarray[$u->getUsername()] = $u->inGroup( $g );
             }
             
-            $currentuser = User::getLoggedIn();
-            foreach( $currentuser->getRights() as $r )
-            {
-                $rights[ $r ][ 'allowed' ] = "yes";
-            }
-            
-			foreach( $g->getRights() as $r )
-            {
-				$rights[ $r ]['present'] = "true";
+			foreach( $g->getRights() as $r ) {
+				$rights[ $r ] = "true";
 			}
 		
 			$this->mBasePage = "groups/groupcreate.tpl";

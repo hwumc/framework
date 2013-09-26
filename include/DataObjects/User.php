@@ -348,11 +348,6 @@ class User extends DataObject
 	}
 	
 	public function getRights() {
-        if( $this->isGod() )
-        {
-            return Right::getAllRegisteredRights();
-        }
-        
 		global $gDatabase;
 		$statement = $gDatabase->prepare("SELECT DISTINCT rightgroup.right FROM rightgroup INNER JOIN `group` ON `group`.id = rightgroup.`group` INNER JOIN usergroup ON `group`.id = usergroup.`group` WHERE usergroup.user = :id;");
 		$statement->bindParam(":id", $this->id);
