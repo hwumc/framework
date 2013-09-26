@@ -20,7 +20,7 @@
 		<div class="control-group">
 			<label class="control-label" for="email">{message name="{$pageslug}-edit-email"}</label>
 			<div class="controls">
-				<input type="text" id="email" class="input-xlarge" name="email" placeholder="{message name="{$pageslug}-edit-email-placeholder"}" required="true" value="{$user->getEmail()}" />
+				<input type="email" id="email" class="input-xlarge" name="email" placeholder="{message name="{$pageslug}-edit-email-placeholder"}" required="true" value="{$user->getEmail()}" />
 			</div>
 		</div>	
 	
