@@ -25,6 +25,12 @@ class PageRegister extends PageBase
             {
                 $this->triggerError("password-mismatch");
                 return;
+            }			
+            
+            if( trim(WebRequest::post( "experience" )) == "" ) 
+            {
+                $this->triggerError("no-experience");
+                return;
             }
             
             $u = new User();
