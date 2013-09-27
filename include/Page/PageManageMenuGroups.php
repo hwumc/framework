@@ -68,6 +68,13 @@ class PageManageMenuGroups extends PageBase
 		if( WebRequest::wasPosted() ) {
 			if( ! $allowEdit ) throw new AccessDeniedException();
 			
+            $exists = MenuGroup::getBySlug( WebRequest::post( "slug" ) );
+            if( $exists != null && $exists->getId() != $g->getId() )
+            {
+                $this->triggerError("slugexists");
+                return;
+            }
+            
 			$g->setSlug( WebRequest::post( "slug" ) );
 			$g->setDisplayName( WebRequest::post( "displayname" ) );
 			$g->save();
@@ -106,6 +113,13 @@ class PageManageMenuGroups extends PageBase
 		$this->mSmarty->assign("allowEdit", 'true');
 	
 		if( WebRequest::wasPosted() ) {
+            $exists = MenuGroup::getBySlug( WebRequest::post( "slug" ) );
+            if( $exists != null )
+            {
+                $this->triggerError("slugexists");
+                return;
+            }
+            
 			$g = new MenuGroup();
 			$g->setSlug( WebRequest::post( "slug" ) );
 			$g->setDisplayName( WebRequest::post( "displayname" ) );
@@ -120,4 +134,15 @@ class PageManageMenuGroups extends PageBase
 			$this->mSmarty->assign( "displayname", "" );
 		}
 	}
+    
+    private function triggerError( $errorCode )
+    {        
+        
+        $this->mSmarty->assign( "slug", WebRequest::post( "slug" ) );
+        $this->mSmarty->assign( "displayname", WebRequest::post( "displayname" ) );
+        
+        $this->mBasePage = "menugroup/create.tpl";
+        
+        Session::appendError("MenuGroup-error-" . $errorCode);
+    }
 }
