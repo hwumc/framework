@@ -29,3 +29,5 @@ class MissingFieldException extends Exception{}
 class NotImplementedException extends Exception{}
 
 class FieldTooLargeException extends Exception{}
+
+class TransactionAlreadyOpenException extends Exception{}
