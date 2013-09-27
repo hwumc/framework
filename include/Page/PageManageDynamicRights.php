@@ -80,6 +80,17 @@ class PageManageDynamicRights extends PageBase
 		self::checkAccess( "dynamicrights-create" );
 	
 		if( WebRequest::wasPosted() ) {
+            $existing = DynamicRight::getByRight( WebRequest::post( "name" ) );
+            if( $existing != null )
+            {
+                $this->mSmarty->assign( "name", WebRequest::post( "name" ) );
+                $this->mBasePage = "dynamicrights/create.tpl";
+                
+                Session::appendError("DynamicRights-error-alreadyexists");
+                
+                return;
+            }
+            
 			$g = new DynamicRight();
 			$g->setRight( WebRequest::post( "name" ) );
 			$g->save();
@@ -87,8 +98,6 @@ class PageManageDynamicRights extends PageBase
 			global $cScriptPath;
 			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageDynamicRights";
 		} else {
-			$rightlist = Right::getAllRegisteredRights();
-		
 			$this->mBasePage = "dynamicrights/create.tpl";
 			$this->mSmarty->assign( "name", "" );
 		}
