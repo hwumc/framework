@@ -47,6 +47,27 @@ class User extends DataObject
 		return $resultObject;
 	}
 
+    public static function getWithRight( $right ) 
+    {
+        global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT DISTINCT u.* FROM `group` g INNER JOIN `rightgroup` rg ON rg.`group` = g.`id` INNER JOIN `usergroup` ug ON g.`id` = ug.`group` INNER JOIN `user` u ON u.`id` = ug.`user` WHERE `right` = :rght;");
+		$statement->bindParam(":rght", $right);
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchAll( PDO::FETCH_CLASS, "User" );
+
+        $data = array();
+		foreach ($resultObject as $v)
+        {
+            $v->isNew = false;
+            $data[$v->getId() . ""] = $v;
+        }
+        
+		return $data;
+
+    }
+    
 	/**
 	 * Check the stored password against the provided password
 	 * @returns true if the password is correct
