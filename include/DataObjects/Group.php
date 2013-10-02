@@ -25,6 +25,26 @@ class Group extends DataObject
 		return $resultObject;
 	}
 	
+    public static function getWithRight( $right ) 
+    {
+        global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT g.* FROM `group` g INNER JOIN `rightgroup` rg ON rg.`group` = g.`id` WHERE `right` = :right;");
+		$statement->bindParam(":right", $right);
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchAll( PDO::FETCH_CLASS, "Group" );
+
+        $data = array();
+		foreach ($resultObject as $v)
+        {
+            $v->isNew = false;
+            $data[$v->getId() . ""] = $v;
+        }
+        
+		return $data;
+    }
+    
 	public function save()
 	{
 		global $gDatabase;

@@ -95,7 +95,7 @@ abstract class PageBase
 		
         if( Session::isLoggedIn() )
         {
-            $this->mSmarty->assign("currentUser", User::getById( Session::getLoggedInUser() ) );
+            $this->mSmarty->assign("currentUser", User::getLoggedIn() );
         } else {
             $this->mSmarty->assign("currentUser", null );
         }
@@ -137,6 +137,15 @@ abstract class PageBase
 			$this->mMainMenu[get_class($this)]["current"] = true;
 		}
 		
+        // remove empty menu groups
+        $newMenu = array();
+        foreach ($this->mMainMenu as $k => $menuGroup) {
+            if( count( $menuGroup['items'] ) > 0 ) {
+                $newMenu[$k] = $menuGroup;
+            }
+        }
+        $this->mMainMenu = $newMenu;
+        
 		$this->mSmarty->assign("mainmenu", $this->mMainMenu);
 
 		global $cWebPath, $cScriptPath;

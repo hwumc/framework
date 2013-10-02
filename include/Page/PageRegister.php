@@ -12,44 +12,71 @@ class PageRegister extends PageBase
 
 	protected function runPage()
 	{
-		$this->mBasePage = "register/register.tpl";
-		if( WebRequest::wasPosted() ) {
-			$u = new User();
-			
-			if( WebRequest::post( "username" ) == "" || WebRequest::post( "username" ) === false )  throw new MissingFieldException();
+		if( WebRequest::wasPosted() )
+        {
+            $existing = User::getByName( WebRequest::post( "username" ) );
+            if( $existing != null )
+            {
+                $this->triggerError("username-taken");
+                return;
+            }
+                
+			if( WebRequest::post( "confirmpassword" ) != WebRequest::post( "password" ) ) 
+            {
+                $this->triggerError("password-mismatch");
+                return;
+            }			
+            
+            if( trim(WebRequest::post( "experience" )) == "" ) 
+            {
+                $this->triggerError("no-experience");
+                return;
+            }
+            
+            $u = new User();
 			$u->setUsername( WebRequest::post( "username" ) );
-			
-			if( WebRequest::post( "password" ) == "" || WebRequest::post( "password" ) === false )  throw new MissingFieldException();
-			if( WebRequest::post( "confirmpassword" ) != WebRequest::post( "password" ) )  throw new ArgumentException();
 			$u->setPassword( WebRequest::post( "password" ) );
-			
-			if( WebRequest::post( "email" ) == "" || WebRequest::post( "email" ) === false )  throw new MissingFieldException();			
 			$u->setEmail( WebRequest::post( "email" ) );
-			
-			if( WebRequest::post( "realname" ) == "" || WebRequest::post( "realname" ) === false )  throw new MissingFieldException();
 			$u->setFullName( WebRequest::post( "realname" ) );
-			
-			if( WebRequest::post( "mobile" ) == "" || WebRequest::post( "mobile" ) === false )  throw new MissingFieldException();
 			$u->setMobile( WebRequest::post( "mobile" ) );
-		
-			if( WebRequest::post( "contactname" ) == "" || WebRequest::post( "contactname" ) === false )  throw new MissingFieldException();
-			$u->setEmergencyContact( WebRequest::post( "contactname" ) );
-            
-            if( WebRequest::post( "contactphone" ) == "" || WebRequest::post( "contactphone" ) === false )  throw new MissingFieldException();
+			$u->setEmergencyContact( WebRequest::post( "contactname" ) );            
 			$u->setEmergencyContactPhone( WebRequest::post( "contactphone" ) );    
-            
-            if( WebRequest::post( "experience" ) == "" || WebRequest::post( "experience" ) === false )  throw new MissingFieldException();
-			$u->setExperience( WebRequest::post( "experience" ) );
-            
-            if( WebRequest::post( "medical" ) === false )  throw new MissingFieldException();
-			$u->setExperience( WebRequest::post( "medical" ) );
-		
+            $u->setExperience( WebRequest::post( "experience" ) );
+			$u->setMedical( WebRequest::post( "medical" ) );
 			$u->save();
 		
 			$this->mBasePage = "register/registered.tpl";
 		
 		} else {
-			return;
+            $this->mSmarty->assign( "regusername", "" );
+            $this->mSmarty->assign( "regpassword", "" );
+            $this->mSmarty->assign( "regemail", "" );
+            $this->mSmarty->assign( "regrealname", "" );
+            $this->mSmarty->assign( "regmobile", "" );
+            $this->mSmarty->assign( "regcontactname", "" );
+            $this->mSmarty->assign( "regcontactphone", "" );
+            $this->mSmarty->assign( "regexperience", "" );
+            $this->mSmarty->assign( "regmedical", "" );
+            $this->mSmarty->assign( "regmedicalcheck", "" );
+            
+			$this->mBasePage = "register/register.tpl";
 		}
 	}
+    
+    private function triggerError( $errorCode )
+    {        
+        $this->mSmarty->assign( "regusername", WebRequest::post( "username" ) );
+        $this->mSmarty->assign( "regemail", WebRequest::post( "email" ) );
+        $this->mSmarty->assign( "regrealname", WebRequest::post( "realname" ) );
+        $this->mSmarty->assign( "regmobile", WebRequest::post( "mobile" ) );
+        $this->mSmarty->assign( "regcontactname", WebRequest::post( "contactname" ) );
+        $this->mSmarty->assign( "regcontactphone", WebRequest::post( "contactphone" ) );
+        $this->mSmarty->assign( "regexperience", WebRequest::post( "experience" ) );
+        $this->mSmarty->assign( "regmedical", WebRequest::post( "medical" ) );
+        $this->mSmarty->assign( "regmedicalcheck", WebRequest::post( "medical" ) == "" ? "" : 'checked="checked"' );
+        
+        $this->mBasePage = "register/register.tpl";
+        
+        Session::appendError("Register-error-" . $errorCode);
+    }
 }

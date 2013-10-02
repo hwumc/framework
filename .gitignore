@@ -1,8 +1,10 @@
 templates_c/*
+errorlog/*
 
 *.ipr
 *.iws
 .my.cnf
+.my.ro.cnf
 web.config
 
 # local config file

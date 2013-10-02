@@ -10,6 +10,7 @@
 
 	<!-- styles -->
 	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap.min.css" />
+	{block name="styleoverride"}
 	<style type="text/css">
       body {
         padding-top: 60px;
@@ -28,6 +29,7 @@
         }
       }
     </style>
+	{/block}
 	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap-responsive.min.css" />    
 	{foreach from="$styles" item="thisstyle"}
 		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
@@ -42,6 +44,7 @@
 	{/block}
 </head>
 <body>
+{block name="navbar"}
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -64,13 +67,13 @@
 			{else}
 				<ul class="nav pull-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$userfullname} <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$currentUser->getFullName()|escape} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="nav-header">{message name="account"}</li>
 							<li><a href="{$cScriptPath}/ChangePassword"><i class="icon-lock"></i> {message name="changepassword"}</a></li>
 							<li><a href="{$cScriptPath}/EditProfile"><i class="icon-tasks"></i> {message name="editprofile"}</a></li>
 							<li class="divider"></li>						
-							<li><a href="{$cScriptPath}/Logout"><i class="icon-off"></i> {message name="logout"} {$loggedin}</a></li>
+							<li><a href="{$cScriptPath}/Logout"><i class="icon-off"></i> {message name="logout"} {$currentUser->getUsername()|escape}</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -78,29 +81,40 @@
           </div><!--/.nav-collapse -->
         </div>
       </div>
-    </div>
+    </div><!-- /.navbar -->{/block}
 	    <div class="container-fluid">
       <div class="row-fluid">
+	  {block name="sidebar"}
         <div class="span3">
           	<div class="well sidebar-nav">
-		<ul class="nav nav-list">
-			{foreach from="$mainmenu" item="menuitem" }
+				<ul class="nav nav-list">
+					{foreach from="$mainmenu" item="menuitem" }
 				
-				{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
-				<li class="nav-header">{$menuitem.displayname}{if isset($menuitem.data)}{$menuitem.data}{/if}</li>
-						{foreach from="$submenu" item="subitem" }
-							<li><a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>{if isset($subitem.displayname)}{$subitem.displayname}{else}{message name={$subitem.title}}{/if}{if isset($subitem.data)}{$subitem.data}{/if}</a></li>
-						{/foreach}
-						<li class="divider"></li>
-				{else}
-				<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data}{/if}</a>
-				{/if}
-				</li>
-			{/foreach}
-		</ul>
-	</div>
+						{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
+						<li class="nav-header">{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</li>
+								{foreach from="$submenu" item="subitem" }
+									<li>
+										<a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>
+											{if isset($subitem.displayname)}
+												{$subitem.displayname|escape}
+											{else}
+												{message name={$subitem.title}}
+											{/if}
+											{if isset($subitem.data)}{$subitem.data|escape}{/if}
+										</a>
+									</li>
+								{/foreach}
+								<li class="divider"></li>
+						{else}
+						<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</a>
+						{/if}
+						</li>
+					{/foreach}
+				</ul>
+			</div>
         </div><!--/span-->
-        <div class="span9">{include file="sessionerrors.tpl"}{block name="pageheader"}
+		{/block}
+        {block name="rowinit"}<div class="span9">{/block}{include file="sessionerrors.tpl"}{block name="pageheader"}
 				<div class="page-header">
   <h1>{message name="{$pageslug}-header"} <small>{message name="{$pageslug}-header-subtext"}</small></h1>
 </div>{/block}

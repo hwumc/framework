@@ -4,8 +4,25 @@ if(!defined("HMS")) die("Invalid entry point");
 
 class DynamicRight extends DataObject
 {
-    
     protected $right;
+    
+    public static function getByRight($right)
+    {
+        global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT * FROM `" . strtolower( get_called_class() ) . "` WHERE `right` = :id LIMIT 1;");
+		$statement->bindParam(":id", $right);
+
+		$statement->execute();
+
+		$resultObject = $statement->fetchObject( get_called_class() );
+
+		if($resultObject != false)
+		{
+			$resultObject->isNew = false;
+		}
+
+		return $resultObject;
+    }
     
     public function getRight()
     {

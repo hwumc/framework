@@ -17,6 +17,12 @@ class PageEditProfile extends PageBase
 	
 		if( WebRequest::wasPosted() ) {
 			$this->mBasePage = "blank.tpl";
+            
+            if( trim(WebRequest::post( "experience" )) == "" ) 
+            {
+                $this->triggerError("no-experience");
+                return;
+            }
 			
 			$user->setEmail( WebRequest::post( "email" ) );
 			$user->setFullName( WebRequest::post( "realname" ) );
@@ -45,4 +51,23 @@ class PageEditProfile extends PageBase
 			$this->mSmarty->assign( "contactphone", $user->getEmergencyContactPhone() );
 		}
 	}
+    
+    private function triggerError( $errorCode )
+    {        
+        
+        $this->mSmarty->assign( "email", WebRequest::post( "email" ) );
+        $this->mSmarty->assign( "realname", WebRequest::post( "realname" ) );
+        $this->mSmarty->assign( "mobile", WebRequest::post( "mobile" ) );
+        $this->mSmarty->assign( "experience", WebRequest::post( "experience" ) );
+        $this->mSmarty->assign( "medicalcheck", (WebRequest::post( "medical" ) == "" ? "" : 'checked="true"') );
+        $this->mSmarty->assign( "medical", WebRequest::post( "medical" ) );
+        $this->mSmarty->assign( "contactname", WebRequest::post( "contactname" ) );
+        $this->mSmarty->assign( "contactphone", WebRequest::post( "contactphone" ) );
+                
+        $this->mBasePage = "profile/edit.tpl";
+        
+        Session::appendError("EditProfile-error-" . $errorCode);
+    }
+    
+    			
 }
