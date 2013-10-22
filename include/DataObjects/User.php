@@ -15,6 +15,7 @@ class User extends DataObject
 	protected $email;
 	protected $emailconfirmation;
 	protected $godmode;
+    protected $isdriver;
     
     public static function getLoggedIn()
 	{
@@ -99,7 +100,7 @@ class User extends DataObject
 		
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode);");
+			$statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver);");
 			$statement->bindParam(":username", $this->username);
 			$statement->bindParam(":password", $this->password);
 			$statement->bindParam(":fullName", $this->fullName);
@@ -112,6 +113,8 @@ class User extends DataObject
 			$statement->bindParam(":emailconfirmation", $this->emailconfirmation);
 			$statement->bindParam(":godmode", $godmodevalue); // force to zero - we don't 
 								//want godmode users created without good reason.
+            $statement->bindParam(":isdriver", $this->isdriver);
+            
 			if($statement->execute())
 			{
 				$this->isNew = false;
@@ -124,7 +127,7 @@ class User extends DataObject
 		}
 		else
 		{ // update
-			$statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation WHERE id = :id LIMIT 1;");
+			$statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation, isdriver = :isdriver WHERE id = :id LIMIT 1;");
 			$statement->bindParam(":username", $this->username);
 			$statement->bindParam(":password", $this->password);
 			$statement->bindParam(":fullName", $this->fullName);
@@ -136,6 +139,7 @@ class User extends DataObject
 			$statement->bindParam(":email", $this->email);
 			$statement->bindParam(":emailconfirmation", $this->emailconfirmation);
 			// not including godmode here. It should never be changed from the interface.
+			$statement->bindParam(":isdriver", $this->isdriver);
 			$statement->bindParam(":id", $this->id);
 
 			if(!$statement->execute())
@@ -273,6 +277,16 @@ class User extends DataObject
 	{
 		return $this->godmode;
 	}
+    
+    public function isDriver()
+    {
+        return $this->isdriver;   
+    }
+    
+    public function setIsDriver($isdriver)
+    {
+        $this->isdriver = $isdriver;   
+    }
 	
 	public static function addMenuItems( $menu ) {
 		$menu = $menu[0];
