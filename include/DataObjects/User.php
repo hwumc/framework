@@ -267,6 +267,7 @@ class User extends DataObject
         // Finally, check the normal user rights.
 		return in_array( $action, $this->getRights() );
 	}
+    
 	public function isMailConfirmed()
 	{
 		// TODO: fix me
