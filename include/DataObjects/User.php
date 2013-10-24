@@ -15,7 +15,7 @@ class User extends DataObject
 	protected $email;
 	protected $emailconfirmation;
 	protected $godmode;
-    protected $isdriver;
+    protected $isdriver = 0;
     
     public static function getLoggedIn()
 	{
