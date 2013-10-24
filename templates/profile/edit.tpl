@@ -37,7 +37,13 @@
 			</div>
 		</div>
 		
-		
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox" for="isdriver">
+					<input type="checkbox" id="isdriver" name="isdriver" {$isdriver} /> {message name="{$pageslug}-isdriver"}
+				</label>
+			</div>
+		</div>	
 	</fieldset>
 
 	<fieldset>
