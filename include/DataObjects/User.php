@@ -205,7 +205,8 @@ class User extends DataObject
 	{
 		$this->emergcontact = $emergcontact;
 	}
-	public function getEmergencyContactPhone()
+	
+    public function getEmergencyContactPhone()
 	{
 		return $this->emergcontactphone;
 	}
