@@ -422,4 +422,9 @@ class User extends DataObject
 		$this->setPassword( $pass );
 		$this->save();
 	}
+
+    public function isAnonymous()
+    {
+        return false;   
+    }
 }
