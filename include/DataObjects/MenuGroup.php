@@ -20,6 +20,12 @@ class MenuGroup extends DataObject
 		{
 			$resultObject->isNew = false;
 		}
+        else
+        {
+            $resultObject = new MenuGroup();
+            $resultObject->setSlug( $slug );
+            $resultObject->isNew = true;
+        }
 
 		return $resultObject;
 	}
@@ -38,6 +44,11 @@ class MenuGroup extends DataObject
     }
     
     public function getDisplayName(){
+        if($this->displayname == null)
+        {
+            return $this->getSlug();    
+        }
+        
         return $this->displayname;
     }
     
