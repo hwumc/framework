@@ -201,7 +201,8 @@ class User extends DataObject
 	{
 		$this->emergcontact = $emergcontact;
 	}
-	public function getEmergencyContactPhone()
+	
+    public function getEmergencyContactPhone()
 	{
 		return $this->emergcontactphone;
 	}
@@ -263,6 +264,7 @@ class User extends DataObject
         // Finally, check the normal user rights.
 		return in_array( $action, $this->getRights() );
 	}
+    
 	public function isMailConfirmed()
 	{
 		// TODO: fix me
@@ -406,4 +408,9 @@ class User extends DataObject
 		$this->setPassword( $pass );
 		$this->save();
 	}
+
+    public function isAnonymous()
+    {
+        return false;   
+    }
 }
