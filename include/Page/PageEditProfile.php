@@ -49,7 +49,7 @@ class PageEditProfile extends PageBase
 			$this->mSmarty->assign( "mobile", $user->getMobile() );
 			$this->mSmarty->assign( "experience", $user->getExperience() );
 			$this->mSmarty->assign( "medicalcheck", ($user->getMedical() == "" ? "" : 'checked="true"') );
-			$this->mSmarty->assign( "isdriver", ($user->isDriver() == 1 ? "" : 'checked="true"') );
+			$this->mSmarty->assign( "isdriver", ($user->isDriver() == 1 ? 'checked="true"' : '') );
 			$this->mSmarty->assign( "medical", $user->getMedical() );
 			$this->mSmarty->assign( "contactname", $user->getEmergencyContact() );
 			$this->mSmarty->assign( "contactphone", $user->getEmergencyContactPhone() );
@@ -64,7 +64,7 @@ class PageEditProfile extends PageBase
         $this->mSmarty->assign( "mobile", WebRequest::post( "mobile" ) );
         $this->mSmarty->assign( "experience", WebRequest::post( "experience" ) );
         $this->mSmarty->assign( "medicalcheck", (WebRequest::post( "medical" ) == "" ? "" : 'checked="true"') );
-        $this->mSmarty->assign( "isdriver", (WebRequest::post( "medical" ) == "on" ? "" : 'checked="true"') );
+        $this->mSmarty->assign( "isdriver", (WebRequest::post( "medical" ) == "on" ? 'checked="true"' : "") );
         $this->mSmarty->assign( "medical", WebRequest::post( "medical" ) );
         $this->mSmarty->assign( "contactname", WebRequest::post( "contactname" ) );
         $this->mSmarty->assign( "contactphone", WebRequest::post( "contactphone" ) );
