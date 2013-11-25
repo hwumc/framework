@@ -65,6 +65,11 @@ abstract class DataObject
 	{
 		return $this->id;
 	}
+    
+    public function objectIsNew()
+    {
+        return $this->isNew;   
+    }
 
 	public function delete() 
     {
