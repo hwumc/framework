@@ -427,4 +427,9 @@ class User extends DataObject
     {
         return false;   
     }
+    
+    public function getGravatarHash()
+    {
+        return md5(strtolower(trim($this->email)));   
+    }
 }

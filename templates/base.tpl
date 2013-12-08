@@ -67,7 +67,7 @@
 			{else}
 				<ul class="nav pull-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$currentUser->getFullName()|escape} <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{include file="userdisplay.tpl" user=$currentUser}&nbsp;<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="nav-header">{message name="account"}</li>
 							<li><a href="{$cScriptPath}/ChangePassword"><i class="icon-lock"></i> {message name="changepassword"}</a></li>
