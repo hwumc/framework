@@ -8,7 +8,7 @@
 			<tbody>
 				{foreach from="$userlist" item="user" key="userid" }
 				<tr>
-					<th>{$user->getFullName()|escape}</th>
+					<th>{include file="userdisplay.tpl"}</th>
 					<td>{$user->getUsername()|escape}</td>
 					<td>{$user->getEmail()|escape}</td>
 					{if $allowEdit == "true"}<td><a href="{$cScriptPath}/{$pageslug}/edit/{$userid}" class="btn btn-small btn-warning">{message name="{$pageslug}-button-edit"}</a></td>{/if}
