@@ -430,6 +430,11 @@ class User extends DataObject
     
     public function getGravatarHash()
     {
-        return md5(strtolower(trim($this->email)));   
+        return self::getGravatarHashForEmail($this->email);   
+    }
+    
+    public static function getGravatarHashForEmail($email)
+    {
+        return md5(strtolower(trim($email)));
     }
 }

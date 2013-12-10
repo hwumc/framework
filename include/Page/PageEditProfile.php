@@ -53,6 +53,8 @@ class PageEditProfile extends PageBase
 			$this->mSmarty->assign( "medical", $user->getMedical() );
 			$this->mSmarty->assign( "contactname", $user->getEmergencyContact() );
 			$this->mSmarty->assign( "contactphone", $user->getEmergencyContactPhone() );
+            
+			$this->mSmarty->assign( "gravatar", $user->getGravatarHash() );
 		}
 	}
     
@@ -68,6 +70,8 @@ class PageEditProfile extends PageBase
         $this->mSmarty->assign( "medical", WebRequest::post( "medical" ) );
         $this->mSmarty->assign( "contactname", WebRequest::post( "contactname" ) );
         $this->mSmarty->assign( "contactphone", WebRequest::post( "contactphone" ) );
+        
+        $this->mSmarty->assign( "gravatar", User::getGravatarHashForEmail(WebRequest::post( "email" )) );
                 
         $this->mBasePage = "profile/edit.tpl";
         

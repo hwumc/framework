@@ -10,7 +10,17 @@
 			<div class="controls">
 				<input type="email" id="email" class="input-xlarge" name="email" placeholder="{message name="{$pageslug}-email-placeholder"}" required="true" value="{$email}" />
 			</div>
-		</div>	
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label" for="email">{message name="{$pageslug}-avatar-label"}</label>
+			<div class="controls">
+				<img src="https://secure.gravatar.com/avatar/{$gravatar}?s=100&default=identicon&r=pg" />
+				<span class="help-block">{message name="{$pageslug}-avatar-help"}</span>
+			</div>
+		</div>
+
+		
 	</fieldset>
 
 	<fieldset>
