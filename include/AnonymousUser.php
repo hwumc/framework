@@ -124,4 +124,9 @@ class AnonymousUser extends User
     {
         return true;   
     }
+    
+    public function getGravatarHash()
+    {
+        return "0";   
+    }
 }
