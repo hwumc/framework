@@ -69,10 +69,13 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{include file="userdisplay.tpl" user=$currentUser}&nbsp;<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li class="nav-header">{message name="account"}</li>
-							<li><a href="{$cScriptPath}/ChangePassword"><i class="icon-lock"></i> {message name="changepassword"}</a></li>
-							<li><a href="{$cScriptPath}/EditProfile"><i class="icon-tasks"></i> {message name="editprofile"}</a></li>
-							<li class="divider"></li>						
+							{foreach from=$personalmenu item="section" key="sectionheader"}
+								<li class="nav-header">{message name="personalmenu-{$sectionheader}"}</li>
+								{foreach from=$section item="menuitem"}
+									<li><a href="{$menuitem.link}"><i class="{$menuitem.icon}"></i>&nbsp;{message name="{$menuitem.displayname}"}</a></li>
+								{/foreach}
+								<li class="divider"></li>	
+							{/foreach}
 							<li><a href="{$cScriptPath}/Logout"><i class="icon-off"></i> {message name="logout"} {$currentUser->getUsername()|escape}</a></li>
 						</ul>
 					</li>

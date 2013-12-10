@@ -35,6 +35,9 @@ abstract class PageBase
 
 	// subnav
 	protected $mSubMenu = array();
+        
+	// subnav
+	protected $mPersonalNav = array();
 
     // is this redirecting (hence don't clear session-based stuff like errors)
     protected $mIsRedirecting = false;
@@ -66,6 +69,8 @@ abstract class PageBase
     
 	protected function setupPage()
 	{
+        global $cScriptPath;
+        
         $this->mMainMenu = array(
 		    /* Format:
 			    "Class name" => array(
@@ -75,7 +80,7 @@ abstract class PageBase
 				    "items" => array(...)
 				    ),
                   */
-		    "main" => array( 
+		    "main" => array(
                 "title" => "main", 
                 "items" => array(
 			        "PageMain" => array(
@@ -86,6 +91,30 @@ abstract class PageBase
                 "displayname" => MenuGroup::getBySlug("main")->getDisplayName()
             )
 	    );
+        
+        $this->mPersonalNav = array(
+            /* Format:
+             "sectiontitle" => array(
+                "key" => array(
+                    "displayname" => "Title to show",
+				    "link" => "Link to show",
+                    "icon" => "Icon class to use"
+                ),
+             ),
+             */
+            "account" => array(
+                "profile" => array(
+                    "displayname" => "editprofile",
+                    "link" => $cScriptPath . "/EditProfile",
+                    "icon" => "icon-tasks",
+                ),
+                "password" => array(
+                    "displayname" => "changepassword",
+                    "link" => $cScriptPath . "/ChangePassword",
+                    "icon" => "icon-lock",
+                ),
+            ),
+        );
         
         $this->setupSmarty();
 		
@@ -129,6 +158,10 @@ abstract class PageBase
 		$gLogger->log("   old menu: " . print_r($this->mMainMenu,true));
 		$this->mMainMenu = Hooks::run( "PreCreateMenu", array($this->mMainMenu) );
 		$gLogger->log("   new menu: " . print_r($this->mMainMenu,true));
+        
+		$gLogger->log("   old pmenu: " . print_r($this->mPersonalNav,true));
+		$this->mPersonalNav = Hooks::run( "PreCreatePersonalMenu", array($this->mPersonalNav) );
+		$gLogger->log("   new pmenu: " . print_r($this->mPersonalNav,true));
 		
 		// setup the current page on the menu, but only if the current page 
 		// exists on the main menu in the first place
@@ -147,6 +180,7 @@ abstract class PageBase
         $this->mMainMenu = $newMenu;
         
 		$this->mSmarty->assign("mainmenu", $this->mMainMenu);
+        $this->mSmarty->assign("personalmenu", $this->mPersonalNav);
 
 		global $cWebPath, $cScriptPath;
 		$this->mSmarty->assign("cWebPath", $cWebPath);
