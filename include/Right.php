@@ -7,7 +7,7 @@ class Right
 	public static function getAllRegisteredRights($includePseudoRights = false) {
 		$rights = array();
 		
-		foreach( PageBase::getRegisteredPages() as $p ) {
+		foreach( PageBase::getAllPages() as $p ) {
 			$page = new $p();
 			$pr = $page->getRegisteredRights();
 			$pr[] = $page->getAccessName();

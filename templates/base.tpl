@@ -54,7 +54,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="#">{message name="sitename"}</a>
-          <div class="nav-collapse collapse">
+            <div class="nav-collapse collapse">
 			{if $loggedin eq ""}
 				<ul class="nav pull-right">
 					<li>
@@ -81,7 +81,25 @@
 					</li>
 				</ul>
 			{/if}
-          </div><!--/.nav-collapse -->
+			{foreach from=$navbaritems item="menu" key="menuheader"}
+				<ul class="nav pull-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{message name="navbar-{$menuheader}"}&nbsp;<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							{foreach from=$menu item="section" key="sectionheader" name="dropdownsection"}
+								<li class="nav-header">{message name="navbarmenu-{$sectionheader}"}</li>
+								{foreach from=$section item="menuitem"}
+									<li><a href="{$menuitem.link}"><i class="{$menuitem.icon}"></i>&nbsp;{message name="{$menuitem.displayname}"}</a></li>
+								{/foreach}
+								{if !$smarty.foreach.dropdownsection.last}
+									<li class="divider"></li>
+								{/if}
+							{/foreach}
+						</ul>
+					</li>
+				</ul>
+			{/foreach}
+            </div><!--/.nav-collapse -->
         </div>
       </div>
     </div><!-- /.navbar -->{/block}
