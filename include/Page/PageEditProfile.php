@@ -54,7 +54,9 @@ class PageEditProfile extends PageBase
 			$this->mSmarty->assign( "contactname", $user->getEmergencyContact() );
 			$this->mSmarty->assign( "contactphone", $user->getEmergencyContactPhone() );
             
-			$this->mSmarty->assign( "gravatar", $user->getGravatarHash() );
+            $this->mSmarty->assign( "gravatar", $user->getGravatarHash() );
+
+			$this->mSmarty->assign( "review", WebRequest::get('review'));
 		}
 	}
     

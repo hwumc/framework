@@ -1,5 +1,11 @@
 {extends file="base.tpl"}
 {block name="body"}
+{if $review != ""}
+	<div class="alert alert-block alert-info">
+	  <h4>{message name="{$pageslug}-review-header"}</h4>
+	  {message name="{$pageslug}-review-info"}
+	</div>
+{/if}
 <form class="form-horizontal" method="post">
 
 	<fieldset>
