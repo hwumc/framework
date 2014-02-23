@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{A0786B88-2ADB-4C21-ABE8-AA2D79766269}") = "siteframework", "siteframework.phpproj", "{1D936447-5486-4E58-A682-1822C130BCFA}"
+EndProject
+Project("{A0786B88-2ADB-4C21-ABE8-AA2D79766269}") = "extension-hwumc-core", "..\siteframework-extensions\hwumc-core\extension-hwumc-core.phpproj", "{E136DF06-84E1-4A97-B207-A36971A569EA}"
+EndProject
+Project("{A0786B88-2ADB-4C21-ABE8-AA2D79766269}") = "extension-debug", "..\siteframework-extensions\debug\extension-debug.phpproj", "{47F0687A-086C-4D0C-99A0-7A3BC0239F73}"
+EndProject
+Project("{A0786B88-2ADB-4C21-ABE8-AA2D79766269}") = "extension-cms", "..\siteframework-extensions\cms\extension-cms.phpproj", "{8EB22BCE-2035-4CCF-A324-86B99A8CA6B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		beta|Any CPU = beta|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D936447-5486-4E58-A682-1822C130BCFA}.beta|Any CPU.ActiveCfg = beta|Any CPU
+		{1D936447-5486-4E58-A682-1822C130BCFA}.beta|Any CPU.Build.0 = beta|Any CPU
+		{1D936447-5486-4E58-A682-1822C130BCFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D936447-5486-4E58-A682-1822C130BCFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D936447-5486-4E58-A682-1822C130BCFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D936447-5486-4E58-A682-1822C130BCFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E136DF06-84E1-4A97-B207-A36971A569EA}.beta|Any CPU.ActiveCfg = beta|Any CPU
+		{E136DF06-84E1-4A97-B207-A36971A569EA}.beta|Any CPU.Build.0 = beta|Any CPU
+		{E136DF06-84E1-4A97-B207-A36971A569EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E136DF06-84E1-4A97-B207-A36971A569EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E136DF06-84E1-4A97-B207-A36971A569EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E136DF06-84E1-4A97-B207-A36971A569EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F0687A-086C-4D0C-99A0-7A3BC0239F73}.beta|Any CPU.ActiveCfg = beta|Any CPU
+		{47F0687A-086C-4D0C-99A0-7A3BC0239F73}.beta|Any CPU.Build.0 = beta|Any CPU
+		{47F0687A-086C-4D0C-99A0-7A3BC0239F73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F0687A-086C-4D0C-99A0-7A3BC0239F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F0687A-086C-4D0C-99A0-7A3BC0239F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F0687A-086C-4D0C-99A0-7A3BC0239F73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EB22BCE-2035-4CCF-A324-86B99A8CA6B9}.beta|Any CPU.ActiveCfg = beta|Any CPU
+		{8EB22BCE-2035-4CCF-A324-86B99A8CA6B9}.beta|Any CPU.Build.0 = beta|Any CPU
+		{8EB22BCE-2035-4CCF-A324-86B99A8CA6B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EB22BCE-2035-4CCF-A324-86B99A8CA6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EB22BCE-2035-4CCF-A324-86B99A8CA6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EB22BCE-2035-4CCF-A324-86B99A8CA6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
