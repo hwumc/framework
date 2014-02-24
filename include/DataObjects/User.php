@@ -133,7 +133,7 @@ class User extends DataObject
         }
         else
         { // update
-            $statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation, isdriver = :isdriver, profilereview = :profilereview WHERE id = :id LIMIT 1;");
+            $statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation, isdriver = :isdriver, profilereview = :profilereview, driverexpiry = :driverexpiry WHERE id = :id LIMIT 1;");
             $statement->bindParam(":username", $this->username);
             $statement->bindParam(":password", $this->password);
             $statement->bindParam(":fullName", $this->fullName);
@@ -146,6 +146,7 @@ class User extends DataObject
             $statement->bindParam(":emailconfirmation", $this->emailconfirmation);
             // not including godmode here. It should never be changed from the interface.
             $statement->bindParam(":isdriver", $this->isdriver);
+            $statement->bindParam(":driverexpiry", $this->driverexpiry);
             $statement->bindParam(":profilereview", $this->profilereview);
             $statement->bindParam(":id", $this->id);
 
@@ -304,12 +305,14 @@ class User extends DataObject
     
     public function getDriverExpiry()
     {
-        return $this->driverexpiry;   
+        return $this->driverexpiry == null ? null : DateTime::createFromFormat("Y-m-d", $this->driverexpiry)->format("d/m/Y");
     }
     
     public function setDriverExpiry($driverexpiry)
     {
-        $this->driverexpiry = $driverexpiry;   
+        $expiry = DateTime::createFromFormat("d/m/Y", $driverexpiry);
+        
+        $this->driverexpiry = $expiry == false ? null : $expiry->format("Y-m-d");
     }
     
     public function getProfileReview()

@@ -72,8 +72,7 @@
 		<div class="control-group">
 			<label class="control-label" for="driverexpiry">{message name="{$pageslug}-driverexpiry"}</label>
 			<div class="controls">
-				<input class="input-medium" type="text" id="driverexpiry" placeholder="{message name="{$pageslug}-driverexpiry-placeholder"}" data-date-format="dd/mm/yyyy" name="driverexpiry" required="true" value="{$driverexpiry}"/>
-				 
+				<input class="input-medium" type="text" id="driverexpiry" placeholder="{message name="{$pageslug}-driverexpiry-placeholder"}" data-date-format="dd/mm/yyyy" name="driverexpiry" value="{$driverexpiry}"/>
 				<span class="help-inline">{message name="{$pageslug}-driverexpiry-help"}</span>
 			</div>
 		</div>	
