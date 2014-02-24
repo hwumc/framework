@@ -119,4 +119,14 @@ class AnonymousUser extends User
 	public function sendPasswordReset() {
 		throw new YouShouldntBeDoingThatException();
 	}
+
+    public function isAnonymous()
+    {
+        return true;   
+    }
+    
+    public function getGravatarHash()
+    {
+        return "0";   
+    }
 }

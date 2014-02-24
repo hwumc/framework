@@ -40,3 +40,5 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 extensions/*
+hwumc.sln
+.idea/*

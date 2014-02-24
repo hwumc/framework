@@ -114,7 +114,7 @@ class PageManageMenuGroups extends PageBase
 	
 		if( WebRequest::wasPosted() ) {
             $exists = MenuGroup::getBySlug( WebRequest::post( "slug" ) );
-            if( $exists != null )
+            if( $exists != null && ! $exists->objectIsNew() )
             {
                 $this->triggerError("slugexists");
                 return;

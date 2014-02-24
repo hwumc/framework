@@ -54,8 +54,8 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="#">{message name="sitename"}</a>
-          <div class="nav-collapse collapse">
 			{if $loggedin eq ""}
+			<div class="nav-collapse collapse">
 				<ul class="nav pull-right">
 					<li>
 						<a href="{$cScriptPath}/Register" class="navbar-link">{message name="register"}</a>
@@ -67,18 +67,40 @@
 			{else}
 				<ul class="nav pull-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$currentUser->getFullName()|escape} <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{include file="userdisplay.tpl" user=$currentUser}&nbsp;<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li class="nav-header">{message name="account"}</li>
-							<li><a href="{$cScriptPath}/ChangePassword"><i class="icon-lock"></i> {message name="changepassword"}</a></li>
-							<li><a href="{$cScriptPath}/EditProfile"><i class="icon-tasks"></i> {message name="editprofile"}</a></li>
-							<li class="divider"></li>						
+							{foreach from=$personalmenu item="section" key="sectionheader"}
+								<li class="nav-header">{message name="personalmenu-{$sectionheader}"}</li>
+								{foreach from=$section item="menuitem"}
+									<li><a href="{$menuitem.link}"><i class="{$menuitem.icon}"></i>&nbsp;{message name="{$menuitem.displayname}"}</a></li>
+								{/foreach}
+								<li class="divider"></li>	
+							{/foreach}
 							<li><a href="{$cScriptPath}/Logout"><i class="icon-off"></i> {message name="logout"} {$currentUser->getUsername()|escape}</a></li>
 						</ul>
 					</li>
 				</ul>
+				<div class="nav-collapse collapse">
 			{/if}
-          </div><!--/.nav-collapse -->
+			{foreach from=$navbaritems item="menu" key="menuheader"}
+				<ul class="nav pull-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{message name="navbar-{$menuheader}"}&nbsp;<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							{foreach from=$menu item="section" key="sectionheader" name="dropdownsection"}
+								<li class="nav-header">{message name="navbarmenu-{$sectionheader}"}</li>
+								{foreach from=$section item="menuitem"}
+									<li><a href="{$menuitem.link}"><i class="{$menuitem.icon}"></i>&nbsp;{message name="{$menuitem.displayname}"}</a></li>
+								{/foreach}
+								{if !$smarty.foreach.dropdownsection.last}
+									<li class="divider"></li>
+								{/if}
+							{/foreach}
+						</ul>
+					</li>
+				</ul>
+			{/foreach}
+            </div><!--/.nav-collapse -->
         </div>
       </div>
     </div><!-- /.navbar -->{/block}
@@ -88,25 +110,26 @@
         <div class="span3">
           	<div class="well sidebar-nav">
 				<ul class="nav nav-list">
-					{foreach from="$mainmenu" item="menuitem" }
-				
+					{foreach from="$mainmenu" item="menuitem" name="mainmenuloop"}
 						{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
-						<li class="nav-header">{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</li>
-								{foreach from="$submenu" item="subitem" }
-									<li>
-										<a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>
-											{if isset($subitem.displayname)}
-												{$subitem.displayname|escape}
-											{else}
-												{message name={$subitem.title}}
-											{/if}
-											{if isset($subitem.data)}{$subitem.data|escape}{/if}
-										</a>
-									</li>
-								{/foreach}
-								<li class="divider"></li>
+							<li class="nav-header">{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</li>
+							{foreach from="$submenu" item="subitem" }
+								<li>
+									<a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active"{/if}>
+										{if isset($subitem.displayname)}
+											{$subitem.displayname|escape}
+										{else}
+											{message name={$subitem.title}}
+										{/if}
+										{if isset($subitem.data)}{$subitem.data|escape}{/if}
+									</a>
+								</li>
+							{/foreach}
+							{if ! $smarty.foreach.mainmenuloop.last}
+							<li class="divider"></li>
+							{/if}
 						{else}
-						<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</a>
+							<li><a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active"{/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</a>
 						{/if}
 						</li>
 					{/foreach}

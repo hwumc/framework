@@ -18,14 +18,14 @@ class PageLogin extends PageBase
 		{
 			if(! ($username = WebRequest::postString("lgUser")))
 			{
-				// no email address specified
-				$this->redirect("nouser");
+				// no username specified
+				$this->redirect("nouser", null);
 				return;
 			}
 			if(! ($password = WebRequest::postString("lgPasswd")))
 			{
 				// no password specified
-				$this->redirect("nopass");
+				$this->redirect("nopass", null);
 				return;
 			}
 
@@ -33,21 +33,21 @@ class PageLogin extends PageBase
 			if($cust == null)
 			{
 				// customer doesn't exist. offer to signup or retry?
-				$this->redirect("invalid");
+				$this->redirect("invalid", null);
 				return;
 			}
 
 			if(! $cust->isMailConfirmed())
 			{
 				// customer hasn't confirmed their email
-				$this->redirect("noconfirm");
+				$this->redirect("noconfirm", $cust);
 				return;
 			}
 			
 			if(! $cust->authenticate($password) )
 			{
 				// not a valid password
-				$this->redirect("invalid");
+				$this->redirect("invalid", $cust);
 				return;
 			}
 
@@ -57,7 +57,7 @@ class PageLogin extends PageBase
 			Session::setLoggedInUser($cust->getId());
 			
 			// redirect back to the main page.
-			$this->redirect();
+			$this->redirect(null, $cust);
 
 		}
 		else
@@ -65,7 +65,7 @@ class PageLogin extends PageBase
 		}
 	}
 
-	private function redirect($error = null)
+	private function redirect($error, User $user)
 	{
         global $cWebPath;
 		
@@ -76,8 +76,17 @@ class PageLogin extends PageBase
 		if($error) {
             Session::appendError( "login-" . $error );
             $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/Login";
-		} else {
-            $this->mHeaders[] = "Location: " . $cWebPath . "/index.php" . WebRequest::get("returnto");            
+        } else {
+            if($user->getProfileReview() == 1)
+            {
+                $user->setProfileReview(0);
+                $user->save();
+                $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/EditProfile?review=yes";
+            } 
+            else 
+            {
+                $this->mHeaders[] = "Location: " . $cWebPath . "/index.php" . WebRequest::get("returnto");
+            }    
         }
 		return;
 	}

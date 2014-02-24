@@ -1,0 +1,1 @@
+﻿<img src="https://secure.gravatar.com/avatar/{$user->getGravatarHash()}?s=20&d={if $user->isAnonymous()}mm{else}identicon{/if}&r=pg" alt="avatar"/>&nbsp;{$user->getFullName()|escape}

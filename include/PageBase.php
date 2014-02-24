@@ -35,6 +35,12 @@ abstract class PageBase
 
 	// subnav
 	protected $mSubMenu = array();
+        
+	// personal nav
+	protected $mPersonalNav = array();
+    
+	// nav bar submenus
+	protected $mNavBarItems = array();
 
     // is this redirecting (hence don't clear session-based stuff like errors)
     protected $mIsRedirecting = false;
@@ -66,6 +72,8 @@ abstract class PageBase
     
 	protected function setupPage()
 	{
+        global $cScriptPath;
+        
         $this->mMainMenu = array(
 		    /* Format:
 			    "Class name" => array(
@@ -75,7 +83,7 @@ abstract class PageBase
 				    "items" => array(...)
 				    ),
                   */
-		    "main" => array( 
+		    "main" => array(
                 "title" => "main", 
                 "items" => array(
 			        "PageMain" => array(
@@ -86,6 +94,44 @@ abstract class PageBase
                 "displayname" => MenuGroup::getBySlug("main")->getDisplayName()
             )
 	    );
+        
+        $this->mPersonalNav = array(
+            /* Format:
+             "sectiontitle" => array(
+                "key" => array(
+                    "displayname" => "Title to show",
+				    "link" => "Link to show",
+                    "icon" => "Icon class to use"
+                ),
+             ),
+             */
+            "account" => array(
+                "profile" => array(
+                    "displayname" => "editprofile",
+                    "link" => $cScriptPath . "/EditProfile",
+                    "icon" => "icon-tasks",
+                ),
+                "password" => array(
+                    "displayname" => "changepassword",
+                    "link" => $cScriptPath . "/ChangePassword",
+                    "icon" => "icon-lock",
+                ),
+            ),
+        );
+        
+        $this->mNavBarItems = array(
+            /* Format:
+             "dropdowntitle" => array(
+                 "sectiontitle" => array(
+                    "key" => array(
+                        "displayname" => "Title to show",
+				        "link" => "Link to show",
+                        "icon" => "Icon class to use"
+                    ),
+                 ),
+             ),
+            */
+        );
         
         $this->setupSmarty();
 		
@@ -129,6 +175,14 @@ abstract class PageBase
 		$gLogger->log("   old menu: " . print_r($this->mMainMenu,true));
 		$this->mMainMenu = Hooks::run( "PreCreateMenu", array($this->mMainMenu) );
 		$gLogger->log("   new menu: " . print_r($this->mMainMenu,true));
+        
+		$gLogger->log("   old pmenu: " . print_r($this->mPersonalNav,true));
+		$this->mPersonalNav = Hooks::run( "PreCreatePersonalMenu", array($this->mPersonalNav) );
+		$gLogger->log("   new pmenu: " . print_r($this->mPersonalNav,true));
+        
+		$gLogger->log("   old nmenu: " . print_r($this->mNavBarItems,true));
+		$this->mNavBarItems = Hooks::run( "PreCreateNavBarMenu", array($this->mNavBarItems) );
+		$gLogger->log("   new nmenu: " . print_r($this->mNavBarItems,true));
 		
 		// setup the current page on the menu, but only if the current page 
 		// exists on the main menu in the first place
@@ -147,6 +201,8 @@ abstract class PageBase
         $this->mMainMenu = $newMenu;
         
 		$this->mSmarty->assign("mainmenu", $this->mMainMenu);
+        $this->mSmarty->assign("personalmenu", $this->mPersonalNav);
+        $this->mSmarty->assign("navbaritems", $this->mNavBarItems);
 
 		global $cWebPath, $cScriptPath;
 		$this->mSmarty->assign("cWebPath", $cWebPath);
