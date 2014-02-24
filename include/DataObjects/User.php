@@ -17,6 +17,7 @@ class User extends DataObject
     protected $godmode;
     protected $isdriver = 0;
     protected $profilereview = 0;
+    protected $driverexpiry = null;
     
     public static function getLoggedIn()
     {
@@ -98,9 +99,11 @@ class User extends DataObject
 
         $godmodevalue = 0;
         
+        $driverExpiry = $this->isdriver ? $this->driverexpiry : null;
+        
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview);");
+            $statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview, :driverexpiry);");
             $statement->bindParam(":username", $this->username);
             $statement->bindParam(":password", $this->password);
             $statement->bindParam(":fullName", $this->fullName);
@@ -115,6 +118,8 @@ class User extends DataObject
                                 //want godmode users created without good reason.
             $statement->bindParam(":isdriver", $this->isdriver);
             $statement->bindParam(":profilereview", $this->profilereview);
+            
+            $statement->bindParam(":driverexpiry", $driverExpiry);
             
             if($statement->execute())
             {
@@ -281,15 +286,30 @@ class User extends DataObject
     {
         return $this->godmode;
     }
+        
+    public function getIsDriver()
+    {
+        return $this->isdriver;   
+    }
     
     public function isDriver()
     {
-        return $this->isdriver;   
+        return $this->isdriver;
     }
     
     public function setIsDriver($isdriver)
     {
         $this->isdriver = $isdriver;   
+    }
+    
+    public function getDriverExpiry()
+    {
+        return $this->driverexpiry;   
+    }
+    
+    public function setDriverExpiry($driverexpiry)
+    {
+        $this->driverexpiry = $driverexpiry;   
     }
     
     public function getProfileReview()
