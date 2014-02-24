@@ -17,6 +17,7 @@ class User extends DataObject
     protected $godmode;
     protected $isdriver = 0;
     protected $profilereview = 0;
+    protected $driverexpiry = null;
     
     public static function getLoggedIn()
     {
@@ -98,9 +99,11 @@ class User extends DataObject
 
         $godmodevalue = 0;
         
+        $driverExpiry = $this->isdriver ? $this->driverexpiry : null;
+        
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview);");
+            $statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview, :driverexpiry);");
             $statement->bindParam(":username", $this->username);
             $statement->bindParam(":password", $this->password);
             $statement->bindParam(":fullName", $this->fullName);
@@ -116,6 +119,8 @@ class User extends DataObject
             $statement->bindParam(":isdriver", $this->isdriver);
             $statement->bindParam(":profilereview", $this->profilereview);
             
+            $statement->bindParam(":driverexpiry", $driverExpiry);
+            
             if($statement->execute())
             {
                 $this->isNew = false;
@@ -128,7 +133,7 @@ class User extends DataObject
         }
         else
         { // update
-            $statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation, isdriver = :isdriver, profilereview = :profilereview WHERE id = :id LIMIT 1;");
+            $statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation, isdriver = :isdriver, profilereview = :profilereview, driverexpiry = :driverexpiry WHERE id = :id LIMIT 1;");
             $statement->bindParam(":username", $this->username);
             $statement->bindParam(":password", $this->password);
             $statement->bindParam(":fullName", $this->fullName);
@@ -141,6 +146,7 @@ class User extends DataObject
             $statement->bindParam(":emailconfirmation", $this->emailconfirmation);
             // not including godmode here. It should never be changed from the interface.
             $statement->bindParam(":isdriver", $this->isdriver);
+            $statement->bindParam(":driverexpiry", $this->driverexpiry);
             $statement->bindParam(":profilereview", $this->profilereview);
             $statement->bindParam(":id", $this->id);
 
@@ -281,15 +287,32 @@ class User extends DataObject
     {
         return $this->godmode;
     }
-    
-    public function isDriver()
+        
+    public function getIsDriver()
     {
         return $this->isdriver;   
     }
     
+    public function isDriver()
+    {
+        return $this->isdriver;
+    }
+    
     public function setIsDriver($isdriver)
     {
-        $this->isdriver = $isdriver;   
+        $this->isdriver = $isdriver;
+    }
+    
+    public function getDriverExpiry()
+    {
+        return $this->driverexpiry == null ? null : DateTime::createFromFormat("Y-m-d", $this->driverexpiry)->format("d/m/Y");
+    }
+    
+    public function setDriverExpiry($driverexpiry)
+    {
+        $expiry = DateTime::createFromFormat("d/m/Y", $driverexpiry);
+        
+        $this->driverexpiry = $expiry == false ? null : $expiry->format("Y-m-d");
     }
     
     public function getProfileReview()

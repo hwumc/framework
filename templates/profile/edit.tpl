@@ -1,5 +1,9 @@
 {extends file="base.tpl"}
 {block name="body"}
+
+<script src="{$cWebPath}/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="{$cWebPath}/scripts/bootstrap-datepicker.js" type="text/javascript"></script>
+
 {if $review != ""}
 	<div class="alert alert-block alert-info">
 	  <h4>{message name="{$pageslug}-review-header"}</h4>
@@ -51,13 +55,25 @@
 			<div class="controls">
 				<textarea rows="3" class="input-xxlarge" id="experience" name="experience" placeholder="{message name="{$pageslug}-experience-placeholder"}" required="true" >{$experience}</textarea>
 			</div>
-		</div>
+		</div>		
+	</fieldset>
+
+	<fieldset>
+		<legend>{message name="{$pageslug}-header-driving"}</legend>
 		
 		<div class="control-group">
 			<div class="controls">
 				<label class="checkbox" for="isdriver">
-					<input type="checkbox" id="isdriver" name="isdriver" {$isdriver} /> {message name="{$pageslug}-isdriver"}
+					<input type="checkbox" id="isdriver" name="isdriver" {if $isdriver}checked="true"{/if} /> {message name="{$pageslug}-isdriver"}
 				</label>
+			</div>
+		</div>
+		
+		<div class="control-group" id="driverExpiryGroup" {if !$isdriver}style="display:none"{/if}>
+			<label class="control-label" for="driverexpiry">{message name="{$pageslug}-driverexpiry"}</label>
+			<div class="controls">
+				<input class="input-medium" type="text" id="driverexpiry" placeholder="{message name="{$pageslug}-driverexpiry-placeholder"}" data-date-format="dd/mm/yyyy" name="driverexpiry" value="{$driverexpiry}" {if $isdriver}required="true"{/if}/>
+				<span class="help-inline">{message name="{$pageslug}-driverexpiry-help"}</span>
 			</div>
 		</div>	
 	</fieldset>
@@ -97,4 +113,20 @@
 		</div>
 	</div>
 </form>
+<script>
+$(function(){
+	window.prettyPrint && prettyPrint();
+	$('#driverexpiry').datepicker();
+});
+
+$('#isdriver').click(function() {
+    if( $(this).is(':checked')) {
+        $("#driverExpiryGroup").show(400, function(){});
+		$("#driverexpiry").attr("required", true);
+    } else {
+        $("#driverExpiryGroup").hide(400, function(){});
+		$("#driverexpiry").removeAttr("required");
+    }
+}); 
+</script>
 {/block}
