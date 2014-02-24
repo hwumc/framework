@@ -54,7 +54,7 @@ class PageEditProfile extends PageBase
 			$this->mSmarty->assign( "mobile", $user->getMobile() );
 			$this->mSmarty->assign( "experience", $user->getExperience() );
 			$this->mSmarty->assign( "medicalcheck", ($user->getMedical() == "" ? "" : 'checked="true"') );
-			$this->mSmarty->assign( "isdriver", ($user->getIsDriver() == 1 ? 'checked="true"' : '') );
+			$this->mSmarty->assign( "isdriver", $user->getIsDriver() );
 			$this->mSmarty->assign( "driverexpiry", $user->getDriverExpiry() );
 			$this->mSmarty->assign( "medical", $user->getMedical() );
 			$this->mSmarty->assign( "contactname", $user->getEmergencyContact() );

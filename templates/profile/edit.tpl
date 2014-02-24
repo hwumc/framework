@@ -64,12 +64,12 @@
 		<div class="control-group">
 			<div class="controls">
 				<label class="checkbox" for="isdriver">
-					<input type="checkbox" id="isdriver" name="isdriver" {$isdriver} /> {message name="{$pageslug}-isdriver"}
+					<input type="checkbox" id="isdriver" name="isdriver" {if $isdriver}checked="true"{/if} /> {message name="{$pageslug}-isdriver"}
 				</label>
 			</div>
 		</div>
 		
-		<div class="control-group">
+		<div class="control-group" id="driverExpiryGroup" {if !$isdriver}style="display:none"{/if}>
 			<label class="control-label" for="driverexpiry">{message name="{$pageslug}-driverexpiry"}</label>
 			<div class="controls">
 				<input class="input-medium" type="text" id="driverexpiry" placeholder="{message name="{$pageslug}-driverexpiry-placeholder"}" data-date-format="dd/mm/yyyy" name="driverexpiry" value="{$driverexpiry}"/>
@@ -118,5 +118,13 @@ $(function(){
 	window.prettyPrint && prettyPrint();
 	$('#driverexpiry').datepicker();
 });
+
+$('#isdriver').click(function() {
+    if( $(this).is(':checked')) {
+        $("#driverExpiryGroup").show(400, function(){});
+    } else {
+        $("#driverExpiryGroup").hide(400, function(){});
+    }
+}); 
 </script>
 {/block}
