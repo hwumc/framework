@@ -38,7 +38,7 @@ class PageEditProfile extends PageBase
             
             $driver = WebRequest::post( "isdriver" );
             $user->setIsDriver( $driver == 'on' ? 1 : 0 );
-            $user->setDriverExpiry( WebRequest::post( "driverexpiry" ) );
+            $user->setDriverExpiry( $driver == 'on' ? WebRequest::post( "driverexpiry" ) : null );
 			
 			$user->save();
 			

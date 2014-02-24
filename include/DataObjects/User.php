@@ -300,7 +300,7 @@ class User extends DataObject
     
     public function setIsDriver($isdriver)
     {
-        $this->isdriver = $isdriver;   
+        $this->isdriver = $isdriver;
     }
     
     public function getDriverExpiry()

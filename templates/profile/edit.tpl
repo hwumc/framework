@@ -72,7 +72,7 @@
 		<div class="control-group" id="driverExpiryGroup" {if !$isdriver}style="display:none"{/if}>
 			<label class="control-label" for="driverexpiry">{message name="{$pageslug}-driverexpiry"}</label>
 			<div class="controls">
-				<input class="input-medium" type="text" id="driverexpiry" placeholder="{message name="{$pageslug}-driverexpiry-placeholder"}" data-date-format="dd/mm/yyyy" name="driverexpiry" value="{$driverexpiry}"/>
+				<input class="input-medium" type="text" id="driverexpiry" placeholder="{message name="{$pageslug}-driverexpiry-placeholder"}" data-date-format="dd/mm/yyyy" name="driverexpiry" value="{$driverexpiry}" {if $isdriver}required="true"{/if}/>
 				<span class="help-inline">{message name="{$pageslug}-driverexpiry-help"}</span>
 			</div>
 		</div>	
@@ -122,8 +122,10 @@ $(function(){
 $('#isdriver').click(function() {
     if( $(this).is(':checked')) {
         $("#driverExpiryGroup").show(400, function(){});
+		$("#driverexpiry").attr("required", true);
     } else {
         $("#driverExpiryGroup").hide(400, function(){});
+		$("#driverexpiry").removeAttr("required");
     }
 }); 
 </script>
