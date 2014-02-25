@@ -171,5 +171,6 @@
 	{foreach from="$scripts" item="thisscript"}
 		<script src="{$thisscript}" type="text/javascript"></script>
 	{/foreach}
+	{block name="scriptfooter"}{/block}
 </body>
 </html>
