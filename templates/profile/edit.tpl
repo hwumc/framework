@@ -85,10 +85,10 @@
 			<label class="control-label" for="medical">{message name="{$pageslug}-medical-label"}</label>
 			<div class="controls">
 				<label class="checkbox">
-					<input type="checkbox" name="medicalcheck" {$medicalcheck}/>
+					<input type="checkbox" name="medicalcheck" {if $medicalcheck}checked="true"{/if} id="medicalcheck"/>
 					{message name="{$pageslug}-medicalcheck-label"}
 				</label>
-				<textarea class="input-xxlarge" rows="3" id="medical" name="medical" placeholder="{message name="{$pageslug}-medical-placeholder"}">{$medical}</textarea>
+				<textarea class="input-xxlarge" rows="3" id="medical" name="medical" placeholder="{message name="{$pageslug}-medical-placeholder"}" {if !$medicalcheck}style="display:none"{/if}>{$medical}</textarea>
 			</div>
 		</div>
 
@@ -126,6 +126,17 @@ $('#isdriver').click(function() {
     } else {
         $("#driverExpiryGroup").hide(400, function(){});
 		$("#driverexpiry").removeAttr("required");
+    }
+}); 
+
+$('#medicalcheck').click(function() {
+    if( $(this).is(':checked')) {
+        $("#medical").show(400, function(){});
+		$("#medical").attr("required", true);
+    } else {
+        $("#medical").hide(400, function(){});
+		$("#medical").removeAttr("required");	
+		$("#medical").val("");
     }
 }); 
 </script>
