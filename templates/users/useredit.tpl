@@ -23,6 +23,12 @@
 				<input type="email" id="email" class="input-xlarge" name="email" placeholder="{message name="{$pageslug}-edit-email-placeholder"}" required="true" value="{$user->getEmail()}" />
 			</div>
 		</div>	
+		<div class="control-group">
+			<label class="control-label" for="profilereview">{message name="{$pageslug}-edit-profilereview"}</label>
+			<div class="controls">
+				<input type="checkbox" id="profilereview" class="input-xlarge" name="profilereview" {if $user->getProfileReview()}checked="checked"{/if} />
+			</div>
+		</div>	
 	
 	</fieldset>
 	

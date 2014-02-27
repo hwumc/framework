@@ -59,6 +59,7 @@ class PageManageUsers extends PageBase
 			$u->setUsername( WebRequest::post( "username" ) );
 			$u->setFullName( WebRequest::post( "realname" ) );
 			$u->setEmail( WebRequest::post( "email" ) );
+            $u->setProfileReview( WebRequest::post( "profilereview" ) == "on" ? 1 : 0 );
 			$u->save();
 			
 			$u->clearGroups();
