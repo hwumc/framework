@@ -77,7 +77,7 @@ $cMainPageContentProvider = "DefaultMainPageContentProvider";
 $cAllowUserSqlQueries = false;
 
 $cDisplayDateFormat = "d/m/Y";
-$cDisplayDateTimeFormat = "d/m/Y H:i";
+$cDisplayDateTimeFormat = "d/m/Y H:i T";
 
 ///////////////// don't put new config options below this line
 
