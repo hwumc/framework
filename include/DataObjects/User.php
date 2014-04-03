@@ -305,12 +305,14 @@ class User extends DataObject
     
     public function getDriverExpiry()
     {
-        return $this->driverexpiry == null ? null : DateTime::createFromFormat("Y-m-d", $this->driverexpiry)->format("d/m/Y");
+        global $cDisplayDateFormat;
+        return $this->driverexpiry == null ? null : DateTime::createFromFormat("Y-m-d", $this->driverexpiry)->format($cDisplayDateFormat);
     }
     
     public function setDriverExpiry($driverexpiry)
     {
-        $expiry = DateTime::createFromFormat("d/m/Y", $driverexpiry);
+        global $cDisplayDateFormat;
+        $expiry = DateTime::createFromFormat($cDisplayDateFormat, $driverexpiry);
         
         $this->driverexpiry = $expiry == false ? null : $expiry->format("Y-m-d");
     }
