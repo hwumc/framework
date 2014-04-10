@@ -274,6 +274,7 @@
     <Content Include="extensions\README.txt">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="templates\profile\loginchpw.tpl" />
     <Content Include="templates\sessionerrors.tpl">
       <SubType>Content</SubType>
     </Content>

@@ -9,9 +9,6 @@
 
     <!-- Le styles -->
 	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap.min.css" />
-	{foreach from="$styles" item="thisstyle"}
-		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
-	{/foreach}
     <style type="text/css">
       body {
         padding-top: 40px;
@@ -44,12 +41,12 @@
         padding: 7px 9px;
       }
 	  
-	  .form-signin .forgotpassword {
-		margin-left: 1em;
-	  }
-
     </style>
-	
+	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap-responsive.min.css" />
+	{foreach from="$styles" item="thisstyle"}
+		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
+	{/foreach}
+
 	<!-- scripts -->
 	{foreach from="$scripts" item="thisscript"}
 		<script src="{$thisscript}" type="text/javascript"></script>
@@ -59,12 +56,23 @@
   <body>
 
     <div class="container">
-		<div class="form-signin">
-		  <h2 class="form-signin-heading">{message name="forgotpassword-title"}</h2>
-		  <p>{message name="forgotpassword-sent"}</p>
-		  <p><a href="{$cScriptPath}">{message name="forgotpassword-return"}</a></p>
+	{include file="sessionerrors.tpl"}
+		<div class="alert alert-block alert-error">
+		  <h4>{message name="forced-password-message-header"}</h4>
+		  {message name="forced-password-message-message"}
 		</div>
-    </div> <!-- /container -->
+      <form class="form-signin" method="post">
+        <h2 class="form-signin-heading">{message name="{$pageslug}-header"}</h2>
+        <input type="password" id="old" class="input-block-level" name="old" placeholder="{message name="{$pageslug}-old-placeholder"}" required="true" />
+		<input type="password" id="new" class="input-block-level" name="new" placeholder="{message name="{$pageslug}-new-placeholder"}" required="true" />
+		<input type="password" id="confirm" class="input-block-level" name="confirm" placeholder="{message name="{$pageslug}-confirm-placeholder"}" required="true" />
+        <button class="btn btn-large btn-primary" type="submit">{message name="{$pageslug}-save"}</button>
+      </form>
 
+    </div> <!-- /container -->
+	<!-- scripts -->
+	{foreach from="$scripts" item="thisscript"}
+		<script src="{$thisscript}" type="text/javascript"></script>
+	{/foreach}
   </body>
 </html>

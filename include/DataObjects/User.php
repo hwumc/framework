@@ -18,6 +18,7 @@ class User extends DataObject
     protected $isdriver = 0;
     protected $profilereview = 0;
     protected $driverexpiry = null;
+    protected $passwordreset = 0;
     
     public static function getLoggedIn()
     {
@@ -103,7 +104,7 @@ class User extends DataObject
         
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview, :driverexpiry);");
+            $statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview, :driverexpiry, 0);");
             $statement->bindParam(":username", $this->username);
             $statement->bindParam(":password", $this->password);
             $statement->bindParam(":fullName", $this->fullName);
@@ -133,7 +134,7 @@ class User extends DataObject
         }
         else
         { // update
-            $statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation, isdriver = :isdriver, profilereview = :profilereview, driverexpiry = :driverexpiry WHERE id = :id LIMIT 1;");
+            $statement = $gDatabase->prepare("UPDATE user SET username = :username, password = :password, fullName = :fullName, experience = :experience, medical = :medical, emergcontact = :emergcontact, emergcontactphone = :emergcontactphone, mobile = :mobile, email = :email, emailconfirmation = :emailconfirmation, isdriver = :isdriver, profilereview = :profilereview, driverexpiry = :driverexpiry, passwordreset = :passwordreset WHERE id = :id LIMIT 1;");
             $statement->bindParam(":username", $this->username);
             $statement->bindParam(":password", $this->password);
             $statement->bindParam(":fullName", $this->fullName);
@@ -148,6 +149,7 @@ class User extends DataObject
             $statement->bindParam(":isdriver", $this->isdriver);
             $statement->bindParam(":driverexpiry", $this->driverexpiry);
             $statement->bindParam(":profilereview", $this->profilereview);
+            $statement->bindParam(":passwordreset", $this->passwordreset);
             $statement->bindParam(":id", $this->id);
 
             if(!$statement->execute())
@@ -273,6 +275,11 @@ class User extends DataObject
             return true;   
         }
         
+        // deny access to users who need to reset their password
+        if( $this->getPasswordReset() ) {
+            return false;   
+        }
+        
         // Finally, check the normal user rights.
         return in_array( $action, $this->getRights() );
     }
@@ -325,6 +332,16 @@ class User extends DataObject
     public function setProfileReview($value)
     {
         $this->profilereview = $value;
+    }
+    
+    public function getPasswordReset()
+    {
+        return $this->passwordreset;    
+    }
+    
+    public function setPasswordReset($value)
+    {
+        $this->passwordreset = $value;
     }
     
     public static function addMenuItems( $menu ) 

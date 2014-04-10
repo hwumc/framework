@@ -29,6 +29,12 @@
 				<input type="checkbox" id="profilereview" class="input-xlarge" name="profilereview" {if $user->getProfileReview()}checked="checked"{/if} />
 			</div>
 		</div>	
+		<div class="control-group">
+			<label class="control-label" for="passwordreset">{message name="{$pageslug}-edit-passwordreset"}</label>
+			<div class="controls">
+				<input type="checkbox" id="passwordreset" class="input-xlarge" name="passwordreset" {if $user->getPasswordReset()}checked="checked"{/if} />
+			</div>
+		</div>	
 	
 	</fieldset>
 	

@@ -83,7 +83,13 @@ class PageLogin extends PageBase
                 $user->save();
                 $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/EditProfile?review=yes";
             } 
-            else 
+            else if($user->getPasswordReset() == 1)
+            {
+                $user->setProfileReview(0);
+                $user->save();
+                $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/ChangePassword?forced=yes";
+            } 
+            else
             {
                 $this->mHeaders[] = "Location: " . $cWebPath . "/index.php" . WebRequest::get("returnto");
             }    

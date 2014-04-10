@@ -220,6 +220,13 @@ abstract class PageBase
         // errors:
         $errorlist = Session::getErrorQueue();
         
+        if( User::getLoggedIn()->getPasswordReset() )
+        {
+            array_unshift( $errorlist, "forced-password-reset" );
+        }
+        
+        $errorlist = Hooks::run("PreErrorDisplay", array($errorlist));
+        
 		$this->mSmarty->assign( "sessionerrors", $errorlist );
         if(! $this->mIsRedirecting) {
             Session::clearErrorQueue();

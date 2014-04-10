@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-	<link rel="stylesheet" type="text/css" href="/style/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="{$cWebPath}/style/bootstrap.min.css" />
 	{foreach from="$styles" item="thisstyle"}
 		<link rel="stylesheet" type="text/css" href="{$thisstyle}" />
 	{/foreach}
