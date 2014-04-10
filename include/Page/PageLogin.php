@@ -85,7 +85,6 @@ class PageLogin extends PageBase
             } 
             else if($user->getPasswordReset() == 1)
             {
-                $user->setProfileReview(0);
                 $user->save();
                 $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/ChangePassword?forced=yes";
             } 
