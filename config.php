@@ -78,6 +78,7 @@ $cAllowUserSqlQueries = false;
 
 $cDisplayDateFormat = "d/m/Y";
 $cDisplayDateTimeFormat = "d/m/Y H:i T";
+$cDisplayDateTimeFormatNoTz = "d/m/Y H:i";
 
 ///////////////// don't put new config options below this line
 
