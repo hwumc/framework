@@ -71,6 +71,14 @@ class User extends DataObject
         return $data;
     }
 
+    public static function triggerProfileReview()
+    {
+        global $gDatabase;
+        $statement = $gDatabase->prepare("UPDATE `user` SET profilereview = 1;");
+
+        $statement->execute();
+    }
+    
     /**
      * Check the stored password against the provided password
      * @returns true if the password is correct

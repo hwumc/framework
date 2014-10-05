@@ -1,6 +1,9 @@
 {extends file="base.tpl"}
 {block name="pagedescription"}{/block}
 {block name="body"}
+{if $allowEdit == "true"}
+	<p><a href="{$cScriptPath}/{$pageslug}/profilereview" class="btn btn-warning">{message name="{$pageslug}-button-profilereview"}</a></p>
+{/if}
 <table class="table table-hover">
 			<thead>
 				<tr><th>{message name="{$pageslug}-text-realname"}</th><th>{message name="{$pageslug}-text-username"}</th><th>{message name="{$pageslug}-text-usermail"}</th>{if $allowEdit == "true"}<th>{message name="{$pageslug}-text-edituser"}</th>{/if}{if $allowDelete == "true"}<th>{message name="{$pageslug}-text-deleteuser"}</th>{/if}</tr>

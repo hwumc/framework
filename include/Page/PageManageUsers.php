@@ -26,6 +26,10 @@ class PageManageUsers extends PageBase
                     $this->deleteMode( $data );
                     return;
                     break;
+                case "profilereview":
+                    $this->profileReviewMode( $data );
+                    return;
+                    break;
             }
 
         }
@@ -174,6 +178,21 @@ class PageManageUsers extends PageBase
             $this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageUsers";
         } else {
             $this->mBasePage = "users/userdelete.tpl";
+        }
+    }
+    
+    private function profileReviewMode( $data ) {
+        self::checkAccess( "users-edit" );
+
+        if( WebRequest::wasPosted() ) {
+            if( WebRequest::post( "confirm" ) == "confirmed" ) {
+                User::triggerProfileReview();
+            }
+
+            global $cScriptPath;
+            $this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageUsers";
+        } else {
+            $this->mBasePage = "users/userreview.tpl";
         }
     }
 }
