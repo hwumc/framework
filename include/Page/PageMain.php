@@ -4,16 +4,16 @@ if(!defined("HMS")) die("Invalid entry point");
 
 class PageMain extends PageBase
 {
-	public function __construct()
-	{
-	}
+    public function __construct()
+    {
+    }
 
-	protected function runPage()
-	{
+    protected function runPage()
+    {
         global $cMainPageContentProvider;
-		$contentProvider = new $cMainPageContentProvider();
+        $contentProvider = new $cMainPageContentProvider();
         $content = $contentProvider->getContent($this->mSmarty);
         $this->mBasePage = $contentProvider->getPageTemplate();
         $this->mSmarty->assign("content", $content);
-	}
+    }
 }

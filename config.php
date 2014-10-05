@@ -26,48 +26,48 @@ $cLoggerName="FakeLogger";
 // array of global scripts to be included
 // Global scripts are included first, then local scripts second
 $cGlobalScripts = array(
-	$cWebPath . '/scripts/jquery-1.9.1.min.js',
-	$cWebPath . '/scripts/bootstrap.min.js',
-	);
+    $cWebPath . '/scripts/jquery-1.9.1.min.js',
+    $cWebPath . '/scripts/bootstrap.min.js',
+    );
 
 $cGlobalStyles = array(
     $cWebPath . '/style/editor-override.css',
-	);
-	
+    );
+    
 // Languages accepted by the system
 $cAvailableLanguages = array(
-	'zxx' => "(Language Tag Codes)",
-	'en-GB' => "English (British)",
-	);
+    'zxx' => "(Language Tag Codes)",
+    'en-GB' => "English (British)",
+    );
 
 // Default language for the site to use
 $cDefaultLanguage = 'en-GB';
-	
+    
 // list of required php extensions.
 // The PDO module required is set above, and need not be listed here also.
 // Optional ones such as Tidy should not be listed here - the site will run 
 // without them. 
 $cRequiredPhpExtensions = array(
-	"PDO",
-	"SPL",
-	"OpenSSL",
-	"pcre",
-	"session",
-	"date",
-	);
-	
+    "PDO",
+    "SPL",
+    "OpenSSL",
+    "pcre",
+    "session",
+    "date",
+    );
+    
 // use Tidy to make pretty HTML.
 $cUseTidy = false;
-	
+    
 $cTidyOptions = array(
-	//"hide-comments" => 1, // discards html comments
-	"logical-emphasis" => 1, // swaps <b> for <strong> and <i> for <em>
-	"output-xhtml" => 1,
-	"indent" => "auto",
-	"wrap" => 0, // disables wrapping
-	"vertical-space" => 1, // adds vertical spacing for readability
-	);
-	
+    //"hide-comments" => 1, // discards html comments
+    "logical-emphasis" => 1, // swaps <b> for <strong> and <i> for <em>
+    "output-xhtml" => 1,
+    "indent" => "auto",
+    "wrap" => 0, // disables wrapping
+    "vertical-space" => 1, // adds vertical spacing for readability
+    );
+    
 $cSoftwareGithubRepo = "stwalkerster/siteframework";
 
 $cExtensions = array();
@@ -84,7 +84,7 @@ $cDisplayDateTimeFormatNoTz = "d/m/Y H:i";
 
 if(file_exists("config.local.php"))
 {
-	require_once("config.local.php");
+    require_once("config.local.php");
 }
 
 // Load the main webstart file

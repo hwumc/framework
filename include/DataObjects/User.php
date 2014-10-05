@@ -19,18 +19,18 @@ class User extends DataObject
     protected $profilereview = 0;
     protected $driverexpiry = null;
     protected $passwordreset = 0;
-    
+
     public static function getLoggedIn()
     {
         $user = User::getById( Session::getLoggedInUser() );
-        
+
         if($user === false) {
             $user = new AnonymousUser();
         }
-        
+
         return $user;
     }
-    
+
     public static function getByName($name)
     {
         global $gLogger;
@@ -51,7 +51,7 @@ class User extends DataObject
         return $resultObject;
     }
 
-    public static function getWithRight( $right ) 
+    public static function getWithRight( $right )
     {
         global $gDatabase;
         $statement = $gDatabase->prepare("SELECT DISTINCT u.* FROM `group` g INNER JOIN `rightgroup` rg ON rg.`group` = g.`id` INNER JOIN `usergroup` ug ON g.`id` = ug.`group` INNER JOIN `user` u ON u.`id` = ug.`user` WHERE `right` = :rght;");
@@ -67,10 +67,10 @@ class User extends DataObject
             $v->isNew = false;
             $data[$v->getId() . ""] = $v;
         }
-        
+
         return $data;
     }
-    
+
     /**
      * Check the stored password against the provided password
      * @returns true if the password is correct
@@ -88,7 +88,7 @@ class User extends DataObject
     {
         // simple encryption. MD5 is very easy to compute, and very hard to reverse.
         // As it's easy to compute, people make tables of possible values to decrypt
-        // it (see: Rainbow Tables). We completely nerf that by adding a known 
+        // it (see: Rainbow Tables). We completely nerf that by adding a known
         // changable factor to the hash, known as a salt. This makes rainbow
         // tables practically useless against this set of passwords.
         return md5(md5($username . md5($password)));
@@ -99,9 +99,9 @@ class User extends DataObject
         global $gDatabase;
 
         $godmodevalue = 0;
-        
+
         $driverExpiry = $this->isdriver ? $this->driverexpiry : null;
-        
+
         if($this->isNew)
         { // insert
             $statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview, :driverexpiry, 0);");
@@ -115,13 +115,13 @@ class User extends DataObject
             $statement->bindParam(":mobile", $this->mobile);
             $statement->bindParam(":email", $this->email);
             $statement->bindParam(":emailconfirmation", $this->emailconfirmation);
-            $statement->bindParam(":godmode", $godmodevalue); // force to zero - we don't 
+            $statement->bindParam(":godmode", $godmodevalue); // force to zero - we don't
                                 //want godmode users created without good reason.
             $statement->bindParam(":isdriver", $this->isdriver);
             $statement->bindParam(":profilereview", $this->profilereview);
-            
+
             $statement->bindParam(":driverexpiry", $driverExpiry);
-            
+
             if($statement->execute())
             {
                 $this->isNew = false;
@@ -173,7 +173,7 @@ class User extends DataObject
     {
         $this->username = $username;
     }
-    
+
     public function getFullName()
     {
         return $this->fullName;
@@ -182,7 +182,7 @@ class User extends DataObject
     public function setFullName($fullName)
     {
         if( $fullName === "" ) return;
-        
+
         $this->fullName = $fullName;
     }
 
@@ -215,7 +215,7 @@ class User extends DataObject
     {
         $this->emergcontact = $emergcontact;
     }
-    
+
     public function getEmergencyContactPhone()
     {
         return $this->emergcontactphone;
@@ -234,7 +234,7 @@ class User extends DataObject
     public function setMobile($mobile)
     {
         if( $mobile === "" ) return;
-    
+
         $this->mobile = $mobile;
     }
 
@@ -254,7 +254,7 @@ class User extends DataObject
         if( $action == "user" ) {
             return true;
         }
-        
+
         // never allow this user right.
         if( $action == "x-denyall" ) {
             return false;
@@ -262,108 +262,108 @@ class User extends DataObject
 
         // always allow this userright
         if( $action == "public" ) {
-            return true;   
+            return true;
         }
-        
+
         // OK, we've got through the basic checks. Am I god?
         if( $this->isGod() ) {
             return true;
         }
-        
+
         // check the per-session rights
         if( in_array( $action, Session::getSessionRights() ) ) {
-            return true;   
+            return true;
         }
-        
+
         // deny access to users who need to reset their password
         if( $this->getPasswordReset() ) {
-            return false;   
+            return false;
         }
-        
+
         // Finally, check the normal user rights.
         return in_array( $action, $this->getRights() );
     }
-    
+
     public function isMailConfirmed()
     {
         // TODO: fix me
         return true;
-    }    
-    
+    }
+
     public function isGod()
     {
         return $this->godmode;
     }
-        
+
     public function getIsDriver()
     {
-        return $this->isdriver;   
+        return $this->isdriver;
     }
-    
+
     public function isDriver()
     {
         return $this->isdriver;
     }
-    
+
     public function setIsDriver($isdriver)
     {
         $this->isdriver = $isdriver;
     }
-    
+
     public function getDriverExpiry()
     {
         global $cDisplayDateFormat;
         return $this->driverexpiry == null ? null : DateTime::createFromFormat("Y-m-d", $this->driverexpiry)->format($cDisplayDateFormat);
     }
-    
+
     public function setDriverExpiry($driverexpiry)
     {
         global $cDisplayDateFormat;
         $expiry = DateTime::createFromFormat($cDisplayDateFormat, $driverexpiry);
-        
+
         $this->driverexpiry = $expiry == false ? null : $expiry->format("Y-m-d");
     }
-    
+
     public function getProfileReview()
     {
-        return $this->profilereview;    
+        return $this->profilereview;
     }
-    
+
     public function setProfileReview($value)
     {
         $this->profilereview = $value;
     }
-    
+
     public function getPasswordReset()
     {
-        return $this->passwordreset;    
+        return $this->passwordreset;
     }
-    
+
     public function setPasswordReset($value)
     {
         $this->passwordreset = $value;
     }
-    
-    public static function addMenuItems( $menu ) 
+
+    public static function addMenuItems( $menu )
     {
         $menu = $menu[0];
         $user = User::getLoggedIn();
-        
+
         global $gLogger;
-        
+
         foreach( PageBase::getRegisteredPages() as $pc ) {
             $page = new $pc();
             $pagename = preg_replace( "/^Page(.*)$/", "\${1}", $pc );
             $gLogger->log("Menu generator: Using URL name of page class $pc as $pagename");
-            
+
             if( ( ! $page->isProtected() ) || ( $user->isAllowed( $page->getAccessName() ) ) ) {
-            
+
                 $group = strtolower($page->getMenuGroup());
                 $groupkey = "menu-" . strtolower( $group );
-                
+
                 if( ! isset( $menu[ strtolower($group) ] ) ) {
                     $menugroup = MenuGroup::getBySlug( $group );
-                    if($menugroup == null) {   
+                    if($menugroup == null) {
                         $menu[ strtolower($group) ] = array(
                             "items" => array(),
                             "title" => strtolower($group),
@@ -378,7 +378,7 @@ class User extends DataObject
                         );
                     }
                 }
-                
+
                 $menu[ $group ][ "items" ][ $pc ] = array(
                     "title" => "page-" . strtolower( $pagename ),
                     "link" => "/" . $pagename,
@@ -386,12 +386,12 @@ class User extends DataObject
             } else {
                 $gLogger->log("Page $pc is protected, not adding entry.");
             }
-            
+
         }
-                
+
         return $menu;
     }
-    
+
     public function getGroups() {
         global $gDatabase;
         $statement = $gDatabase->prepare("SELECT g.*, 'false' as isNew FROM usergroup ug INNER JOIN `group` g ON g.id = ug.`group` WHERE ug.user = :id;");
@@ -400,10 +400,10 @@ class User extends DataObject
         $statement->execute();
 
         $resultObject = $statement->fetchAll( PDO::FETCH_CLASS, "Group" );
-        
+
         return $resultObject;
     }
-    
+
     public function inGroup( $group ) {
         global $gDatabase;
         $statement = $gDatabase->prepare("SELECT g.*, 'false' as isNew FROM usergroup ug INNER JOIN `group` g ON g.id = ug.`group` WHERE ug.user = :id AND ug.group = :group;");
@@ -414,10 +414,10 @@ class User extends DataObject
         $statement->execute();
 
         $resultObject = $statement->fetchAll( PDO::FETCH_CLASS, "Group" );
-        
+
         return count( $resultObject ) == 1;
     }
-    
+
     public function leaveGroup( $group ) {
         global $gDatabase;
         $statement = $gDatabase->prepare("DELETE FROM usergroup WHERE `user` = :id AND `group` = :group LIMIT 1;");
@@ -427,24 +427,24 @@ class User extends DataObject
 
         $statement->execute();
     }
-    
+
     public function clearGroups() {
         $groups = $this->getGroups();
         $currentuser = User::getLoggedIn();
         foreach( $groups as $group ) {
             if( $group->isManager( $currentuser ) ) {
-                $this->leaveGroup( $group );   
+                $this->leaveGroup( $group );
             }
         }
-        
+
     }
-    
+
     public function getRights() {
         if( $this->isGod() )
         {
             return Right::getAllRegisteredRights();
         }
-        
+
         global $gDatabase;
         $statement = $gDatabase->prepare("SELECT DISTINCT rightgroup.right FROM rightgroup INNER JOIN `group` ON `group`.id = rightgroup.`group` INNER JOIN usergroup ON `group`.id = usergroup.`group` WHERE usergroup.user = :id;");
         $statement->bindParam(":id", $this->id);
@@ -452,10 +452,10 @@ class User extends DataObject
         $statement->execute();
 
         $resultObject = $statement->fetchAll( PDO::FETCH_COLUMN, 0 );
-        
+
         return $resultObject;
     }
-    
+
     public function sendPasswordReset() {
         // build a state salt for the random bytes
         $state = sha1 ( md5( uniqid( getmypid() . gethostname() . mt_rand() . microtime() . memory_get_usage(), true ) ) . mt_rand() );
@@ -464,30 +464,30 @@ class User extends DataObject
         $bytes = openssl_random_pseudo_bytes(160, $cstrong);
         $hex   = bin2hex($bytes);
         // build a password
-        $pass = ( substr( base_convert( sha1( $state . $bytes ), 16, 32 ) , 0, 11 ) );    
-    
+        $pass = ( substr( base_convert( sha1( $state . $bytes ), 16, 32 ) , 0, 11 ) );
+
         // get mail from the DB
         $email = Message::getMessage( "forgotpassword-email" );
         $emailsubj = Message::getMessage( "forgotpassword-email-subject" );
         // subst in the password
         $email = str_replace( '$1', $pass, $email );
-        
+
         Mail::send( $this->getEmail() , $emailsubj, $email );
-    
+
         $this->setPassword( $pass );
         $this->save();
     }
 
     public function isAnonymous()
     {
-        return false;   
+        return false;
     }
-    
+
     public function getGravatarHash()
     {
-        return self::getGravatarHashForEmail($this->email);   
+        return self::getGravatarHashForEmail($this->email);
     }
-    
+
     public static function getGravatarHashForEmail($email)
     {
         return md5(strtolower(trim($email)));

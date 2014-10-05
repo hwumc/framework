@@ -7,8 +7,8 @@ if(!defined("HMS")) die("Invalid entry point");
  */
 class SystemLogger implements ILogger
 {
-	public function log($message)
-	{
-		syslog( LOG_NOTICE, $message );
-	}
+    public function log($message)
+    {
+        syslog( LOG_NOTICE, $message );
+    }
 }

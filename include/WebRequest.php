@@ -7,175 +7,175 @@ if(!defined("HMS")) die("Invalid entry point");
  */
 class WebRequest
 {
-	/**
-	 * Retrieves the PATH_INFO server variable, if it is set
-	 */
-	public static function pathInfo()
-	{
-		if(isset($_SERVER['PATH_INFO']))
-		{
-			return $_SERVER['PATH_INFO'];
-		}
-		else
-		{
-			return false;
-		}
-	}
-	public static function pathInfoExtension()
-	{
-		$pi = explode("/",WebRequest::pathInfo());
-	
-		if(count($pi) > 1) {
-			array_shift($pi);
-			array_shift($pi);
-			return implode("/", $pi);
-		} else return "";
-	}
+    /**
+     * Retrieves the PATH_INFO server variable, if it is set
+     */
+    public static function pathInfo()
+    {
+        if(isset($_SERVER['PATH_INFO']))
+        {
+            return $_SERVER['PATH_INFO'];
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public static function pathInfoExtension()
+    {
+        $pi = explode("/",WebRequest::pathInfo());
 
-	public static function httpHost()
-	{
-		if(isset($_SERVER["HTTP_HOST"]))
-		{
-			return $_SERVER["HTTP_HOST"];
-		}
-		else
-		{
-			return false;
-		}
-	}
+        if(count($pi) > 1) {
+            array_shift($pi);
+            array_shift($pi);
+            return implode("/", $pi);
+        } else return "";
+    }
 
-	/**
-	 * Retrieves a GET variable, if it is set.
-	 */
-	public static function get($variable)
-	{
-		if(isset($_GET[$variable]))
-		{
-			return $_GET[$variable];
-		}
-		else
-		{
-			return false;
-		}
-	}
+    public static function httpHost()
+    {
+        if(isset($_SERVER["HTTP_HOST"]))
+        {
+            return $_SERVER["HTTP_HOST"];
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/**
-	 * Retrieves a POST variable, if it is set.
-	 */
-	public static function post($variable)
-	{
-		if(isset($_POST[$variable]))
-		{
-			return $_POST[$variable];
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	public static function postString($variable)
-	{
-		return htmlentities(self::post($variable));
-	}
-	
-	public static function postInt($variable)
-	{
-		$x = self::post($variable);
-		return is_numeric($x) && intval($x)==$x ? intval($x) : false;
-	}
-	
-	public static function postFloat($variable)
-	{
-		$x = self::post($variable);
-		return is_numeric($x) && ($x == (string)(float)$x) ? $x : false;
-	}
+    /**
+     * Retrieves a GET variable, if it is set.
+     */
+    public static function get($variable)
+    {
+        if(isset($_GET[$variable]))
+        {
+            return $_GET[$variable];
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public static function getInt($variable)
-	{
-		$x = self::get($variable);
-		return is_numeric($x) && intval($x)==$x ? intval($x) : false;
-	}
+    /**
+     * Retrieves a POST variable, if it is set.
+     */
+    public static function post($variable)
+    {
+        if(isset($_POST[$variable]))
+        {
+            return $_POST[$variable];
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public static function getPostKeys()
-	{
-		return array_keys($_POST);
-	}
-	
-	/**
-	 * Returns true if the request was sent via a HTTP POST, false otherwise
-	 */
-	public static function wasPosted()
-	{
-		if(isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST")
-		{
-			return true;
-		}
+    public static function postString($variable)
+    {
+        return htmlentities(self::post($variable));
+    }
 
-		return false;
-	}
-	
-	public static function setCookie($name, $content)
-	{	
-		global $gCookieJar;
-		$gCookieJar[$name] = $content;
-	}
-	
-	public static function getRequestUri() {
-		return $_SERVER["REQUEST_URI"];
-	
-	}
-	
-	public static function sendCookies()
-	{	
-		global $gCookieJar;
-		foreach($gCookieJar as $name => $value)
-		{
-			setcookie($name, $value);
-		}
-	}
-	
-	public static function getCookie($name)
-	{
-		if(isset($_COOKIE[$name]))
-		{
-			return $_COOKIE[$name]; // nom nom!
-		}
-		else
-		{
-			return false; // :'(
-		}
-	}
-	
-	/**
-	 * Outputs all content to the browser
-	 */
-	public static function output($content)
-	{
-		// final transformations?
-		$content = Hooks::run("BeforeOutputSend",array($content));
-	
+    public static function postInt($variable)
+    {
+        $x = self::post($variable);
+        return is_numeric($x) && intval($x)==$x ? intval($x) : false;
+    }
+
+    public static function postFloat($variable)
+    {
+        $x = self::post($variable);
+        return is_numeric($x) && ($x == (string)(float)$x) ? $x : false;
+    }
+
+    public static function getInt($variable)
+    {
+        $x = self::get($variable);
+        return is_numeric($x) && intval($x)==$x ? intval($x) : false;
+    }
+
+    public static function getPostKeys()
+    {
+        return array_keys($_POST);
+    }
+
+    /**
+     * Returns true if the request was sent via a HTTP POST, false otherwise
+     */
+    public static function wasPosted()
+    {
+        if(isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST")
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function setCookie($name, $content)
+    {
+        global $gCookieJar;
+        $gCookieJar[$name] = $content;
+    }
+
+    public static function getRequestUri() {
+        return $_SERVER["REQUEST_URI"];
+
+    }
+
+    public static function sendCookies()
+    {
+        global $gCookieJar;
+        foreach($gCookieJar as $name => $value)
+        {
+            setcookie($name, $value);
+        }
+    }
+
+    public static function getCookie($name)
+    {
+        if(isset($_COOKIE[$name]))
+        {
+            return $_COOKIE[$name]; // nom nom!
+        }
+        else
+        {
+            return false; // :'(
+        }
+    }
+
+    /**
+     * Outputs all content to the browser
+     */
+    public static function output($content)
+    {
+        // final transformations?
+        $content = Hooks::run("BeforeOutputSend",array($content));
+
         $data = "";
         $bufferlevels = ob_get_level();
         for( $x = $bufferlevels; $x > 0; $x-- ) {
             $data .= ob_get_contents();
             ob_end_clean();
         }
-		   
-		// write the HTML to the buffer
-		print $content;
-		
-		// strip out html comments
-		$data = str_replace("<!--", "", $data);
-		$data = str_replace("-->", "", $data);
-		
-		// show that rogue data as a comment after everything
-		if($data != "")
-		{
-			print "<!-- " . $data . " -->";
-		}
-        
+
+        // write the HTML to the buffer
+        print $content;
+
+        // strip out html comments
+        $data = str_replace("<!--", "", $data);
+        $data = str_replace("-->", "", $data);
+
+        // show that rogue data as a comment after everything
+        if($data != "")
+        {
+            print "<!-- " . $data . " -->";
+        }
+
         // catch anything else
         ob_start();
-	}
+    }
 }

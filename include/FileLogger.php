@@ -7,8 +7,8 @@ if(!defined("HMS")) die("Invalid entry point");
  */
 class FileLogger implements ILogger
 {
-	public function log($message)
-	{
-		file_put_contents( "application.log", date("c") . ": " . $message . "\r\n", FILE_APPEND );
-	}
+    public function log($message)
+    {
+        file_put_contents( "application.log", date("c") . ": " . $message . "\r\n", FILE_APPEND );
+    }
 }

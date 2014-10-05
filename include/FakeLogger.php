@@ -7,7 +7,7 @@ if(!defined("HMS")) die("Invalid entry point");
  */
 class FakeLogger implements ILogger
 {
-	public function log($message)
-	{
-	}
+    public function log($message)
+    {
+    }
 }

@@ -4,7 +4,7 @@ if(!defined("HMS")) die("Invalid entry point");
 
 interface MainPageContentProvider
 {
-	public function getContent($smarty);
-    
+    public function getContent($smarty);
+
     public function getPageTemplate();
 }

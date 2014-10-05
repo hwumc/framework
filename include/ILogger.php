@@ -7,5 +7,5 @@ if(!defined("HMS")) die("Invalid entry point");
  */
 interface ILogger
 {
-	public function log($message);
+    public function log($message);
 }

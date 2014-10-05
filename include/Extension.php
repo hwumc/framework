@@ -15,7 +15,7 @@ abstract class Extension
 {
     /**
      * Get information about the extension
-     * 
+     *
      * @return array(
      *      name => "",
      *      gitviewer => "",
@@ -24,16 +24,16 @@ abstract class Extension
      *      );
      */
     public abstract function getExtensionInformation();
-    
+
     /**
      * Returns relative file path of entered class
-     * 
+     *
      */
     protected abstract function autoload($class);
-    
+
     /**
      * Function where all hooks required by this extension can be registered.
-     * 
+     *
      */
     protected abstract function registerHooks();
 
@@ -45,53 +45,53 @@ abstract class Extension
             $extinfo = $this->getExtensionInformation();
             $extensionFilePath = $extinfo['filepath'];
             if(file_exists($extensionFilePath . '/' . $filepath)) {
-	            require_once($extensionFilePath . '/' . $filepath);
-	            return;
+                require_once($extensionFilePath . '/' . $filepath);
+                return;
             }
         }
     }
-     
+
     public function setup()
     {
         spl_autoload_register(array($this, 'reallyAutoload'));
-            
+
         $this->registerHooks();
-    
+
     }
-    
-    	
-	public function getGitInformation()
-	{
+
+
+    public function getGitInformation()
+    {
         $dir = getcwd();
         $extinfo = $this->getExtensionInformation();
         chdir($extinfo['filepath']);
         return exec( 'git log -n1 --format=%H' );
         chdir($dir);
-	}
-	
+    }
+
     public function getGitTimeInformation()
-	{
+    {
         $dir = getcwd();
         $extinfo = $this->getExtensionInformation();
         chdir($extinfo['filepath']);
         return exec( 'git log -n1 --pretty=format:"%cr"' );
         chdir($dir);
-	}
-    
-	public function getAuthors()
-	{
+    }
+
+    public function getAuthors()
+    {
         $dir = getcwd();
         $extinfo = $this->getExtensionInformation();
         chdir($extinfo['filepath']);
-        
-		$authors = array();
-		exec( 'git log --format="%cN <%cE>"', $authors );
-		$authors = array_count_values( $authors );
-		arsort( $authors );
+
+        $authors = array();
+        exec( 'git log --format="%cN <%cE>"', $authors );
+        $authors = array_count_values( $authors );
+        arsort( $authors );
         $authors = array_keys( $authors);
-        
+
         chdir($dir);
-        
-		return $authors;
-	}
+
+        return $authors;
+    }
 }

@@ -4,18 +4,18 @@ if(!defined("HMS")) die("Invalid entry point");
 
 class PageLogout extends PageBase
 {
-	public function __construct()
-	{
-		$this->mIsSpecialPage = true;
-	}
-	
-	protected function runPage()
-	{
-		Session::destroy();
-		
-		global $cScriptPath;
-		$this->mHeaders[] = "HTTP/1.1 303 See Other";
-		$this->mHeaders[] = "Location: " . $cScriptPath;
-		$this->mBasePage = "blank.tpl";
-	}
+    public function __construct()
+    {
+        $this->mIsSpecialPage = true;
+    }
+
+    protected function runPage()
+    {
+        Session::destroy();
+
+        global $cScriptPath;
+        $this->mHeaders[] = "HTTP/1.1 303 See Other";
+        $this->mHeaders[] = "Location: " . $cScriptPath;
+        $this->mBasePage = "blank.tpl";
+    }
 }
