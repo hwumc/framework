@@ -102,11 +102,11 @@ class AnonymousUser extends User
         return array();
     }
 
-    public function inGroup( $group ) {
+    public function inGroup( Group $group ) {
         return false;
     }
 
-    public function leaveGroup( $group ) {
+    public function leaveGroup( Group $group ) {
     }
 
     public function clearGroups() {
