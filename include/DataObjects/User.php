@@ -404,7 +404,7 @@ class User extends DataObject
         return $resultObject;
     }
 
-    public function inGroup( $group ) {
+    public function inGroup(Group $group ) {
         global $gDatabase;
         $statement = $gDatabase->prepare("SELECT g.*, 'false' as isNew FROM usergroup ug INNER JOIN `group` g ON g.id = ug.`group` WHERE ug.user = :id AND ug.group = :group;");
         $statement->bindParam(":id", $this->id);
@@ -418,7 +418,18 @@ class User extends DataObject
         return count( $resultObject ) == 1;
     }
 
-    public function leaveGroup( $group ) {
+    public function leaveGroup(Group $group )
+    {
+        if(! $group->isManager(User::getLoggedIn()))
+        {
+            throw new GroupChangeNotAllowedException("Current user is not a group manager");
+        }
+        
+        if(! $group->canRemoveFromSelf() && $this->getId() == User::getLoggedIn()->getId())
+        {
+            throw new GroupChangeNotAllowedException("Cannot remove self from this group");
+        }
+        
         global $gDatabase;
         $statement = $gDatabase->prepare("DELETE FROM usergroup WHERE `user` = :id AND `group` = :group LIMIT 1;");
         $statement->bindParam(":id", $this->id);
@@ -426,17 +437,29 @@ class User extends DataObject
         $statement->bindParam(":group", $groupid );
 
         $statement->execute();
+        
     }
 
+    public function joinGroup(Group $group)
+    {
+        if($group->isManager(User::getLoggedIn()))
+        {
+            $ug = new Usergroup();
+            $ug->setUserID( $this->getId() );
+            $ug->setGroupID( $group->getId() );
+            $ug->save();
+        }
+        else
+        {
+            throw new GroupChangeNotAllowedException("Current user is not a group manager");
+        }
+    }
+    
     public function clearGroups() {
         $groups = $this->getGroups();
-        $currentuser = User::getLoggedIn();
         foreach( $groups as $group ) {
-            if( $group->isManager( $currentuser ) ) {
-                $this->leaveGroup( $group );
-            }
+            $this->leaveGroup( $group );
         }
-
     }
 
     public function getRights() {

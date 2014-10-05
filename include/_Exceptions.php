@@ -31,3 +31,11 @@ class NotImplementedException extends Exception{}
 class FieldTooLargeException extends Exception{}
 
 class TransactionAlreadyOpenException extends Exception{}
+
+class GroupChangeNotAllowedException extends Exception
+{
+    public function GroupChangeNotAllowedException($message = "")
+    {
+        $this->message = $message ;
+    }
+}

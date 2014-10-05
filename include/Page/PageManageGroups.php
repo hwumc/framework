@@ -75,6 +75,7 @@ class PageManageGroups extends PageBase
             $g->setOwner( $parent );
             $g->setName( WebRequest::post( "groupname" ) );
             $g->setDescription( WebRequest::post( "description" ) );
+            $g->setCanRemoveFromSelf(WebRequest::post("removefromself") == 'on' ? 1 : 0);
             $g->save();
             $g->clearRights();
 
@@ -117,6 +118,7 @@ class PageManageGroups extends PageBase
             $this->mSmarty->assign( "groupname", $g->getName() );
             $this->mSmarty->assign( "description", $g->getDescription() );
             $this->mSmarty->assign( "lockparent", "false" );
+            $this->mSmarty->assign( "removefromself", $g->canRemoveFromSelf() ? "checked" : "");
             $this->mSmarty->assign( "parent", $g->getOwner()->getName() == $g->getName() ? "" : $g->getOwner()->getName() );
 
             $groupnames= array();
@@ -167,6 +169,7 @@ class PageManageGroups extends PageBase
             $g = new Group();
             $g->setName( WebRequest::post( "groupname" ) );
             $g->setDescription( WebRequest::post( "description" ) );
+            $g->setCanRemoveFromSelf(WebRequest::post("removefromself") == 'on' ? 1 : 0);
             $g->save();
 
             $r = array();
@@ -210,6 +213,7 @@ class PageManageGroups extends PageBase
             $this->mSmarty->assign( "description", "" );
             $this->mSmarty->assign( "lockparent", "true" );
             $this->mSmarty->assign( "parent", "" );
+            $this->mSmarty->assign( "removefromself", "checked");
             $this->mSmarty->assign( "jsgrouplist", "[" . "]" );
         }
     }

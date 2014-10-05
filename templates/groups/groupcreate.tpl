@@ -11,6 +11,7 @@
 			<span class="help-inline">{message name="{$pageslug}-create-groupname-help"}</span>
 		</div>
 	</div>	
+
 	<div class="control-group">
 		<label class="control-label" for="description">{message name="{$pageslug}-create-description"}</label>
 		<div class="controls">
@@ -18,6 +19,7 @@
 			<span class="help-inline">{message name="{$pageslug}-create-description-help"}</span>
 		</div>
 	</div>	
+
 	<div class="control-group">
 		<label class="control-label" for="parent">{message name="{$pageslug}-create-parent"}</label>
 		<div class="controls">
@@ -25,6 +27,14 @@
 			<span class="help-inline">{message name="{$pageslug}-create-parent-help"}</span>
 		</div>
 	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox" for="removefromself">
+				<input type="checkbox" id="removefromself" name="removefromself" {$removefromself}/> {message name="{$pageslug}-removefromself-label"}
+			</label>
+		</div>
+	</div>	
 	
 	<fieldset>
 		<legend>{message name="{$pageslug}-create-rightsheader"}</legend>

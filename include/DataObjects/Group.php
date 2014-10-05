@@ -7,6 +7,7 @@ class Group extends DataObject
     protected $name;
     protected $description;
     protected $owner;
+    protected $removefromself;
 
     public static function getByName( $id ) {
         global $gDatabase;
@@ -50,10 +51,11 @@ class Group extends DataObject
         global $gDatabase;
 
         if($this->isNew)
-        { // insert
-            $statement = $gDatabase->prepare("INSERT INTO `group` VALUES (null, :name, :desc, null);");
+        {   // insert
+            $statement = $gDatabase->prepare("INSERT INTO `group` VALUES (null, :name, :desc, null, :removefromself);");
             $statement->bindParam(":name", $this->name);
             $statement->bindParam(":desc", $this->description);
+            $statement->bindParam(":removefromself", $this->removefromself);
             if($statement->execute())
             {
                 $this->isNew = false;
@@ -65,12 +67,13 @@ class Group extends DataObject
             }
         }
         else
-        { // update
-            $statement = $gDatabase->prepare("UPDATE `group` SET name = :name, description = :desc, owner = :owner WHERE id = :id LIMIT 1;");
+        {   // update
+            $statement = $gDatabase->prepare("UPDATE `group` SET name = :name, description = :desc, owner = :owner, removefromself = :removefromself WHERE id = :id LIMIT 1;");
             $statement->bindParam(":name", $this->name);
             $statement->bindParam(":id", $this->id);
             $statement->bindParam(":desc", $this->description);
             $statement->bindParam(":owner", $this->owner);
+            $statement->bindParam(":removefromself", $this->removefromself);
 
             if(!$statement->execute())
             {
@@ -97,14 +100,41 @@ class Group extends DataObject
         return $result;
     }
 
-    public function getName() { return $this->name; }
-    public function getDescription() { return $this->description; }
-    public function setName( $name ) { $this->name = $name; }
-    public function setDescription( $desc ) { $this->description = $desc; }
+    public function getName()
+    { 
+        return $this->name;
+    }
+    
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    public function canRemoveFromSelf()
+    {
+        return $this->removefromself;   
+    }
+    
+    public function setCanRemoveFromSelf($value)
+    {
+        $this->removefromself = $value;   
+    }
+    
+    public function setName( $name )
+    { 
+        $this->name = $name; 
+    }
+    
+    public function setDescription( $desc )
+    {
+        $this->description = $desc;
+    }
 
-    public function setOwner( $owner ) {
+    public function setOwner( $owner )
+    {
         // unset
-        if( $owner == null ) {
+        if( $owner == null ) 
+        {
             $this->owner = null;
             return;
         }
@@ -113,13 +143,16 @@ class Group extends DataObject
 
         // special case: myself is 0
         // this means that groups are created owning themselves.
-        if( $this->owner == $this->id ) {
+        if( $this->owner == $this->id ) 
+        {
             $this->owner = null;
         }
     }
 
-    public function getOwner( ) {
-        if( $this->owner == 0 ) {
+    public function getOwner( ) 
+    {
+        if( $this->owner == 0 ) 
+        {
             return $this;
         }
 
@@ -127,15 +160,21 @@ class Group extends DataObject
     }
 
     // returns if the specified User is a manager (owner) of this group
-    public function isManager( $user ) {
-        if( $user->isAllowed( "groups-edit" ) ) {
+    public function isManager( $user ) 
+    {
+        if( $user->isAllowed( "groups-edit" ) ) 
+        {
             return true;
         }
-
 
         $owner = $this->getOwner();
         $isOwner = $user->inGroup($owner);
 
         return $isOwner;
+    }
+
+    public function __toString()
+    {
+        return "{GROUP:" . $this->getId() . "|" . $this->getName() . "}";   
     }
 }

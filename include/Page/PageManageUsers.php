@@ -48,13 +48,15 @@ class PageManageUsers extends PageBase
         $this->mSmarty->assign("userlist", $users );
     }
 
-    private function editMode( $data ) {
+    private function editMode( $data ) 
+    {
         self::checkAccess( "users-edit" );
 
         $this->mBasePage = "users/useredit.tpl";
 
 
-        if( WebRequest::wasPosted() ) {
+        if( WebRequest::wasPosted() ) 
+        {
             $u = User::getById( $data[ 1 ] );
             $u->setUsername( WebRequest::post( "username" ) );
             $u->setFullName( WebRequest::post( "realname" ) );
@@ -63,52 +65,91 @@ class PageManageUsers extends PageBase
             $u->setPasswordReset( WebRequest::post( "passwordreset" ) == "on" ? 1 : 0 );
             $u->save();
 
-            $u->clearGroups();
+            $existingGroups = $u->getGroups();
 
+            $newGroups = array();
+            foreach( $_POST as $k => $v ) 
+            {
+                if( $v !== "on" ) 
+                {
+                    continue;
+                }
 
-            $r = array();
-            foreach( $_POST as $k => $v ) {
-                if( $v !== "on" ) continue;
-
-                if( preg_match( "/^group\-.*$/", $k ) === 1 ) {
-                    $r[ ] = $k;
+                if( preg_match( "/^group\-([0-9]+)$/", $k ) === 1 ) 
+                {
+                    $groupid = preg_replace( "/^group\-([0-9]+)$/", "\${1}", $k );
+                    $group = Group::getById($groupid);
+                    if($group != false)
+                    {
+                        $newGroups[ ] = $group;
+                    }
                 }
             }
 
-            $currentuser = User::getLoggedIn();
-
-            foreach( $r as $k ) {
-                $groupid = preg_replace( "/^group\-(.*)$/", "\${1}", $k );
-                if( Group::getById( $groupid )->isManager( $currentuser ) ) {
-                    $ug = new Usergroup();
-                    $ug->setUserID( $u->getId() );
-                    $ug->setGroupID( $groupid );
-                    $ug->save();
+            // array_diff returns the values in 1 that are not present in the others.
+            $groupsToAdd = array_diff($newGroups, $existingGroups);
+            $groupsToRemove = array_diff($existingGroups, $newGroups);
+            
+            foreach( $groupsToAdd as $group ) 
+            {
+                try
+                {
+                    $u->joinGroup($group);   
+                }
+                catch(GroupChangeNotAllowedException $ex)
+                {
+                    Session::appendError("error-group-join-not-allowed");   
                 }
             }
-
-
+            
+            foreach ($groupsToRemove as $group)
+            {
+                try
+                {
+                    $u->leaveGroup($group);   
+                }
+                catch(GroupChangeNotAllowedException $ex)
+                {
+                    Session::appendError("error-group-leave-not-allowed");   
+                }
+            }
+            
             global $cScriptPath;
             $this->mBasePage = "blank.tpl";
             $this->mHeaders[] = "HTTP/1.1 303 See Other";
             $this->mHeaders[] = "Location: " . $cScriptPath . "/ManageUsers";
-        } else {
+        } 
+        else 
+        {
             $groupList = Group::getArray();
             $groups = array();
 
-            foreach( $groupList as $id => $g) {
-                $groups[ $id ] = array(
+            foreach( $groupList as $id => $g) 
+            {
+                $groups[ $id ] = array
+                (
                     "name" => $g->getName(),
                     "description" => $g->getDescription(),
                     "assigned" => false,
-                    "editable" => $g->isManager( User::getLoggedIn() ) ? "true" : "false" );
+                    "editable" => $g->isManager( User::getLoggedIn() ) ? "true" : "false",
+                    "removable" => $g->canRemoveFromSelf()
+                );
             }
 
             $user = User::getById( $data[ 1 ] );
 
-            foreach( $user->getGroups() as $g ) {
-                if( isset( $groups[ $g->getId() ] ) ) {
+            foreach( $user->getGroups() as $g ) 
+            {
+                if( isset( $groups[ $g->getId() ] ) ) 
+                {
                     $groups[ $g->getId() ][ "assigned" ] = true;
+                    
+                    if( (! $groups[ $g->getId() ][ "removable" ])
+                        && $user->getId() == User::getLoggedIn()->getId()
+                        )
+                    {
+                        $groups[ $g->getId() ][ "editable" ] = "false";
+                    }
                 }
             }
 
