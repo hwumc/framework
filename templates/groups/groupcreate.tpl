@@ -68,7 +68,7 @@
 				{foreach from="$userslist" key="username" item="check"}
 					<label class="checkbox">
 						<input type="checkbox" name="user-{$username}" {if $check == "true"}checked="true" {/if} disabled="true"/>
-						<tt>{$username|escape}</tt>
+						{include file="userdisplay.tpl" user=User::getByName($username)}
 					</label>
 				{/foreach}
 			</div>

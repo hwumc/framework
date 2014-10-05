@@ -9,6 +9,7 @@
 				<tr>
 					<th>{message name="{$pageslug}-text-groupname"}</th>
 					<th>{message name="{$pageslug}-text-groupparent"}</th>
+					<th>{message name="{$pageslug}-text-description"}</th>
 					<th>{message name="{$pageslug}-text-editgroup"}</th>
 					{if $allowDelete == "true"}<th>{message name="{$pageslug}-text-deletegroup"}</th>{/if}
 				</tr>
@@ -18,6 +19,7 @@
 					<tr>
 						<th>{$group->getName()|escape}</th>
 						<td>{$group->getOwner()->getName()|escape}</td>
+						<td>{$group->getDescription()|escape}</td>
 						<td><a href="{$cScriptPath}/{$pageslug}/edit/{$groupid}" class="btn btn-small {if $group->isManager($currentUser)}btn-warning{/if}">{if $group->isManager($currentUser)}{message name="{$pageslug}-button-editgroup"}{else}{message name="{$pageslug}-button-viewgroup"}{/if}</a></td>
 						{if $allowDelete == "true"}<td><a  href="{if $group->canDelete()}{$cScriptPath}/{$pageslug}/delete/{$groupid}{else}#{/if}" class="btn btn-small btn-danger {if !$group->canDelete()}disabled{/if}">{message name="{$pageslug}-button-deletegroup"}</a></td>{/if}
 					</tr>
