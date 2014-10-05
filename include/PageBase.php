@@ -66,6 +66,12 @@ abstract class PageBase
             "message",
             array( "Message", "smartyFuncMessage" )
             );
+        
+        $this->mSmarty->registerPlugin(
+            "function",
+            "rawmessage",
+            array( "Message", "smartyFuncRawMessage" )
+            );
 
         Hooks::run("PostSetupSmarty", array($this->mSmarty) );
     }

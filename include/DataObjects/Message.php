@@ -185,12 +185,31 @@ class Message extends DataObject
      *
      * -- Simon :D xx
      */
-    public static function smartyFuncMessage( $params, $smarty ) {
+    public static function smartyFuncMessage( $params, $smarty ) 
+    {
         $language = self::getActiveLanguage();
 
         $name = $params["name"];
 
         return htmlentities( self::retrieveContent( $name, $language ), ENT_COMPAT , 'UTF-8' );
+    }
+    
+    /**
+     * Never call this function either.
+     *
+     * Really, don't do it.
+     *
+     * Don't delete it either.
+     *
+     * -- Simon :D xx
+     */
+    public static function smartyFuncRawMessage( $params, $smarty ) 
+    {
+        $language = self::getActiveLanguage();
+
+        $name = $params["name"];
+
+        return self::retrieveContent( $name, $language );
     }
 
     public static function clearAll( ) {
