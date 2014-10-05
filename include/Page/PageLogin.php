@@ -19,13 +19,13 @@ class PageLogin extends PageBase
             if(! ($username = WebRequest::postString("lgUser")))
             {
                 // no username specified
-                $this->redirect("nouser", null);
+                $this->redirectError("nouser");
                 return;
             }
             if(! ($password = WebRequest::postString("lgPasswd")))
             {
                 // no password specified
-                $this->redirect("nopass", null);
+                $this->redirectError("nopass");
                 return;
             }
 
@@ -33,21 +33,21 @@ class PageLogin extends PageBase
             if($cust == null)
             {
                 // customer doesn't exist. offer to signup or retry?
-                $this->redirect("invalid", null);
+                $this->redirectError("invalid");
                 return;
             }
 
             if(! $cust->isMailConfirmed())
             {
                 // customer hasn't confirmed their email
-                $this->redirect("noconfirm", $cust);
+                $this->redirectError("noconfirm");
                 return;
             }
 
             if(! $cust->authenticate($password) )
             {
                 // not a valid password
-                $this->redirect("invalid", $cust);
+                $this->redirectError("invalid");
                 return;
             }
 
@@ -57,7 +57,7 @@ class PageLogin extends PageBase
             Session::setLoggedInUser($cust->getId());
 
             // redirect back to the main page.
-            $this->redirect(null, $cust);
+            $this->redirect($cust);
 
         }
         else
@@ -65,7 +65,7 @@ class PageLogin extends PageBase
         }
     }
 
-    private function redirect($error, User $user)
+    private function redirectError($error)
     {
         global $cWebPath;
 
@@ -73,29 +73,40 @@ class PageLogin extends PageBase
         $this->mHeaders[] = "HTTP/1.1 303 See Other";
         $this->mIsRedirecting = true;
 
-        if($error) {
-            Session::appendError( "login-" . $error );
-            $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/Login";
-        } else {
-            if($user->getProfileReview() == 1)
-            {
-                $user->setProfileReview(0);
-                $user->save();
-                $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/EditProfile?review=yes";
-            }
-            else if($user->getPasswordReset() == 1)
-            {
-                $user->save();
-                $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/ChangePassword?forced=yes";
-            }
-            else
-            {
-                $this->mHeaders[] = "Location: " . $cWebPath . "/index.php" . WebRequest::get("returnto");
-            }
-        }
+        Session::appendError( "login-" . $error );
+        $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/Login";
+        
         return;
     }
 
+    private function redirect(User $user)
+    {
+        global $cWebPath;
+
+        // redirect back to the main page.
+        $this->mHeaders[] = "HTTP/1.1 303 See Other";
+        $this->mIsRedirecting = true;
+
+       
+        if($user->getProfileReview() == 1)
+        {
+            $user->setProfileReview(0);
+            $user->save();
+            $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/EditProfile?review=yes";
+        }
+        else if($user->getPasswordReset() == 1)
+        {
+            $user->save();
+            $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/ChangePassword?forced=yes";
+        }
+        else
+        {
+            $this->mHeaders[] = "Location: " . $cWebPath . "/index.php" . WebRequest::get("returnto");
+        }
+            
+        return;
+    }
+    
     // this is a hook function
     // a global hook
     // don't break it.
