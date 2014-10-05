@@ -132,6 +132,10 @@ class Group extends DataObject
             return true;   
         }
         
-        return ( $user->inGroup( $this->getOwner() ) );
+        
+        $owner = $this->getOwner();
+        $isOwner = $user->inGroup($owner);
+        
+        return $isOwner;
     }
 }
