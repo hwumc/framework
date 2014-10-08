@@ -39,6 +39,7 @@ class PageChangePassword extends PageBase
                 global $cScriptPath;
                 $this->mHeaders[] = "HTTP/1.1 303 See Other";
                 $this->mHeaders[] = "Location: " . $cScriptPath . "/EditProfile";
+                $this->mIsRedirecting = true;
             }
             catch(Exception $ex)
             {

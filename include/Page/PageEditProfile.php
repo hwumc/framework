@@ -46,6 +46,7 @@ class PageEditProfile extends PageBase
             global $cScriptPath;
             $this->mHeaders[] = "HTTP/1.1 303 See Other";
             $this->mHeaders[] = "Location: " . $cScriptPath . "/EditProfile";
+            $this->mIsRedirecting = true;
 
         } else {
             $this->mBasePage = "profile/edit.tpl";

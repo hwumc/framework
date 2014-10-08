@@ -131,6 +131,7 @@ class PageManageUsers extends PageBase
             $this->mBasePage = "blank.tpl";
             $this->mHeaders[] = "HTTP/1.1 303 See Other";
             $this->mHeaders[] = "Location: " . $cScriptPath . "/ManageUsers";
+            $this->mIsRedirecting = true;
         } 
         else 
         {

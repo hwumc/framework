@@ -31,7 +31,7 @@ class PageForgotPassword extends PageBase
             // redirect back to the main page.
             $this->mHeaders[] = "HTTP/1.1 303 See Other";
             $this->mHeaders[] = "Location: " . $cScriptPath . "/ForgotPassword/sent";
-
+            $this->mIsRedirecting = true;
         }
         else
         {

@@ -74,6 +74,7 @@ class PageMessageEditor extends PageBase
             global $cScriptPath;
             $this->mHeaders[] = "HTTP/1.1 303 See Other";
             $this->mHeaders[] = "Location: " . $cScriptPath . "/MessageEditor";
+            $this->mIsRedirecting = true;
 
             $this->save();
 
