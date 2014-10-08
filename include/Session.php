@@ -15,7 +15,34 @@ class Session
             $_SESSION['errorqueue'] = array();
         }
 
-        $_SESSION['errorqueue'][] = $errorcode;
+        $_SESSION['errorqueue'][] = array('message' => $errorcode, 'type' => 'error');
+    }
+    
+    public static function appendInfo($errorcode)
+    {
+        if(! isset( $_SESSION['errorqueue'] ) ) {
+            $_SESSION['errorqueue'] = array();
+        }
+
+        $_SESSION['errorqueue'][] = array('message' => $errorcode, 'type' => 'info');
+    }
+    
+    public static function appendWarning($errorcode)
+    {
+        if(! isset( $_SESSION['errorqueue'] ) ) {
+            $_SESSION['errorqueue'] = array();
+        }
+
+        $_SESSION['errorqueue'][] = array('message' => $errorcode, 'type' => 'warning');
+    }
+    
+    public static function appendSuccess($errorcode)
+    {
+        if(! isset( $_SESSION['errorqueue'] ) ) {
+            $_SESSION['errorqueue'] = array();
+        }
+
+        $_SESSION['errorqueue'][] = array('message' => $errorcode, 'type' => 'success');
     }
 
     public static function getErrorQueue()
