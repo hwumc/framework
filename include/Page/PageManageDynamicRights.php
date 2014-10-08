@@ -70,6 +70,7 @@ class PageManageDynamicRights extends PageBase
 
             global $cScriptPath;
             $this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageDynamicRights";
+            $this->mIsRedirecting = true;
 
         } else {
             $this->mBasePage = "dynamicrights/delete.tpl";
@@ -97,6 +98,7 @@ class PageManageDynamicRights extends PageBase
 
             global $cScriptPath;
             $this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageDynamicRights";
+            $this->mIsRedirecting = true;
         } else {
             $this->mBasePage = "dynamicrights/create.tpl";
             $this->mSmarty->assign( "name", "" );

@@ -44,6 +44,7 @@ class PageMessageEditor extends PageBase
                 $this->mBasePage = "blank.tpl";
                 global $cScriptPath;
                 $this->mHeaders[] =  "Location: " . $cScriptPath . "/MessageEditor";
+                $this->mIsRedirecting = true;
             } else {
                 $this->mBasePage = "messageeditor/clear.tpl";
             }
@@ -59,6 +60,7 @@ class PageMessageEditor extends PageBase
                 Message::clearAllUnset();
                 global $cScriptPath;
                 $this->mHeaders[] =  "Location: " . $cScriptPath . "/MessageEditor";
+                $this->mIsRedirecting = true;
             } else {
                 $this->mBasePage = "messageeditor/rmunset.tpl";
             }

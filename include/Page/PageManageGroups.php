@@ -97,6 +97,7 @@ class PageManageGroups extends PageBase
 
             global $cScriptPath;
             $this->mHeaders[] = ( "Location: " . $cScriptPath . "/ManageGroups" );
+            $this->mIsRedirecting = true;
         } else {
             $rightlist = Right::getAllRegisteredRights();
             $rights = array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) );
@@ -154,8 +155,7 @@ class PageManageGroups extends PageBase
 
             global $cScriptPath;
             $this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageGroups";
-
-
+            $this->mIsRedirecting = true;
         } else {
             $this->mBasePage = "groups/groupdelete.tpl";
         }
@@ -196,6 +196,7 @@ class PageManageGroups extends PageBase
 
             global $cScriptPath;
             $this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageGroups";
+            $this->mIsRedirecting = true;
         } else {
             $rightlist = Right::getAllRegisteredRights();
 

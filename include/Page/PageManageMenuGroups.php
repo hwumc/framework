@@ -81,6 +81,7 @@ class PageManageMenuGroups extends PageBase
 
             global $cScriptPath;
             $this->mHeaders[] = ( "Location: " . $cScriptPath . "/ManageMenuGroups" );
+            $this->mIsRedirecting = true;
         } else {
             $this->mBasePage = "menugroup/create.tpl";
             $this->mSmarty->assign( "slug", $g->getSlug() );
@@ -102,6 +103,7 @@ class PageManageMenuGroups extends PageBase
 
             global $cScriptPath;
             $this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageMenuGroups";
+            $this->mIsRedirecting = true;
 
         } else {
             $this->mBasePage = "menugroup/delete.tpl";
@@ -127,6 +129,7 @@ class PageManageMenuGroups extends PageBase
 
             global $cScriptPath;
             $this->mHeaders[] =  "Location: " . $cScriptPath . "/ManageMenuGroups";
+            $this->mIsRedirecting = true;
         } else {
 
             $this->mBasePage = "menugroup/create.tpl";
