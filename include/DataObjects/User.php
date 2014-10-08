@@ -112,7 +112,7 @@ class User extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO user VALUES (null, :username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview, :driverexpiry, 0);");
+            $statement = $gDatabase->prepare("INSERT INTO user (username, password, fullName, experience, medical, emergcontact, emergcontactphone, mobile, email, emailconfirmation, godmode, isdriver, profilereview, driverexpiry, passwordreset) VALUES (:username, :password, :fullName, :experience, :medical, :emergcontact, :emergcontactphone, :mobile, :email, :emailconfirmation, :godmode, :isdriver, :profilereview, :driverexpiry, 0);");
             $statement->bindParam(":username", $this->username);
             $statement->bindParam(":password", $this->password);
             $statement->bindParam(":fullName", $this->fullName);

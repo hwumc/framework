@@ -62,7 +62,7 @@ class MenuGroup extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO menugroup VALUES (null, :slug, :displayname);");
+            $statement = $gDatabase->prepare("INSERT INTO menugroup (slug, displayname) VALUES (:slug, :displayname);");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":displayname", $this->displayname);
 

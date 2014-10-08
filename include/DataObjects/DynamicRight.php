@@ -45,7 +45,7 @@ class DynamicRight extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO dynamicright VALUES (null, :right);");
+            $statement = $gDatabase->prepare("INSERT INTO dynamicright (right) VALUES (:right);");
             $statement->bindParam(":right", $this->right);
             if($statement->execute())
             {
