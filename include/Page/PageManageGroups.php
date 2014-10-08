@@ -99,7 +99,7 @@ class PageManageGroups extends PageBase
             $this->mHeaders[] = ( "Location: " . $cScriptPath . "/ManageGroups" );
             $this->mIsRedirecting = true;
         } else {
-            $rightlist = Right::getAllRegisteredRights();
+            $rightlist = array_diff(Right::getAllRegisteredRights(), array("public", "user"));
             $rights = array_combine( $rightlist, array_fill( 0, count( $rightlist ), "false" ) );
 
             $users = User::getArray();
