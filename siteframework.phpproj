@@ -297,6 +297,7 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="templates\userdisplay.tpl" />
+    <Content Include="templates\users\userreview.tpl" />
     <Content Include="templates\webmaster\sudo.tpl">
       <SubType>Content</SubType>
     </Content>
