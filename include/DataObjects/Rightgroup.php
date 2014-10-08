@@ -13,7 +13,7 @@ class Rightgroup extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO rightgroup (group, right) VALUES (:group, :right);");
+            $statement = $gDatabase->prepare("INSERT INTO rightgroup (`group`, `right`) VALUES (:group, :right);");
             $statement->bindParam(":right", $this->right);
             $statement->bindParam(":group", $this->group);
             if($statement->execute())

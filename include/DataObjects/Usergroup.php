@@ -13,7 +13,7 @@ class Usergroup extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO usergroup (user, group) VALUES (:user, :group);");
+            $statement = $gDatabase->prepare("INSERT INTO usergroup (`user`, `group`) VALUES (:user, :group);");
             $statement->bindParam(":user", $this->user);
             $statement->bindParam(":group", $this->group);
             if($statement->execute())

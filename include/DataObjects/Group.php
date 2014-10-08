@@ -52,7 +52,7 @@ class Group extends DataObject
 
         if($this->isNew)
         {   // insert
-            $statement = $gDatabase->prepare("INSERT INTO `group` (name, description, removefromself) VALUES (:name, :desc, :removefromself);");
+            $statement = $gDatabase->prepare("INSERT INTO `group` (name, description, owner, removefromself) VALUES (:name, :desc, null, :removefromself);");
             $statement->bindParam(":name", $this->name);
             $statement->bindParam(":desc", $this->description);
             $statement->bindParam(":removefromself", $this->removefromself);
