@@ -62,16 +62,7 @@ class PageManageUsers extends PageBase
         if( WebRequest::wasPosted() ) 
         {
             $u = User::getById( $data[ 1 ] );
-            
-            try
-            {    
-                $u->setUsername( WebRequest::post( "username" ) );
-            }
-            catch(ValidationException $ex)
-            {
-                Session::appendError("ManageUsers-badusername");
-            }
-            
+            $u->setUsername( WebRequest::post( "username" ) );
             $u->setFullName( WebRequest::post( "realname" ) );
             $u->setEmail( WebRequest::post( "email" ) );
             $u->setProfileReview( WebRequest::post( "profilereview" ) == "on" ? 1 : 0 );

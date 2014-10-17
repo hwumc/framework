@@ -179,11 +179,6 @@ class User extends DataObject
 
     public function setUsername($username)
     {
-        if($username !== htmlentities($username))
-        {
-            throw new ValidationException();
-        }
-        
         $this->username = $username;
     }
 

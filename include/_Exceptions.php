@@ -31,7 +31,6 @@ class NotImplementedException extends Exception{}
 class FieldTooLargeException extends Exception{}
 
 class TransactionAlreadyOpenException extends Exception{}
-class ValidationException extends Exception{}
 
 class GroupChangeNotAllowedException extends Exception
 {

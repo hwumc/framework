@@ -26,12 +26,6 @@ class PageRegister extends PageBase
                 $this->triggerError("password-mismatch");
                 return;
             }
-            
-            if( WebRequest::post( "username" ) != htmlentities(WebRequest::post( "password" )) )
-            {
-                $this->triggerError("bad-username");
-                return;
-            }
 
             if( trim(WebRequest::post( "experience" )) == "" )
             {
