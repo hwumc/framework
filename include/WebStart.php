@@ -126,34 +126,16 @@ HTML;
         {
             throw new ExtensionUnavailableException($cDatabaseModule);
         }
-        
-        if(isset($_SERVER["RDS_HOSTNAME"]))
-        {
-            $connectionString = "mysql:host="
-                . $_SERVER["RDS_HOSTNAME"]
-                . ":"
-                . $_SERVER["RDS_PORT"]
-                . ";dbname="
-                . $_SERVER["RDS_DB_NAME"];
-            
-            $gDatabase = new Database($cDatabaseConnectionString, $_SERVER["RDS_USERNAME"], $_SERVER["RDS_PASSWORD"]);
-            $gReadOnlyDatabase = new Database($cDatabaseConnectionString, $_SERVER["RDS_USERNAME"] . "ro", $_SERVER["RDS_PASSWORD"]);
-            
-            unset($connectionString);
-        }
-        else
-        {
-            // Not running under beanstalk
-            $mycnf = parse_ini_file($cMyDotCnfFile);
-            $myrocnf = parse_ini_file($cMyDotRoDotCnfFile);
 
-            $gDatabase = new Database($cDatabaseConnectionString, $mycnf["user"], $mycnf["password"]);
-            $gReadOnlyDatabase = new Database($cDatabaseConnectionString, $myrocnf["user"], $myrocnf["password"]);
+        $mycnf = parse_ini_file($cMyDotCnfFile);
+        $myrocnf = parse_ini_file($cMyDotRoDotCnfFile);
 
-            // tidy up sensitive data we don't want lying around.
-            unset($mycnf);
-            unset($myrocnf);
-        }
+        $gDatabase = new Database($cDatabaseConnectionString, $mycnf["user"], $mycnf["password"]);
+        $gReadOnlyDatabase = new Database($cDatabaseConnectionString, $myrocnf["user"], $myrocnf["password"]);
+
+        // tidy up sensitive data we don't want lying around.
+        unset($mycnf);
+        unset($myrocnf);
 
         // use exceptions on failed database stuff
         $gDatabase->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
