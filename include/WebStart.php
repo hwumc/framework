@@ -37,13 +37,23 @@ class WebStart
 HTML;
         $message = "Unhandled " . $exception;
 
-        // strip out database passwords from the error message
         global $cMyDotCnfFile, $cFilePath;
-        $mycnf = parse_ini_file($cMyDotCnfFile);
+        
+        // strip out database passwords from the error message
+        if(isset($_SERVER["RDS_HOSTNAME"]))
+        {
+            $message = str_replace($_SERVER['RDS_USERNAME'], "webserver", $message);
+            $message = str_replace($_SERVER['RDS_PASSWORD'], "sekrit", $message);
+        }
+        else
+        {
+            $mycnf = parse_ini_file($cMyDotCnfFile);
 
-        // clean any secret variables
-        $message = str_replace($mycnf['user'], "webserver", $message);
-        $message = str_replace($mycnf['password'], "sekrit", $message);
+            // clean any secret variables
+            $message = str_replace($mycnf['user'], "webserver", $message);
+            $message = str_replace($mycnf['password'], "sekrit", $message);
+        }
+        
         $message = str_replace($cFilePath, "", $message);
 
         // clear and discard any content that's been saved to the output buffer
@@ -136,8 +146,8 @@ HTML;
                 . ";dbname="
                 . $_SERVER["RDS_DB_NAME"];
             
-            $gDatabase = new Database($cDatabaseConnectionString, $_SERVER["RDS_USERNAME"], $_SERVER["RDS_PASSWORD"]);
-            $gReadOnlyDatabase = new Database($cDatabaseConnectionString, $_SERVER["RDS_USERNAME"] . "ro", $_SERVER["RDS_PASSWORD"]);
+            $gDatabase = new Database($connectionString, $_SERVER["RDS_USERNAME"], $_SERVER["RDS_PASSWORD"]);
+            $gReadOnlyDatabase = new Database($connectionString, $_SERVER["RDS_USERNAME"] . "ro", $_SERVER["RDS_PASSWORD"]);
             
             unset($connectionString);
         }
