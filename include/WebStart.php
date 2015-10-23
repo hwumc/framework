@@ -41,9 +41,10 @@ HTML;
         global $cMyDotCnfFile, $cFilePath;
         $mycnf = parse_ini_file($cMyDotCnfFile);
 
-        // clean any secret variables
+        // clean any secret variables, including the first 15 chars of the database password (yay php.)
         $message = str_replace($mycnf['user'], "webserver", $message);
         $message = str_replace($mycnf['password'], "sekrit", $message);
+        $message = str_replace(substr($mycnf['password'], 0, 15) . '...', "sekrit", $message);
         $message = str_replace($cFilePath, "", $message);
 
         // clear and discard any content that's been saved to the output buffer
