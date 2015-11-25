@@ -81,7 +81,7 @@ class User extends DataObject
     
     /**
      * Check the stored password against the provided password
-     * @returns true if the password is correct
+     * @return true if the password is correct
      */
     public function authenticate($password)
     {
