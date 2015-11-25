@@ -61,7 +61,7 @@ class Session
     }
 
     public static function addSessionRight( $right ) {
-        if( ! is_array( $_SESSION['session_rights'] ) ) {
+        if( (! isset( $_SESSION['session_rights'] )) || (! is_array( $_SESSION['session_rights'] )) ) {
             $_SESSION['session_rights'] = array();
         }
 
