@@ -21,6 +21,13 @@ class PageRegister extends PageBase
                 return;
             }
 
+            $existing = User::getByNameOrEmail( WebRequest::post( "email" ) );
+            if( $existing != null )
+            {
+                $this->triggerError("email-taken");
+                return;
+            }
+
             if( WebRequest::post( "confirmpassword" ) != WebRequest::post( "password" ) )
             {
                 $this->triggerError("password-mismatch");

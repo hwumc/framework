@@ -17,7 +17,7 @@ class PageForgotPassword extends PageBase
         if(WebRequest::wasPosted()) // sanity check
         {
             if( $username = WebRequest::postString( "lgUser" ) ) {
-                $cust = User::getByName($username);
+                $cust = User::getByNameOrEmail($username);
                 if($cust != null) {
                     if( $cust->isMailConfirmed() ) {
                         $cust->sendPasswordReset();

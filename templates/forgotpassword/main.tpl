@@ -63,7 +63,7 @@
       <form class="form-signin" method="post">
         <h2 class="form-signin-heading">{message name="forgotpassword-title"}</h2>
 		<label for="lgUser">{message name="forgotpassword-text"}</label>
-        <input type="text" name="lgUser" class="input-block-level" placeholder="{message name="login-username"}">
+        <input type="text" name="lgUser" class="input-block-level" placeholder="{message name="forgotpassword-userormail"}">
         <button class="btn btn-large btn-primary" type="submit">{message name="forgotpassword-button"}</button>
       </form>
 

@@ -51,6 +51,27 @@ class User extends DataObject
         return $resultObject;
     }
 
+    public static function getByNameOrEmail($name)
+    {
+        global $gLogger;
+        $gLogger->log("User: getting $name from database");
+        global $gDatabase;
+        $statement = $gDatabase->prepare("SELECT * FROM user WHERE username = :username OR email = :email LIMIT 1;");
+        $statement->bindParam(":username", $name);
+        $statement->bindParam(":email", $name);
+
+        $statement->execute();
+
+        $resultObject = $statement->fetchObject("User");
+        if($resultObject != false)
+        {
+            $gLogger->log("User::getByName: $name exists");
+            $resultObject->isNew = false;
+        }
+
+        return $resultObject;
+    }
+
     public static function getWithRight( $right )
     {
         global $gDatabase;
@@ -502,8 +523,12 @@ class User extends DataObject
         $emailsubj = Message::getMessage( "forgotpassword-email-subject" );
         // subst in the password
         $email = str_replace( '$1', $pass, $email );
+        $email = str_replace( '$2', $this->getUsername(), $email );
 
         Mail::send( $this->getEmail() , $emailsubj, $email );
+
+        // Force a password change
+        $this->setPasswordReset(1);
 
         $this->setPassword( $pass );
         $this->save();
