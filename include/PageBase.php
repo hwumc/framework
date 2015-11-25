@@ -228,7 +228,7 @@ abstract class PageBase
 
         if( User::getLoggedIn()->getPasswordReset() )
         {
-            array_unshift( $errorlist, "forced-password-reset" );
+            array_unshift( $errorlist, array('message' => "forced-password-reset", 'type' => 'error') );
         }
 
         $errorlist = Hooks::run("PreErrorDisplay", array($errorlist));
