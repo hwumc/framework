@@ -54,6 +54,10 @@
 						<input type="checkbox" name="group-{$id}" {if $group.assigned == "true"}checked="true" {/if} {if $group.editable == "false" }disabled="true"{/if}  />
 						<strong>{$group.name|escape}</strong>: {$group.description|escape}
 					</label>
+					{if $group.editable == "false" && $group.assigned == "true"}
+						{* Send a value for this group anyway. This is protected on the server too, but it throws a nasty error which probably doesn't signal the user's intent. *}
+						<input type="hidden" name="group-{$id}" value="on" />
+					{/if}
 				{/foreach}
 			</div>
 		</div>
