@@ -67,8 +67,6 @@ $cTidyOptions = array(
     "wrap" => 0, // disables wrapping
     "vertical-space" => 1, // adds vertical spacing for readability
     );
-    
-$cSoftwareGithubRepo = "stwalkerster/siteframework";
 
 $cExtensions = array();
 

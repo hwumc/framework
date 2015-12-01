@@ -2,9 +2,9 @@
 {block name="body"}
 	<table class="table table-bordered table-condensed">
 		<tbody>
-			<tr><th>{message name="SoftwareVersion-branch"}</th><td><a href="https://github.com/{$softwarerepo}/tree/{$softwarebranch}">{$softwarebranch}</a></td></tr>
+			<tr><th>{message name="SoftwareVersion-branch"}</th><td><a href="https://phabricator.stwalkerster.co.uk/diffusion/SF/browse/{$softwarebranch}/">{$softwarebranch}</a></td></tr>
 			<tr><th>{message name="SoftwareVersion-verdescription"}</th><td>{$softwaredesc}</td></tr>
-			<tr><th>{message name="SoftwareVersion-sha"}</th><td><a href="https://github.com/{$softwarerepo}/commit/{$softwaresha}">{$softwaresha}</a></td></tr>
+			<tr><th>{message name="SoftwareVersion-sha"}</th><td><a href="https://phabricator.stwalkerster.co.uk/rSF{$softwaresha}">{$softwaresha}</a></td></tr>
 			<tr><th>{message name="SoftwareVersion-origin"}</th><td>{$softwareorigin}</td></tr>
 		</tbody>
 	</table>

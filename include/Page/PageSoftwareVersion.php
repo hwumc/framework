@@ -23,9 +23,6 @@ class PageSoftwareVersion extends PageBase
         $this->mSmarty->assign( "softwareorigin", exec( 'git config remote.origin.url' ) );
         $this->mSmarty->assign( "softwareauthors", $authors );
 
-        global $cSoftwareGithubRepo;
-        $this->mSmarty->assign( "softwarerepo", $cSoftwareGithubRepo );
-
         global $cRequiredPhpExtensions;
         $this->mSmarty->assign( "phpextensions", $cRequiredPhpExtensions);
 
