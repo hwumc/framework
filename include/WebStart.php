@@ -128,11 +128,26 @@ HTML;
             throw new ExtensionUnavailableException($cDatabaseModule);
         }
 
-        $mycnf = parse_ini_file($cMyDotCnfFile);
-        $myrocnf = parse_ini_file($cMyDotRoDotCnfFile);
-
+        if($cMyDotCnfFile === false)
+        {
+            $mycnf = array( "user" => null, "password" => null);
+            $myrocnf = array( "user" => null, "password" => null);
+        }
+        else 
+        {
+            $mycnf = parse_ini_file($cMyDotCnfFile);
+            $myrocnf = parse_ini_file($cMyDotRoDotCnfFile);
+        }
+        
         $gDatabase = new Database($cDatabaseConnectionString, $mycnf["user"], $mycnf["password"]);
         $gReadOnlyDatabase = new Database($cDatabaseConnectionString, $myrocnf["user"], $myrocnf["password"]);
+
+        // test the database connected successfully
+        if($gDatabase->query("SELECT 'ping';")->fetchColumn() !== "ping")
+        {
+            $errorInfo = $gDatabase->errorInfo();
+            throw new Exception("Database connection failed.");
+        }
 
         // tidy up sensitive data we don't want lying around.
         unset($mycnf);
