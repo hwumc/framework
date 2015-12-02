@@ -30,16 +30,26 @@ class User extends DataObject
     {
         global $gDatabase;
 
-        // include list of groups
-        $groups = implode(",", $groupList);
+        $whereAdded = false;
+        $sql = "select distinct u.* from user u left join usergroup g on g.user = u.id";
 
-        // include null groups
-        $none = "";
-        if($includeNoGroups) {
-            $none = "or g.`group` is null";
+        // include list of groups
+        if(count($groupList) > 0)
+        {
+            $sql .= " where g.`group` in (" . implode(",", $groupList) . ")";
+            $whereAdded = true;
         }
 
-        $sql = "select distinct u.* from user u left join usergroup g on g.user = u.id where g.`group` in (" . $groups . ") " . $none . ";";
+        // include null groups
+        if($includeNoGroups) {
+            if($whereAdded) {
+                $sql .= " or g.`group` is null";
+            } else {
+                $sql .= " where g.`group` is null";
+            }
+        }
+
+        $sql .= ";";
 
         $statement = $gDatabase->prepare($sql);
 
