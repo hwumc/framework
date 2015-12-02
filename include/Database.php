@@ -6,6 +6,8 @@ class Database extends PDO
 {
     protected $hasActiveTransaction = false;
 
+    public $isMysql = true;
+
     /**
      * Determines if this connection has a transaction in progress or not
      * @return true if there is a transaction in progress.
@@ -23,7 +25,10 @@ class Database extends PDO
         }
         else
         {
-            $this->exec("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+            if($this->isMysql) {
+                $this->exec("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+            }
+
             $this->hasActiveTransaction = parent::beginTransaction();
             return $this->hasActiveTransaction;
         }

@@ -142,6 +142,12 @@ HTML;
         $gDatabase = new Database($cDatabaseConnectionString, $mycnf["user"], $mycnf["password"]);
         $gReadOnlyDatabase = new Database($cDatabaseConnectionString, $myrocnf["user"], $myrocnf["password"]);
 
+        // If not MySQL, disable some mysql-specific initialisation code
+        if(substr($cDatabaseConnectionString, 0, strlen("mysql:")) !== "mysql:") {
+            $gDatabase->isMysql = false;
+            $gReadOnlyDatabase->isMysql = false;
+        }
+
         // test the database connected successfully
         if($gDatabase->query("SELECT 'ping';")->fetchColumn() !== "ping")
         {
