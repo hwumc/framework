@@ -5,13 +5,16 @@
 	<p><a href="{$cScriptPath}/{$pageslug}/profilereview" class="btn btn-warning">{message name="{$pageslug}-button-profilereview"}</a></p>
 {/if}
 
+<div class="well filterbar">
 <form class="form-inline" method="post">
+	<span class="help-inline"><strong>Filter list by group: </strong></span>
 	{foreach from="$grouplist" item="g" key="id"}
 		<label class="checkbox"><input type="checkbox" name="showgroup-{$id}" {if $g.selected}checked="checked"{/if}/>{$g.name|escape}</label>
 	{/foreach}
-	<label><input type="checkbox" name="shownogroup" {if $showNoGroup}checked="checked"{/if}/>(not in a group)</label>
+	<label class="checkbox"><input type="checkbox" name="shownogroup" {if $showNoGroup}checked="checked"{/if}/>(not in a group)</label>
 	<button type="submit" class="btn btn-small btn-primary"><i class="icon-white icon-search"></i>&nbsp;Search</button>
 </form>
+</div>
 
 <table class="table table-hover">
 			<thead>

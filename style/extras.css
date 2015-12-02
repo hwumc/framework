@@ -1,0 +1,15 @@
+﻿div.filterbar {
+    padding: 0.75em;
+}
+
+div.filterbar form.form-inline {
+    margin-bottom: 0;
+}
+
+div.filterbar form.form-inline button.btn {
+    float: right;
+}
+
+div.filterbar form.form-inline label.checkbox {
+    margin-left: 0.3em;
+}
