@@ -20,6 +20,43 @@ class User extends DataObject
     protected $driverexpiry = null;
     protected $passwordreset = 0;
 
+    /**
+     * Summary of getInGroups
+     * @param int[] $groupList 
+     * @param boolean $includeNoGroups 
+     * @return User[]
+     */
+    public static function getInGroups($groupList, $includeNoGroups)
+    {
+        global $gDatabase;
+
+        // include list of groups
+        $groups = implode(",", $groupList);
+
+        // include null groups
+        $none = "";
+        if($includeNoGroups) {
+            $none = "or g.`group` is null";
+        }
+
+        $sql = "select distinct u.* from user u left join usergroup g on g.user = u.id where g.`group` in (" . $groups . ") " . $none . ";";
+
+        $statement = $gDatabase->prepare($sql);
+
+        $statement->execute();
+
+        $resultObject = $statement->fetchAll( PDO::FETCH_CLASS, "User" );
+
+        $data = array();
+        foreach ($resultObject as $v)
+        {
+            $v->isNew = false;
+            $data[$v->getId() . ""] = $v;
+        }
+
+        return $data;
+    }
+
     public static function getLoggedIn()
     {
         $user = User::getById( Session::getLoggedInUser() );

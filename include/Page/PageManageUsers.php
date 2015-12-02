@@ -21,15 +21,15 @@ class PageManageUsers extends PageBase
                 case "edit":
                     $this->editMode( $data );
                     return;
-                    break;
+
                 case "delete":
                     $this->deleteMode( $data );
                     return;
-                    break;
+
                 case "profilereview":
                     $this->profileReviewMode( $data );
                     return;
-                    break;
+
             }
 
         }
@@ -47,8 +47,56 @@ class PageManageUsers extends PageBase
             $this->mSmarty->assign("allowEdit", 'false');
         }
 
+        $groups = Group::getArray();
+        $grouplist = array();
+
+        foreach($groups as $id => $obj)
+        {
+            $grouplist[$id] = array(
+                "name" => $obj->getName(),
+                "selected" => false,
+            );
+        }
+
+        $showNoGroup = true;
+
+        if (WebRequest::wasPosted()) {
+            if( WebRequest::post("shownogroup") !== "on")
+            {
+                $showNoGroup = false;
+            }
+
+            foreach( $_POST as $k => $v ) 
+            {
+                if( $v !== "on" ) 
+                {
+                    continue;
+                }
+
+                if( preg_match( "/^showgroup\-([0-9]+)$/", $k ) === 1 ) 
+                {
+                    $groupid = preg_replace( "/^showgroup\-([0-9]+)$/", "\${1}", $k );
+                    $grouplist[$groupid]["selected"] = true;
+                }
+            }
+        } else {
+            foreach($grouplist as $id => $obj) {
+                $grouplist[$id]["selected"] = true;
+            }
+        }
+
+        $selectedGroups = array();
+        foreach ($grouplist as $id => $obj) {
+            if ($grouplist[$id]["selected"]) {
+                $selectedGroups[] = $id;
+            }
+        }
+
+        $this->mSmarty->assign("grouplist", $grouplist );
+        $this->mSmarty->assign("showNoGroup", $showNoGroup );
+
         $this->mBasePage = "users/userlist.tpl";
-        $users = User::getArray();
+        $users = User::getInGroups($selectedGroups, $showNoGroup);
         $this->mSmarty->assign("userlist", $users );
     }
 
