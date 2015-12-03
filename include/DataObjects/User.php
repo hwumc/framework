@@ -33,11 +33,14 @@ class User extends DataObject
         $whereAdded = false;
         $sql = "select distinct u.* from user u left join usergroup g on g.user = u.id";
 
+		$params = array();
+
         // include list of groups
-        if(count($groupList) > 0)
+        if(is_array($groupList) && count($groupList) > 0)
         {
-            $sql .= " where g.`group` in (" . implode(",", $groupList) . ")";
+            $sql .= " where g.`group` in (" . implode(",", array_fill(0, count($groupList), "?")) . ")";
             $whereAdded = true;
+			$params = array_merge($params, $groupList);
         }
 
         // include null groups
@@ -53,7 +56,7 @@ class User extends DataObject
 
         $statement = $gDatabase->prepare($sql);
 
-        $statement->execute();
+        $statement->execute($params);
 
         $resultObject = $statement->fetchAll( PDO::FETCH_CLASS, "User" );
 
