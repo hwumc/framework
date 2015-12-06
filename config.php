@@ -109,8 +109,7 @@ $cContentFilePath = $cFilePath . "/upload";
 
 $cCmsDefaultTemplate = "cms/cmspage.tpl";
 $cCmsTemplates = array(
-    "mainpage.tpl" => "Main Page banner",
-    "newmainpage.tpl" => "(NEW) Main Page banner",
+    "newmainpage.tpl" => "Main Page banner",
     );
 
 ///////////////// don't put new config options below this line
