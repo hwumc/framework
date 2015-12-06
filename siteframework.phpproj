@@ -287,10 +287,13 @@
     <Content Include="style\datepicker.css" />
     <Content Include="style\editor-override.css" />
     <Content Include="style\extras.css" />
+    <Content Include="style\mainpage.css" />
     <Content Include="templates\editorinit.tpl" />
     <Content Include="templates\files\delete.tpl" />
     <Content Include="templates\files\list.tpl" />
     <Content Include="templates\files\upload.tpl" />
+    <Content Include="templates\mainsidebar.tpl" />
+    <Content Include="templates\navigation.tpl" />
     <Content Include="templates\profile\loginchpw.tpl" />
     <Content Include="templates\sessionerrors.tpl">
       <SubType>Content</SubType>

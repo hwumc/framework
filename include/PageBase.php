@@ -33,8 +33,8 @@ abstract class PageBase
     // base template to use
     protected $mBasePage = "base.tpl";
 
-    // subnav
-    protected $mSubMenu = array();
+    // subnav - not implemented in template!
+    // protected $mSubMenu = array();
 
     // personal nav
     protected $mPersonalNav = array();
@@ -217,8 +217,9 @@ abstract class PageBase
         // the current page path
         $this->mSmarty->assign("currentPagePath", WebRequest::pathInfo());
 
-        $this->mSmarty->assign("subnavigation", $this->mSubMenu);
-        $this->mSmarty->assign("hasSubmenu", count($this->mSubMenu) == 0 ? "no" : "yes" );
+        // Not implemented in templates!
+        // $this->mSmarty->assign("subnavigation", $this->mSubMenu);
+        // $this->mSmarty->assign("hasSubmenu", count($this->mSubMenu) == 0 ? "no" : "yes" );
 
         // page slug
         $this->mSmarty->assign( "pageslug", preg_replace( "/^Page(.*)$/", "\${1}", get_class($this) ) );

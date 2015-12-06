@@ -107,6 +107,12 @@ $cContentScriptWebPath = "/usercontent/content.php";
 // this is the on-disk path to wherever the uploads are stored
 $cContentFilePath = $cFilePath . "/upload";
 
+$cCmsDefaultTemplate = "cms/cmspage.tpl";
+$cCmsTemplates = array(
+    "mainpage.tpl" => "Main Page banner",
+    "newmainpage.tpl" => "(NEW) Main Page banner",
+    );
+
 ///////////////// don't put new config options below this line
 
 if(file_exists($cFilePath . "/config.local.php"))
