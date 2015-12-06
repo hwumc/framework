@@ -6,14 +6,17 @@
 	
 	<p>{message name="{$pageslug}-delete-areyousure"}</p>
 
-    <div class="thumbnail">
-        <img src="{$file->getDownloadPath()}" alt="">
-        <h4>{$file->getName()|escape}</h4>
-        <table>
-            <tr><th>Type</th><td>{$file->getMime()|escape}</td></tr>
-            <tr><th>Size</th><td>{$file->getHumanSize()}</td></tr>
-        </table>
+    <div class="row-fluid">
+        <div class="span4 offset4 thumbnail">
+            <img src="{$file->getDownloadPath()}" alt="">
+            <h4>{$file->getName()|escape}</h4>
+            <table>
+                <tr><th>Type</th><td>{$file->getMime()|escape}</td></tr>
+                <tr><th>Size</th><td>{$file->getHumanSize()}</td></tr>
+            </table>
+        </div>
     </div>
+    
 
     <div class="control-group">
 		<div class="controls">

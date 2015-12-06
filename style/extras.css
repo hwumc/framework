@@ -17,3 +17,7 @@ div.filterbar form.form-inline label.checkbox {
 ul.thumbnails li div.thumbnail div.btn-group {
     margin-top: 4px;
 }
+
+div.mce-container {
+    margin-bottom: 10px;
+}
