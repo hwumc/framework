@@ -11,6 +11,7 @@ class ArgumentException extends Exception{}
 class SaveFailedException extends Exception{}
 
 class LoginFailedException extends Exception{}
+class UploadFailedException extends Exception{}
 
 class CreateUserException extends Exception{}
 
@@ -38,4 +39,13 @@ class GroupChangeNotAllowedException extends Exception
     {
         $this->message = $message ;
     }
+}
+
+class ErrorLogEntry extends Exception{}
+
+function gErrorLog($message) {
+    global $cFilePath;
+    file_put_contents( 
+        $cFilePath . "/errorlog/" . microtime(true) . "_" . session_id(), 
+        serialize( new ErrorLogEntry($message) ) );
 }

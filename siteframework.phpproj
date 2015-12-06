@@ -34,6 +34,7 @@
     <Compile Include="include\AnonymousUser.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="include\DataObjects\File.php" />
     <Compile Include="include\DefaultMainPageContentProvider.php">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +50,7 @@
     <Compile Include="include\Extension.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="include\Page\PageFileManager.php" />
     <Compile Include="include\Page\PageManageMenuGroups.php">
       <SubType>Code</SubType>
     </Compile>
@@ -239,6 +241,7 @@
     <Compile Include="templates\users\useredit.tpl" />
     <Compile Include="templates\users\userlist.tpl" />
     <Compile Include="templates\webmaster\git.tpl" />
+    <Compile Include="usercontent\content.php" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="documentation" />
@@ -246,6 +249,9 @@
     <Folder Include="img" />
     <Folder Include="include" />
     <Folder Include="errorlog" />
+    <Folder Include="usercontent\" />
+    <Folder Include="templates\files\" />
+    <Folder Include="upload\" />
     <Folder Include="scripts" />
     <Folder Include="smarty" />
     <Folder Include="style" />
@@ -274,7 +280,17 @@
     <Content Include="extensions\README.txt">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="img\file-misc.png" />
+    <Content Include="style\bootstrap-datetimepicker.min.css" />
+    <Content Include="style\bootstrap-responsive.css" />
+    <Content Include="style\bootstrap-responsive.min.css" />
+    <Content Include="style\datepicker.css" />
+    <Content Include="style\editor-override.css" />
     <Content Include="style\extras.css" />
+    <Content Include="templates\editorinit.tpl" />
+    <Content Include="templates\files\delete.tpl" />
+    <Content Include="templates\files\list.tpl" />
+    <Content Include="templates\files\upload.tpl" />
     <Content Include="templates\profile\loginchpw.tpl" />
     <Content Include="templates\sessionerrors.tpl">
       <SubType>Content</SubType>
@@ -302,5 +318,6 @@
     <Content Include="templates\webmaster\sudo.tpl">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="upload\.gitignore" />
   </ItemGroup>
 </Project>

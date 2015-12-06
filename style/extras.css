@@ -13,3 +13,7 @@ div.filterbar form.form-inline button.btn {
 div.filterbar form.form-inline label.checkbox {
     margin-left: 0.3em;
 }
+
+ul.thumbnails li div.thumbnail div.btn-group {
+    margin-top: 4px;
+}

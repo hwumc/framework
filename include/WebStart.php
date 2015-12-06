@@ -102,10 +102,10 @@ HTML;
 
     private function setupAutoloader()
     {
-        global $cIncludePath;
+        global $cIncludePath, $cFilePath;
 
         // not caught by the autoloader :(
-        require_once('smarty/Smarty.class.php');
+        require_once($cFilePath . '/smarty/Smarty.class.php');
 
         // many exceptions defined in one file, let's not clutter stuff.
         // This ofc breaks the autoloading, so let's include them all now.
@@ -212,7 +212,7 @@ HTML;
      * Assume nothing is running yet.
      * @return
      */
-    private function setupEnvironment()
+    public function setupEnvironment()
     {
         set_exception_handler(array("WebStart","exceptionHandler"));
 

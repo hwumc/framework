@@ -6,8 +6,8 @@ if(!defined("HMS")) die("Invalid entry point");
 
 ini_set('display_errors',1);
 
-$cIncludePath = "include";
 $cFilePath = __DIR__;
+$cIncludePath = $cFilePath . "/include";
 $cScriptPath = $_SERVER['SCRIPT_NAME'];
 
 $pparts = pathinfo($_SERVER["SCRIPT_NAME"]);
@@ -18,8 +18,8 @@ $cWebPath = str_replace("//","/",$cWebPath);
 // database details
 $cDatabaseConnectionString = 'mysql:host=dbmaster.srv.stwalkerster.net;dbname=hwumc_new_devel';
 $cDatabaseModule = "pdo_mysql";
-$cMyDotCnfFile = ".my.cnf";
-$cMyDotRoDotCnfFile = ".my.ro.cnf";
+$cMyDotCnfFile = $cFilePath . "/.my.cnf";
+$cMyDotRoDotCnfFile = $cFilePath . "/.my.ro.cnf";
 
 $cLoggerName="FakeLogger";
 
@@ -55,6 +55,7 @@ $cRequiredPhpExtensions = array(
     "pcre",
     "session",
     "date",
+    "fileinfo"
     );
     
 // use Tidy to make pretty HTML.
@@ -79,11 +80,38 @@ $cDisplayDateFormat = "d/m/Y";
 $cDisplayDateTimeFormat = "d/m/Y H:i T";
 $cDisplayDateTimeFormatNoTz = "d/m/Y H:i";
 
+// Allowed file upload types. Use PHP MIME types here, and remember there could 
+// be several variations dependant on browser config. Failures against this list
+// are logged in the error log so the list can be adjusted later.
+// PLEASE be aware of the security implications of this - certain files (.js, .php, .html, etc)
+// are inherently dangerous and should NEVER be allowed. Other files (.svg, .png) can 
+// have embedded code which could be unwittingly executed.
+//
+// Basically, every uploaded file is a security risk. Think long and hard before granting
+// access to file uploads.
+$cAllowedUploadTypes = array(
+    "image/png" => "image",
+    "image/jpeg" => "image",
+    "image/bmp" => "image",
+
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" => "misc",
+    "application/msword" => "misc",
+    "application/pdf" => "misc",
+    "application/excel" => "misc",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => "misc",
+    );
+
+// This is the fully-qualified path to the usercontent script
+$cContentScriptWebPath = "/usercontent/content.php";
+
+// this is the on-disk path to wherever the uploads are stored
+$cContentFilePath = $cFilePath . "/upload";
+
 ///////////////// don't put new config options below this line
 
-if(file_exists("config.local.php"))
+if(file_exists($cFilePath . "/config.local.php"))
 {
-    require_once("config.local.php");
+    require_once($cFilePath . "/config.local.php");
 }
 
 // Load the main webstart file
