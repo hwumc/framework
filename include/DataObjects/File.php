@@ -178,6 +178,15 @@ class File extends DataObject
         parent::delete();
     }
 
+    /**
+     * Splat this due to side effects - canDelete executes a *real* delete followed
+     * by a rollback, which works perfectly fine for databases. Not so much for filesystems
+     * @return bool
+     */
+    public function canDelete() {
+        return true;
+    }
+
     public function isImage() {
         global $cAllowedUploadTypes;
 

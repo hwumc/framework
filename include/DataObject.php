@@ -89,9 +89,13 @@ abstract class DataObject
         {
             $success = false;
 
+            // operate on another copy of this object, because delete()
+            // can have side effects.
+            $tmp = self::getById($this->id);
+
             try
             {
-                $this->delete();
+                $tmp->delete();
                 $success = true;
             }
             catch (PDOException $ex)
