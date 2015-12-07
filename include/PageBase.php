@@ -40,7 +40,7 @@ abstract class PageBase
     protected $mPersonalNav = array();
 
     // nav bar submenus
-    protected $mNavBarItems = array();
+    protected $mNavBarSecondaryItems = array();
 
     // is this redirecting (hence don't clear session-based stuff like errors)
     protected $mIsRedirecting = false;
@@ -125,7 +125,7 @@ abstract class PageBase
             ),
         );
 
-        $this->mNavBarItems = array(
+        $this->mNavBarSecondaryItems = array(
             /* Format:
              "dropdowntitle" => array(
                  "sectiontitle" => array(
@@ -186,9 +186,9 @@ abstract class PageBase
         $this->mPersonalNav = Hooks::run( "PreCreatePersonalMenu", array($this->mPersonalNav) );
         $gLogger->log("   new pmenu: " . print_r($this->mPersonalNav,true));
 
-        $gLogger->log("   old nmenu: " . print_r($this->mNavBarItems,true));
-        $this->mNavBarItems = Hooks::run( "PreCreateNavBarMenu", array($this->mNavBarItems) );
-        $gLogger->log("   new nmenu: " . print_r($this->mNavBarItems,true));
+        $gLogger->log("   old nmenu: " . print_r($this->mNavBarSecondaryItems,true));
+        $this->mNavBarSecondaryItems = Hooks::run( "PreCreateNavBarSecondaryMenu", array($this->mNavBarSecondaryItems) );
+        $gLogger->log("   new nmenu: " . print_r($this->mNavBarSecondaryItems,true));
 
         // setup the current page on the menu, but only if the current page
         // exists on the main menu in the first place
@@ -208,7 +208,7 @@ abstract class PageBase
 
         $this->mSmarty->assign("mainmenu", $this->mMainMenu);
         $this->mSmarty->assign("personalmenu", $this->mPersonalNav);
-        $this->mSmarty->assign("navbaritems", $this->mNavBarItems);
+        $this->mSmarty->assign("navbarsecondaryitems", $this->mNavBarSecondaryItems);
 
         global $cWebPath, $cScriptPath;
         $this->mSmarty->assign("cWebPath", $cWebPath);
