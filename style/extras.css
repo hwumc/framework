@@ -18,6 +18,19 @@ ul.thumbnails li div.thumbnail div.btn-group {
     margin-top: 4px;
 }
 
+/* Padding at the bottom of the tinymce editor */
 div.mce-tinymce {
     margin-bottom: 10px;
+}
+
+/* Undo that label formatting when it's embedded in a h4 */
+label.fileheader {
+    font-size: 17.5px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 10px 0;
+}
+
+label.fileheader input[type=checkbox] {
+    vertical-align: top;
 }

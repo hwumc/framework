@@ -35,6 +35,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="include\DataObjects\File.php" />
+    <Compile Include="include\DataObjects\ImageGroup.php" />
+    <Compile Include="include\DataObjects\ImageGroupFile.php" />
     <Compile Include="include\DefaultMainPageContentProvider.php">
       <SubType>Code</SubType>
     </Compile>
@@ -57,6 +59,7 @@
     <Compile Include="include\Page\PageManageDynamicRights.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="include\Page\PageManageImageGroups.php" />
     <Compile Include="index.php" />
     <Compile Include="documentation\.gitignore" />
     <Compile Include="documentation\Doxyfile" />
@@ -249,6 +252,7 @@
     <Folder Include="img" />
     <Folder Include="include" />
     <Folder Include="errorlog" />
+    <Folder Include="templates\imagegroup\" />
     <Folder Include="usercontent\" />
     <Folder Include="templates\files\" />
     <Folder Include="upload\" />
@@ -289,9 +293,13 @@
     <Content Include="style\extras.css" />
     <Content Include="style\mainpage.css" />
     <Content Include="templates\editorinit.tpl" />
+    <Content Include="templates\filegrid.tpl" />
     <Content Include="templates\files\delete.tpl" />
     <Content Include="templates\files\list.tpl" />
     <Content Include="templates\files\upload.tpl" />
+    <Content Include="templates\imagegroup\create.tpl" />
+    <Content Include="templates\imagegroup\delete.tpl" />
+    <Content Include="templates\imagegroup\list.tpl" />
     <Content Include="templates\mainsidebar.tpl" />
     <Content Include="templates\navigation.tpl" />
     <Content Include="templates\profile\loginchpw.tpl" />
