@@ -8,7 +8,7 @@
         <div class="control-group">
             <label class="control-label" for="name">{message name="{$pageslug}-create-name"}</label>
             <div class="controls">
-                <input class="input-xxlarge" type="text" id="name" name="name" placeholder="{message name=" {$pageslug}-create-name-placeholder"}" required="true" value="{$name}" {if $allowEdit=="false" }disabled="true" {/if}/>
+                <input class="input-xxlarge" type="text" id="name" name="name" placeholder="{message name="{$pageslug}-create-name-placeholder"}" required="true" value="{$name}" {if $allowEdit=="false" }disabled="true" {/if}/>
                 <span class="help-inline">{message name="{$pageslug}-create-name-help"}</span>
             </div>
         </div>
