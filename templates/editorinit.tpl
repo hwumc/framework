@@ -1,4 +1,4 @@
-﻿<script src="{$cWebPath}/scripts/tinymce/tinymce.min.js"></script>
+<script src="{$cWebPath}/scripts/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
 	tinymce.init({
 		selector: "textarea",
