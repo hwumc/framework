@@ -324,14 +324,22 @@ abstract class PageBase
 
         $pathinfo = explode('/', WebRequest::pathInfo());
         $pathinfo = array_values(array_filter($pathinfo));
-        if(
-            count($pathinfo) >= 1 &&
-            $pathinfo[0] != "" &&  // not empty
-            (! preg_match( "/[^a-zA-Z0-9]/", $pathinfo[0] ) ) // contains only alphanumeric chars
-            )
-        {  //if
-            $page = $pathinfo[0];
-        } // fi
+        if( count($pathinfo) >= 1 && $pathinfo[0] != "" ) {
+            // PathInfo set.
+
+            // sanity check
+            if( ! preg_match( "/[^a-zA-Z0-9]/", $pathinfo[0] ) ) {
+                // Page is sane.
+                $page = $pathinfo[0];
+            }
+            else {
+                // Nope. not a sane filename. Fall back to extension content.
+                $extensionContent = self::getExtensionContent( $pathinfo[0] );
+                if( $extensionContent !== null ) {
+                    return $extensionContent;
+                }
+            }
+        }
 
         // okay, the page title should be reasonably safe now, let's try and make the page
 
@@ -342,12 +350,12 @@ abstract class PageBase
         $filepath = self::findPageFile($pagename);
 
 
-        if($filepath !== false)
-        { // found it.
+        if($filepath !== false) { 
+            // found it.
             require_once($filepath);
         }
-        else
-        {    // oops, couldn't find the requested page, let's fail gracefully.
+        else {    
+            // oops, couldn't find the requested page, let's fail gracefully.
             $extensionContent = self::getExtensionContent( $page );
             if( $extensionContent !== null ) {
                 return $extensionContent;
