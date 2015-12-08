@@ -147,6 +147,10 @@ class File extends DataObject
         return $cContentScriptWebPath . '/' . $this->getChecksum();
     }
 
+    public function getThumbPath() {
+        return $this->getDownloadPath();
+    }
+
     public static function humanSize($size) {
         $suffix = "B";
         

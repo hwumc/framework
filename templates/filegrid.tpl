@@ -15,7 +15,7 @@
             {if $includebuttons == "true"}
             <div class="btn-group pull-right">
                 <a href="{$cScriptPath}/{$pageslug}/delete/{$file->getId()}" class="btn btn-danger btn-small"><i class="icon-white icon-trash"></i></a>
-                <a href="{$file->getDownloadPath()}" class="btn btn-primary btn-small"><i class="icon-white icon-download"></i></a>
+                <a href="{$file->getThumbPath()}" class="btn btn-primary btn-small"><i class="icon-white icon-download"></i></a>
             </div>
             {/if}
             {if $includecheck == "true"}
