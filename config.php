@@ -89,10 +89,11 @@ $cDisplayDateTimeFormatNoTz = "d/m/Y H:i";
 //
 // Basically, every uploaded file is a security risk. Think long and hard before granting
 // access to file uploads.
+// 
+// Don't mark anything other than JPG and PNG as images or thumbnails will fail to generate
 $cAllowedUploadTypes = array(
     "image/png" => "image",
     "image/jpeg" => "image",
-    "image/bmp" => "image",
 
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document" => "misc",
     "application/msword" => "misc",

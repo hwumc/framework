@@ -148,6 +148,15 @@ class File extends DataObject
     }
 
     public function getThumbPath() {
+        $status = true;
+        if(!file_exists($this->getFilePath() . "_thumb_300")) {
+            $status = $this->createThumbnail();
+        }
+
+        if($status) {
+            return $this->getDownloadPath() . "/thumb";
+        }
+
         return $this->getDownloadPath();
     }
 
@@ -195,6 +204,55 @@ class File extends DataObject
         global $cAllowedUploadTypes;
 
         return $cAllowedUploadTypes[$this->mime] === "image";
+    }
+
+    private function createThumbnail() {
+        $imageResource = null;
+        $size = 300;
+
+        if($this->getMime() == "image/png") {
+            $imageResource = imagecreatefrompng($this->getFilePath());
+        }
+        else if ($this->getMime() == "image/jpeg") {
+            $imageResource = imagecreatefromjpeg($this->getFilePath());
+        }
+        else {
+            return false;
+        }
+
+        $oldX = imageSX($imageResource);
+        $oldY = imageSY($imageResource);
+
+        if ($oldX > $oldY) {
+            $thumbX = $size;
+            $thumbY = $oldY * ( $size / $oldX );
+        }
+
+        if ($oldX < $oldY) {
+            $thumbX = $oldX * ( $size / $oldY );
+            $thumbY = $size;
+        }
+
+        if ($oldX == $oldY) {
+            $thumbX = $size;
+            $thumbY = $size;
+        }
+
+        $thumbnail = imagecreatetruecolor($thumbX, $thumbY);
+
+        imagecopyresampled($thumbnail, $imageResource, 0, 0, 0, 0, $thumbX, $thumbY, $oldX, $oldY);
+
+        if($this->getMime() == "image/png") {
+            imagepng($thumbnail, $this->getFilePath() . "_thumb_" . $size);
+        }
+        else if ($this->getMime() == "image/jpeg") {
+            imagejpeg($thumbnail, $this->getFilePath() . "_thumb_" . $size);
+        }
+
+        imagedestroy($thumbnail);
+        imagedestroy($imageResource);
+
+        return true;
     }
 
 }

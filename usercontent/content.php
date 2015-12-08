@@ -12,26 +12,51 @@ require_once('../config.php');
 $application = new WebStart();
 $application->setupEnvironment();
 
-$file = File::getByChecksum(substr(WebRequest::pathInfo(), 1));
+$pathInfo = WebRequest::pathInfo();
+$pathInfo = substr($pathInfo, 1);
+$parts = explode("/", $pathInfo);
+
+$file = File::getByChecksum($parts[0]);
 
 if($file === false) {
     header("HTTP/1.1 404 Not Found");
     return;
 }
 
-$skipFile = false;
+function sendFile($diskPath, $hash, $mime) {
+    $skipFile = false;
 
-if("\"" . $file->getChecksum() . "\"" == $_SERVER['HTTP_IF_NONE_MATCH'])
-{
-    header("HTTP/1.1 304 Not Modified");
-    $skipFile = true;
+    if("\"" . $hash . "\"" == $_SERVER['HTTP_IF_NONE_MATCH'])
+    {
+        header("HTTP/1.1 304 Not Modified");
+        $skipFile = true;
+    }
+
+    header("ETag: \"{$hash}\"");
+    header("Cache-Control: max-age=31536000");
+    header("Content-Type: " . $mime);
+    header("Content-Disposition: attachment");
+
+    if(!$skipFile) {
+        readfile($diskPath);
+    }
 }
 
-header("ETag: \"{$file->getChecksum()}\"");
-header("Cache-Control: max-age=31536000");
-header("Content-Type: " . $file->getMime());
-header("Content-Disposition: attachment");
+if(isset($parts[1])){
+    // Special.
+    if($parts[1] == "thumb") {
+        $filepath = $file->getFilePath() . "_thumb_300";
+        $hash = hash_file( "sha256", $filepath );
 
-if(!$skipFile) {
-    readfile($file->getFilePath());
+        sendFile($filepath, $hash, $file->getMime());
+    }
+    else{
+        // idk.
+        header("HTTP/1.1 404 Not Found");
+        return;
+    }
+}
+else {
+    // normal file.
+    sendFile($file->getFilePath(), $file->getChecksum(), $file->getMime());
 }
