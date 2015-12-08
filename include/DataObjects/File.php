@@ -187,6 +187,10 @@ class File extends DataObject
 
     public function delete()
     {
+        if(file_exists($this->getFilePath() . "_thumb_300")) {
+            unlink($this->getFilePath() . "_thumb_300");
+        }
+
         unlink($this->getFilePath());
         parent::delete();
     }
