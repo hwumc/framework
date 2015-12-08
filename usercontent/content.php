@@ -15,12 +15,23 @@ $application->setupEnvironment();
 $file = File::getByChecksum(substr(WebRequest::pathInfo(), 1));
 
 if($file === false) {
+    header("HTTP/1.1 404 Not Found");
     return;
 }
 
+$skipFile = false;
+
+if("\"" . $file->getChecksum() . "\"" == $_SERVER['HTTP_IF_NONE_MATCH'])
+{
+    header("HTTP/1.1 304 Not Modified");
+    $skipFile = true;
+}
+
+header("ETag: \"{$file->getChecksum()}\"");
+header("Cache-Control: max-age=31536000");
 header("Content-Type: " . $file->getMime());
 header("Content-Disposition: attachment");
 
-readfile($file->getFilePath());
-
-?>
+if(!$skipFile) {
+    readfile($file->getFilePath());
+}
