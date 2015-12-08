@@ -157,20 +157,34 @@ class User extends DataObject
     public function authenticate($password)
     {
         global $gLogger;
-        $encpass = self::encryptPassword($this->username, $password);
-        $gLogger->log("User::authenticate: Comparing {$this->password} to {$encpass}");
-        return ( $this->password == $encpass);
-    }
+        global $gPasswordOptions;
+     
+        if (substr($this->password, 0, 1) != "$") {
+            // Legacy password
+            $calculated = md5(md5($this->username . md5($password)));
+            if($calculated == $this->password) {
+                // Password match, silently upgrade storage
 
-    // let's not make a decrypt method.... we don't need it.
-    protected static function encryptPassword($username, $password)
-    {
-        // simple encryption. MD5 is very easy to compute, and very hard to reverse.
-        // As it's easy to compute, people make tables of possible values to decrypt
-        // it (see: Rainbow Tables). We completely nerf that by adding a known
-        // changable factor to the hash, known as a salt. This makes rainbow
-        // tables practically useless against this set of passwords.
-        return md5(md5($username . md5($password)));
+                $this->password = password_hash($password, PASSWORD_DEFAULT, $gPasswordOptions);
+                $this->save();
+
+                return true;
+            }
+            
+			return false;
+		}
+
+        if (password_verify($password, $this->password)) {
+            if(password_needs_rehash($this->password, PASSWORD_DEFAULT, $gPasswordOptions))
+            {
+                $this->password = password_hash($password, PASSWORD_DEFAULT, $gPasswordOptions);
+                $this->save();
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public function save()
@@ -245,7 +259,8 @@ class User extends DataObject
 
     public function setPassword($password)
     {
-        $this->password = self::encryptPassword($this->username, $password);
+        global $gPasswordOptions;
+        $this->password = password_hash($password, PASSWORD_DEFAULT, $gPasswordOptions);
     }
 
     public function setUsername($username)

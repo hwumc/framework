@@ -113,6 +113,11 @@ $cCmsTemplates = array(
     "newmainpage.tpl" => "Main Page banner",
     );
 
+// Password encryption options. You shouldn't need to touch this.
+// Bump the cost by 1 if you're paranoid or it's 2018 already, but 10 is
+// a good baseline for 2016
+$gPasswordOptions = array( 'cost' => 10 );
+
 ///////////////// don't put new config options below this line
 
 if(file_exists($cFilePath . "/config.local.php"))
