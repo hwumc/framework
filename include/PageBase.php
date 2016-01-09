@@ -80,6 +80,12 @@ abstract class PageBase
     {
         global $cScriptPath;
 
+		$mainGroup = MenuGroup::getBySlug("main");
+
+		if($mainGroup->objectIsNew()){
+			$mainGroup->setIsSecondary(0);
+		}
+
         $this->mMainMenu = array(
             /* Format:
                 "Class name" => array(
@@ -97,7 +103,9 @@ abstract class PageBase
                         "link" => "/"
                     )
                 ),
-                "displayname" => MenuGroup::getBySlug("main")->getDisplayName()
+                "displayname" => $mainGroup->getDisplayName(),
+                "issecondary" => $mainGroup->getIsSecondary(),
+				"priority" => 1
             )
         );
 
@@ -200,10 +208,32 @@ abstract class PageBase
         // remove empty menu groups
         $newMenu = array();
         foreach ($this->mMainMenu as $k => $menuGroup) {
-            if( count( $menuGroup['items'] ) > 0 ) {
+            if( !isset( $menuGroup['items'] ) || count( $menuGroup['items'] ) > 0 ) {
                 $newMenu[$k] = $menuGroup;
             }
         }
+
+		// Sort the menu based on issecondary and priority flags
+		uasort($newMenu, function($a, $b) {
+			if( $a['issecondary'] == 0 && $b['issecondary'] == 1) {
+				return -1;
+			}
+
+			if( $a['issecondary'] == 1 && $b['issecondary'] == 0) {
+				return 1;
+			}
+
+			if( $a['priority'] > $b['priority'] ) {
+				return 1;
+			}
+
+			if( $a['priority'] < $b['priority'] ) {
+				return -1;
+			}
+
+			return 0;
+		});
+
         $this->mMainMenu = $newMenu;
 
         $this->mSmarty->assign("mainmenu", $this->mMainMenu);

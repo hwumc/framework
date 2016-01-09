@@ -21,7 +21,7 @@
             {/if}
             {else}
             <li>
-                <a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active" {/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</a>
+                <a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active" {/if}>{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</a>
                 {/if}
             </li>
             {/foreach}

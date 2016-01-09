@@ -461,14 +461,18 @@ class User extends DataObject
                         $menu[ strtolower($group) ] = array(
                             "items" => array(),
                             "title" => strtolower($group),
-                            "displayname" => Message::getMessage( $groupkey )
+                            "displayname" => Message::getMessage( $groupkey ),
+							"issecondary" => 1,
+							"priority" => 999,
                         );
                     }
                     else {
                         $menu[ strtolower($group) ] = array(
                             "items" => array(),
                             "title" => strtolower($menugroup->getSlug()),
-                            "displayname" => $menugroup->getDisplayName()
+                            "displayname" => $menugroup->getDisplayName(),
+                            "issecondary" => $menugroup->getIsSecondary(),
+                            "priority" => $menugroup->getPriority()
                         );
                     }
                 }

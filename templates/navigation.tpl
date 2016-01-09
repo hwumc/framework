@@ -11,6 +11,7 @@
                     {/foreach}
                     <li class="divider"></li>
                 {/foreach}
+				{block name="personalnav"}{/block}
                 <li><a href="{$cScriptPath}/Logout"><i class="icon-off"></i> {message name="logout"} {$currentUser->getUsername()|escape}</a></li>
             </ul>
         </li>
@@ -23,6 +24,7 @@
             <li><a href="{$cScriptPath}/Login" class="navbar-link">{message name="login"}</a></li>
         </ul>
     {/if}
+	{block name="navbarsecondaryitems"}
     {foreach from=$navbarsecondaryitems item="menu" key="menuheader"}
         <ul class="nav pull-right">
             <li class="dropdown">
@@ -41,5 +43,6 @@
             </li>
         </ul>
     {/foreach}
+	{/block}
     {block name="primarynavbar"}{/block}
 </div><!--/.nav-collapse -->

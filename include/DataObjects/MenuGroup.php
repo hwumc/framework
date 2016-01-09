@@ -6,6 +6,8 @@ class MenuGroup extends DataObject
 {
     protected $slug;
     protected $displayname;
+	protected $issecondary;
+	protected $priority;
 
     public static function getBySlug( $slug ) {
         global $gDatabase;
@@ -25,6 +27,8 @@ class MenuGroup extends DataObject
             $resultObject = new MenuGroup();
             $resultObject->setSlug( $slug );
             $resultObject->isNew = true;
+            $resultObject->setIsSecondary(1);
+            $resultObject->setPriority(10);
         }
 
         return $resultObject;
@@ -42,6 +46,28 @@ class MenuGroup extends DataObject
 
         $this->slug = $slug;
     }
+
+	/**
+	 * @return int
+	 */
+	public function getIsSecondary() {
+		return $this->issecondary;
+	}
+
+	/**
+	 * @param int $isSecondary 
+	 */
+	public function setIsSecondary($isSecondary) {
+		$this->issecondary = $isSecondary;
+	}
+
+	public function getPriority() {
+		return $this->priority;
+	}
+
+	public function setPriority($priority) {
+		$this->priority = $priority;
+	}
 
     public function getDisplayName(){
         if($this->displayname == null)
@@ -62,9 +88,11 @@ class MenuGroup extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO menugroup (slug, displayname) VALUES (:slug, :displayname);");
+            $statement = $gDatabase->prepare("INSERT INTO menugroup (slug, displayname, issecondary, priority) VALUES (:slug, :displayname, :issecondary, :priority);");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":displayname", $this->displayname);
+            $statement->bindParam(":issecondary", $this->issecondary);
+            $statement->bindParam(":priority", $this->priority);
 
             if($statement->execute())
             {
@@ -78,10 +106,12 @@ class MenuGroup extends DataObject
         }
         else
         { // update
-            $statement = $gDatabase->prepare("UPDATE `menugroup` SET slug = :slug, displayname = :displayname WHERE id = :id LIMIT 1;");
+            $statement = $gDatabase->prepare("UPDATE `menugroup` SET slug = :slug, displayname = :displayname, issecondary = :issecondary, priority = :priority WHERE id = :id LIMIT 1;");
             $statement->bindParam(":id", $this->id);
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":displayname", $this->displayname);
+            $statement->bindParam(":issecondary", $this->issecondary);
+            $statement->bindParam(":priority", $this->priority);
 
             if(!$statement->execute())
             {
@@ -108,7 +138,9 @@ class MenuGroup extends DataObject
                 $menu[ strtolower($group->getSlug()) ] = array(
                     "items" => array(),
                     "title" => strtolower($group->getSlug()),
-                    "displayname" => $group->getDisplayName()
+                    "displayname" => $group->getDisplayName(),
+					"issecondary" => $group->getIsSecondary(),
+					"priority" => $group->getPriority()
                 );
             }
         }

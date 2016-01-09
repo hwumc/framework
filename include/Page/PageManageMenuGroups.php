@@ -61,6 +61,10 @@ class PageManageMenuGroups extends PageBase
         } catch(AccessDeniedException $ex) {
             $allowEdit = "false";
         }
+
+		/**
+		 * @var $g MenuGroup
+		 */
         $g = MenuGroup::getById( $data[ 1 ] );
 
         $this->mSmarty->assign("allowEdit", $allowEdit);
@@ -69,7 +73,7 @@ class PageManageMenuGroups extends PageBase
             if( ! $allowEdit ) throw new AccessDeniedException();
 
             $exists = MenuGroup::getBySlug( WebRequest::post( "slug" ) );
-            if( $exists != null && $exists->getId() != $g->getId() )
+            if( $exists != null && $exists->getId() != $g->getId() && $exists->objectIsNew() === false )
             {
                 $this->triggerError("slugexists");
                 return;
@@ -77,6 +81,8 @@ class PageManageMenuGroups extends PageBase
 
             $g->setSlug( WebRequest::post( "slug" ) );
             $g->setDisplayName( WebRequest::post( "displayname" ) );
+            $g->setPriority( WebRequest::post( "priority" ) );
+            $g->setIsSecondary( WebRequest::post( "issecondary" ) == 'on' ? 1 : 0 );
             $g->save();
 
             global $cScriptPath;
@@ -86,6 +92,8 @@ class PageManageMenuGroups extends PageBase
             $this->mBasePage = "menugroup/create.tpl";
             $this->mSmarty->assign( "slug", $g->getSlug() );
             $this->mSmarty->assign( "displayname", $g->getDisplayName() );
+            $this->mSmarty->assign( "priority", $g->getPriority() );
+            $this->mSmarty->assign( "issecondary", $g->getIsSecondary() == 1 ? 'checked="checked"' : '');
         }
     }
 
@@ -125,6 +133,8 @@ class PageManageMenuGroups extends PageBase
             $g = new MenuGroup();
             $g->setSlug( WebRequest::post( "slug" ) );
             $g->setDisplayName( WebRequest::post( "displayname" ) );
+            $g->setPriority( WebRequest::post( "priority" ) );
+			$g->setIsSecondary( WebRequest::post( "issecondary" ) == 'on' ? 1 : 0 );
             $g->save();
 
             global $cScriptPath;
@@ -135,6 +145,8 @@ class PageManageMenuGroups extends PageBase
             $this->mBasePage = "menugroup/create.tpl";
             $this->mSmarty->assign( "slug", "" );
             $this->mSmarty->assign( "displayname", "" );
+            $this->mSmarty->assign( "issecondary", "" );
+            $this->mSmarty->assign( "priority", 10 );
         }
     }
 
