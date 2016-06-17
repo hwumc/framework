@@ -73,7 +73,7 @@ foreach ($fileList as $uploadedPath) {
         }
     }
 
-    rename($importPath . $uploadedPath, $f->getFilePath());
+    copy($importPath . $uploadedPath, $f->getFilePath());
 
     // Save the file.
     $f->save();
