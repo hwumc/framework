@@ -34,3 +34,13 @@ label.fileheader {
 label.fileheader input[type=checkbox] {
     vertical-align: top;
 }
+
+li#registerbutton {
+    background: linear-gradient(to top,#222,#666);
+}
+li#registerbutton:hover {
+    background: linear-gradient(to top,#444,#666);
+}
+li#registerbutton a {
+    color: white;
+}

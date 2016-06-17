@@ -20,7 +20,7 @@
 <div class="nav-collapse collapse">
     {if $loggedin eq ""}
         <ul class="nav pull-right">
-            <li><a href="{$cScriptPath}/Register" class="navbar-link">{message name="register"}</a></li>
+            <li id="registerbutton"><a href="{$cScriptPath}/Register" class="navbar-link">{message name="register"}</a></li>
             <li><a href="{$cScriptPath}/Login" class="navbar-link">{message name="login"}</a></li>
         </ul>
     {/if}
