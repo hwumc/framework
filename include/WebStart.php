@@ -100,7 +100,7 @@ HTML;
         }
     }
 
-    private function setupAutoloader()
+    public function setupAutoloader()
     {
         global $cIncludePath, $cFilePath;
 
@@ -116,7 +116,7 @@ HTML;
         spl_autoload_register("WebStart::autoLoader");
     }
 
-    private function setupDatabase()
+    public function setupDatabase()
     {
         global $gDatabase, $gReadOnlyDatabase, $cDatabaseConnectionString, $cMyDotCnfFile, $cMyDotRoDotCnfFile,
             $cDatabaseModule;
@@ -167,14 +167,14 @@ HTML;
         Hooks::run("PostSetupDatabase", array( $gReadOnlyDatabase ) );
     }
 
-    private function initialiseLogger()
+    public function initialiseLogger()
     {
         global $cLoggerName, $gLogger;
         $gLogger = new $cLoggerName;
         $gLogger->log("Initialising logger for path " . $_SERVER["REQUEST_URI"]);
     }
 
-    private function loadExtensions()
+    public function loadExtensions()
     {
         global $cExtensions, $gLogger, $gLoadedExtensions;
 
