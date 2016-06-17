@@ -81,6 +81,7 @@ class User extends DataObject
         return $user;
     }
 
+    /** @return User */
     public static function getByName($name)
     {
         global $gLogger;

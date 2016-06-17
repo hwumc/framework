@@ -75,7 +75,7 @@ class PageLogin extends PageBase
 
         Session::appendError( "login-" . $error );
         $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/Login";
-        
+
         return;
     }
 
@@ -87,7 +87,7 @@ class PageLogin extends PageBase
         $this->mHeaders[] = "HTTP/1.1 303 See Other";
         $this->mIsRedirecting = true;
 
-       
+
         if($user->getProfileReview() == 1)
         {
             $user->setProfileReview(0);
@@ -99,14 +99,18 @@ class PageLogin extends PageBase
             $user->save();
             $this->mHeaders[] = "Location: " . $cWebPath . "/index.php/ChangePassword?forced=yes";
         }
+        else if(WebRequest::pathInfo() !== "/Login")
+        {
+            $this->mHeaders[] = "Location: " . WebRequest::getRequestUri();
+        }
         else
         {
             $this->mHeaders[] = "Location: " . $cWebPath . "/index.php" . WebRequest::get("returnto");
         }
-            
+
         return;
     }
-    
+
     // this is a hook function
     // a global hook
     // don't break it.
