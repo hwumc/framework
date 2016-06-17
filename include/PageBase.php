@@ -22,6 +22,7 @@ abstract class PageBase
     // array of extra (per-page) CSS stylesheets to add
     protected $mStyles = array();
 
+    /** @var Smarty */
     protected $mSmarty;
 
     // message containing the title of the page

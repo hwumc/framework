@@ -29,6 +29,7 @@
             <table>
                 <tr><th>Type</th><td><tt>{$file->getMime()|escape}</tt></td></tr>
                 <tr><th>Size</th><td>{$file->getHumanSize()}</td></tr>
+                <tr><td colspan="2">{$file->getCopyright()|escape}</td></tr>
             </table>
             {/if}
         </div>

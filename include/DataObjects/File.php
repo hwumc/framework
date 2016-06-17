@@ -14,6 +14,7 @@ class File extends DataObject
     protected $size;
     protected $checksum;
     protected $mime;
+    protected $copyright;
 
     /**
      * Summary of getByChecksum
@@ -86,15 +87,17 @@ class File extends DataObject
 
     public function save()
     {
+        /** @var $gDatabase Database */
         global $gDatabase;
 
         if($this->isNew)
         {   // insert
-            $statement = $gDatabase->prepare("INSERT INTO `file` (name, size, checksum, mime) VALUES (:name, :size, :checksum, :mime);");
+            $statement = $gDatabase->prepare("INSERT INTO `file` (name, size, checksum, mime, copyright) VALUES (:name, :size, :checksum, :mime, :copyright);");
             $statement->bindParam(":name", $this->name);
             $statement->bindParam(":size", $this->size);
             $statement->bindParam(":checksum", $this->checksum);
             $statement->bindParam(":mime", $this->mime);
+            $statement->bindParam(":copyright", $this->copyright);
 
             if($statement->execute())
             {
@@ -257,6 +260,22 @@ class File extends DataObject
         imagedestroy($imageResource);
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCopyright()
+    {
+        return $this->copyright;
+    }
+
+    /**
+     * @param string $copyright
+     */
+    public function setCopyright($copyright)
+    {
+        $this->copyright = $copyright;
     }
 
 }
