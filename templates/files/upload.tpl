@@ -38,7 +38,7 @@
             <div class="controls">
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary">{message name="upload"}</button>
-                    <a href="{$cScriptPath}/ManageGroups" class="btn">{message name="getmeoutofhere"}</a>
+                    <a href="{$cScriptPath}/FileManager" class="btn">{message name="getmeoutofhere"}</a>
                 </div>
             </div>
         </div>
