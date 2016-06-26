@@ -104,6 +104,8 @@ $cAllowedUploadTypes = array(
 
 // This is the fully-qualified path to the usercontent script
 $cContentScriptWebPath = "/usercontent/content.php";
+// This is the fully-qualified path to the main application, only used in conjunction with the content script web path.
+$cApplicationRootPath = "/";
 
 // this is the on-disk path to wherever the uploads are stored
 $cContentFilePath = $cFilePath . "/upload";
