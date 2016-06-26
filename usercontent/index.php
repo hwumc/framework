@@ -8,4 +8,4 @@ define("HMS",1);
 // include the configuration file, which should set up the entire environment as we need it.
 require_once('../config.php');
 
-header('Location: $cApplicationRootPath');
+header('Location: ' . $cApplicationRootPath);
