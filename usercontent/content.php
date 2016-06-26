@@ -12,6 +12,30 @@ require_once('../config.php');
 $application = new WebStart();
 $application->setupEnvironment();
 
+function validateCallPath() {
+    $requestUri = WebRequest::getRequestUri();
+    $requestPathData = parse_url($requestUri);
+    $requestPathData['host'] = $_SERVER['SERVER_NAME'];
+
+    global $cContentScriptWebPath;
+    $correctPathData = parse_url($cContentScriptWebPath);
+
+    if(isset($correctPathData['host']) && $correctPathData['host'] != $requestPathData['host']) {
+        return false;
+    }
+
+    if(substr($requestPathData['path'], -strlen($correctPathData['path'])) !== $correctPathData['path']) {
+        return false;
+    }
+
+    return true;
+}
+
+$isvalid = validateCallPath();
+if(!$isvalid) {
+    header("HTTP/1.1 403 Forbidden");
+}
+
 $pathInfo = WebRequest::pathInfo();
 $pathInfo = substr($pathInfo, 1);
 $parts = explode("/", $pathInfo);
